@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.opencv.android.JavaCameraView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/frameView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        />
->
-</org.opencv.android.JavaCameraView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</LinearLayout>
