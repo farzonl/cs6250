@@ -34,6 +34,13 @@
             android:configChanges="keyboardHidden|orientation">
         </activity>
 
+        <activity
+            android:name=".core.PipelineEditingActivity"
+            android:label="@string/title_activity_pipeline_editting"
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation">
+        </activity>
+
     </application>
 
 </manifest>

@@ -18,9 +18,8 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
 
-public class VideoViewingActivity extends AppCompatActivity {
+public class VideoViewingActivity extends Activity {
 
 	private static final String TAG = "VideoViewingActivity";
 	private static final int EDIT_PIPELINE = 1;
@@ -49,8 +48,6 @@ public class VideoViewingActivity extends AppCompatActivity {
 		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		setContentView(R.layout.activity_video_viewing);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
 	}
 
 	@Override
