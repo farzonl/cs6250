@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
  */
 public class PipelineEditingActivity extends Activity implements OnClickListener {
 	
-	private final String TAG = "PipelineEdittingActivity";
+	private final String TAG = "PipelineEditingActivity";
 	
 	//The effects view and the pipeline view.
 	LinearLayout effectsLinearLayout;
