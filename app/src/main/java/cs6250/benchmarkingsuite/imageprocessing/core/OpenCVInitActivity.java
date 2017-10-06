@@ -2,7 +2,7 @@
  * Created by farzon on 9/21/17.
  */
 
-package cs6250.benchmarkingsuite.imageprocessing;
+package cs6250.benchmarkingsuite.imageprocessing.core;
 import org.opencv.android.OpenCVLoader;
 
 import org.opencv.android.BaseLoaderCallback;

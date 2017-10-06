@@ -1,4 +1,4 @@
-package cs6250.benchmarkingsuite.imageprocessing;
+package cs6250.benchmarkingsuite.imageprocessing.core;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -6,6 +6,9 @@ import android.view.WindowManager;
 import android.view.Window;
 import org.opencv.android.JavaCameraView;
 import android.view.Menu;
+
+import cs6250.benchmarkingsuite.imageprocessing.R;
+
 /**
  * Main Activity where the effects are viewed on screen as being aplied to the camera image.
  */
@@ -79,4 +82,19 @@ public class VideoViewingActivity extends Activity {
 
         return true;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(TAG, "Menu Item selected " + item);
+        if(item == mItemEditPipeline)
+        {
+            Intent intentPipeLineEdit = new Intent(this, PipelineEditingActivity.class);
+        }
+    }
+    /*
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "onActivityResult");
+    }*/
 }
