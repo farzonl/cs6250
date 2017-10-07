@@ -17,7 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.support.v7.widget.Toolbar;
+import android.widget.Button;
+
 
 public class VideoViewingActivity extends Activity {
 
@@ -48,7 +49,19 @@ public class VideoViewingActivity extends Activity {
 		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		setContentView(R.layout.activity_video_viewing);
+        Button button= (Button) findViewById(R.id.pipeline);
+
+        button.setOnClickListener(new StartPipeline(this));
 	}
+
+	public void switchToEffectEditor()
+    {
+        Intent editPipelineIntent = new Intent(this, PipelineEditingActivity.class);
+        effectList = imageProcessor.getEffects();
+        editPipelineIntent.putExtra("effects", effectList);
+        //Start the editing activity.
+        this.startActivityForResult(editPipelineIntent, EDIT_PIPELINE);
+    }
 
 	@Override
 	protected void onPause() {
@@ -104,26 +117,6 @@ public class VideoViewingActivity extends Activity {
 		Log.i(TAG, "onCreateOptionsMenu");
 		mItemEditPipeline = menu.add("Edit Pipeline");
 		mItemClearPipeline = menu.add("Clear Pipeline");
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Log.i(TAG, "Menu Item selected " + item);
-		
-		//Handles clicking of the menu items.
-		if(item == mItemEditPipeline) {
-			//Puts the current pipeline effects in to an Intent to send to the editing activity.
-			Intent editPipelineIntent = new Intent(this, PipelineEditingActivity.class);
-			effectList = imageProcessor.getEffects();
-			editPipelineIntent.putExtra("effects", effectList);
-			
-			//Start the editing activity.
-			this.startActivityForResult(editPipelineIntent, EDIT_PIPELINE);
-		} else if(item == mItemClearPipeline) {
-			imageProcessor.clearPipeline();
-		} 
-		
 		return true;
 	}
 
