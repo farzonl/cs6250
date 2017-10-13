@@ -20,6 +20,8 @@ import android.support.v4.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
+
 /**
  * Starting point of the app that makes sure that the user has the OpenCV package installed on their device.
  */
@@ -87,6 +89,8 @@ public class OpenCVInitActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Storage.initStorage(getApplicationContext());
 
         Log.i(TAG, "Trying to load OpenCV library");
         if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_3_0, this, mOpenCVCallBack))

@@ -3,9 +3,13 @@ package cs6250.benchmarkingsuite.imageprocessing.core;
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
+
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
+import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,7 +39,11 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	//Effect buttons
 	Button buttonNone;
 	Button buttonGrayScale;
-	
+	Button buttonCartoon;
+	Button buttonFaceDetection;
+	Button buttonMask;
+
+
 	//Static Buttons
 	Button buttonClearPipeline;
 	Button buttonCancel;
@@ -100,6 +108,18 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 			if (v == buttonGrayScale) {
 				newEffect = new GrayscaleEffect();
 			}
+
+			if (v == buttonMask) {
+				newEffect = new MaskEffect();
+			}
+
+			if (v == buttonCartoon) {
+				newEffect = new CartoonEffect();
+			}
+
+			if (v == buttonFaceDetection) {
+				newEffect = new FaceDetectionEffect();
+			}
 			
 			if(newEffect != null) {
 				effects.add(newEffect);
@@ -147,6 +167,21 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		buttonGrayScale.setText("Grayscale");
 		buttonGrayScale.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonGrayScale);
+
+		buttonCartoon = new Button(this);
+		buttonCartoon.setText("Cartoon");
+		buttonCartoon.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonCartoon);
+
+		buttonFaceDetection = new Button(this);
+		buttonFaceDetection.setText("FaceDetection");
+		buttonFaceDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonFaceDetection);
+
+		buttonMask = new Button(this);
+		buttonMask.setText("Mask");
+		buttonMask.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonMask);
 		
 		//Static Buttons
 		CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
