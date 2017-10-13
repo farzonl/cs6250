@@ -6,7 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.opencv.core.Mat;
 
-import android.util.Log;
+//import android.util.Log;
 
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.IdentityEffect;
@@ -64,7 +64,7 @@ public class Pipeline {
 
 
 	public void start() {
-		Log.d(TAG, "start()");
+		//Log.d(TAG, "start()");
 		for (Thread thread : effectThreads) {
 			if (thread.getState() == Thread.State.NEW) {
 				thread.start();
@@ -75,7 +75,7 @@ public class Pipeline {
 
 
 	public void stop() {
-		Log.d(TAG, "stop()");
+		//Log.d(TAG, "stop()");
 		for (Thread thread : effectThreads) {
 			thread.interrupt();
 		}
@@ -84,7 +84,7 @@ public class Pipeline {
 
 
 	public void addEffect(EffectTask effect) {
-		Log.d(TAG, "addEffect(" + effect + ")");
+		//Log.d(TAG, "addEffect(" + effect + ")");
 		effect.setOutputQueue(processedFrameQueue);
 		if (!effectTasks.isEmpty()) {
 			Thread oldEffectThread = effectThreads.remove(effectThreads.size() - 1);
@@ -183,7 +183,7 @@ public class Pipeline {
 	 * Adds IdentityEffect task to process frames.
 	 */
 	public void clearEffects() {
-		Log.d(TAG, "clearEffects()");
+		//Log.d(TAG, "clearEffects()");
 		effectTasks.clear();
 
 		EffectTask effectTask = new LocalEffectTask(new IdentityEffect());
