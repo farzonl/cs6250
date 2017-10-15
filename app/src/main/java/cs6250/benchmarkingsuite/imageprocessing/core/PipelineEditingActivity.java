@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;;
+import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,8 +46,8 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		this.setContentView(R.layout.activity_pipeline_editting);
 		
 		//Gets the views from the layout
-		effectsLinearLayout = (LinearLayout) this.findViewById(R.id.effectsLinearLayout);
-		pipelineLinearLayout = (LinearLayout) this.findViewById(R.id.pipelinesLinearLayout);
+		effectsLinearLayout = this.findViewById(R.id.effectsLinearLayout);
+		pipelineLinearLayout = this.findViewById(R.id.pipelinesLinearLayout);
 		
 		effects = (ArrayList<Effect>) this.getIntent().getSerializableExtra("effects");
 		if(effects == null) {
@@ -109,13 +109,13 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effectsLinearLayout.addView(buttonGrayScale);
 		
 		//Static Buttons
-		buttonClearPipeline = (Button) this.findViewById(R.id.button_edit_pipeline_clear);
+		buttonClearPipeline = this.findViewById(R.id.button_edit_pipeline_clear);
 		buttonClearPipeline.setOnClickListener(this);
 		
-		buttonCancel = (Button) this.findViewById(R.id.button_edit_pipeline_cancel);
+		buttonCancel = this.findViewById(R.id.button_edit_pipeline_cancel);
 		buttonCancel.setOnClickListener(this);
 		
-		buttonOk = (Button) this.findViewById(R.id.button_edit_pipeline_ok);
+		buttonOk = this.findViewById(R.id.button_edit_pipeline_ok);
 		buttonOk.setOnClickListener(this);
 		
 		//Pipeline Buttons

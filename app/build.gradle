@@ -27,4 +27,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     testCompile 'junit:junit:4.12'
     compile project(':openCVLibrary330')
+
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.+'
+    compile group: 'org.apache.avro', name: 'avro', version: '1.8.+'
+    compile group: 'org.apache.avro', name: 'avro-ipc', version: '1.8.+'
 }

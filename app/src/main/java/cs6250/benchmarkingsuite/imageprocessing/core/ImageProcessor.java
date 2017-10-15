@@ -67,7 +67,7 @@ public class ImageProcessor implements CvCameraViewListener {
 		
 		//Makes sure that the frame passed back is the size needed by OpenCV to display it.
 		if(newFrame != null && newFrame.width() < inputFrame.width()) {
-			int diff = (int) (inputFrame.width() - newFrame.width());
+			int diff = inputFrame.width() - newFrame.width();
 			Scalar value = new Scalar(0,0,0);
 			Mat mat = new Mat();
 			Core.copyMakeBorder(newFrame, mat, 0, 0, diff/2, diff - diff/2, Core.BORDER_CONSTANT, value);
