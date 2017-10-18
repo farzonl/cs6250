@@ -139,21 +139,21 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effectsLinearLayout.addView(buttonGrayScale);
 		
 		//Static Buttons
-		CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
+		/*CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
 		String ipAddress = cloudInstance.getIPAddress();
-		if(!ipAddress.isEmpty())
+		if(ipAddress != null && !ipAddress.isEmpty())
 		{
 			ipTextBox.setText(ipAddress);
 		}
 
 		int portNumber = cloudInstance.getPortNumber();
-		if(portNumber != 0)
+		if(portNumber > 0)
 		{
 			portTextBox.setText("" + portNumber);
-		}
+		}*/
 
 		CloudOnRBtn = (RadioButton) findViewById(R.id.CloudOnRadBtn);
-		CloudOnRBtn.setChecked(cloudInstance.shouldUseCloud());
+		//CloudOnRBtn.setChecked(cloudInstance.shouldUseCloud());
 
 		CloudOnRBtn.setOnClickListener(this);
 		CloudOffRBtn = (RadioButton) findViewById(R.id.CloudOffRadBtn);

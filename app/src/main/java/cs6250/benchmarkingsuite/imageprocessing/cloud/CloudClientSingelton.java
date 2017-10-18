@@ -12,11 +12,19 @@ public final class CloudClientSingelton {
 
     public String getIPAddress()
     {
+        if(cloudClient == null)
+        {
+            return "";
+        }
         return cloudClient.serverIP;
     }
 
     public int getPortNumber()
     {
+        if(cloudClient == null)
+        {
+            return -1;
+        }
         return cloudClient.port;
     }
     private void suspendThread()
