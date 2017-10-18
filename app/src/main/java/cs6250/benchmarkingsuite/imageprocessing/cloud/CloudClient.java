@@ -15,11 +15,12 @@ import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
 
 public class CloudClient implements Runnable {
 	
-	final String serverIP = "10.0.1.18";
-	final static int port = 20001;
+
 	NettyTransceiver transceiver;
 	IBenchProtocol.Callback client;
-	
+	public String serverIP;
+	public int port;
+
 	//BandwidthMeasurement bandwidth;
 	
 	@Override

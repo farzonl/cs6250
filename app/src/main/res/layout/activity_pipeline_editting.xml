@@ -47,6 +47,53 @@
     </HorizontalScrollView>
 
     <LinearLayout
+        android:id="@+id/cloudEnableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkedButton="@+id/CloudRadGroup">
+            <RadioButton
+                android:id="@+id/CloudOnRadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cloud_on"/>
+            <RadioButton
+                android:id="@+id/CloudOffRadBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cloud_off"/>
+        </RadioGroup>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <EditText
+                android:id="@+id/ip_address"
+                android:inputType="number|numberDecimal"
+                android:digits="0123456789."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="IP Address"/>
+            <EditText
+                android:id="@+id/PortNumber"
+                android:inputType="number"
+                android:digits="0123456789"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Port Number"/>
+        </LinearLayout>
+        <View
+            android:id="@+id/viewStub0"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="2"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 

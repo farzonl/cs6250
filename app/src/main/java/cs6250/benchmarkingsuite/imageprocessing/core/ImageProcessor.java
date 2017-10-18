@@ -5,25 +5,21 @@ import java.util.ArrayList;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.core.*;
 import android.util.Log;
 
-import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.IdentityEffect;
-import cs6250.benchmarkingsuite.imageprocessing.pipeline.EffectTask;
-import cs6250.benchmarkingsuite.imageprocessing.pipeline.FrameProcessor;
-import cs6250.benchmarkingsuite.imageprocessing.pipeline.LocalEffectTask;
+import cs6250.benchmarkingsuite.imageprocessing.effects.*;
+import cs6250.benchmarkingsuite.imageprocessing.pipeline.*;
 
 
 public class ImageProcessor implements CvCameraViewListener {	
 	private static final String TAG = "ImageProcessor";
 	
 	//The underlying pipeline system for the image processor to pass frames to.
-	FrameProcessor frameProcessor;
+	CloudFrameProcessor frameProcessor;
 	
 	public ImageProcessor() {
-		frameProcessor = new FrameProcessor(new EffectTask[]{new LocalEffectTask(new IdentityEffect())});
+		frameProcessor = new CloudFrameProcessor(new EffectTask[]{new LocalEffectTask(new IdentityEffect())});
 	}
 	
 	/**
