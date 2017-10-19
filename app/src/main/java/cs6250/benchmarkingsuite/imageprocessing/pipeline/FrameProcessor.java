@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import org.opencv.core.Mat;
 
 //android
-import android.util.Log;
+//import android.util.Log;
 
 //cs6250
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
@@ -31,14 +31,14 @@ public class FrameProcessor {
 	}
 
 	public void addFrame(Mat frame) {
-		Log.d("FrameProcessor", "unprocessedFrameQueue size: " + unprocessedFrameQueue.size());
+		//Log.d("FrameProcessor", "unprocessedFrameQueue size: " + unprocessedFrameQueue.size());
 		unprocessedFrameQueue.offer(frame);
 	}
 
 
 	public Mat getFrame() {
-		Log.d("FrameProcessor", "processedFrameQueue size: "
-				+ processedFrameQueue.size());
+		//Log.d("FrameProcessor", "processedFrameQueue size: "
+		//		+ processedFrameQueue.size());
 		return processedFrameQueue.poll();
 	}
 
