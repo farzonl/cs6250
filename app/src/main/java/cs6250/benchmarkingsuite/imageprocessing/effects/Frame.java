@@ -18,6 +18,7 @@ public class Frame
 
 	public Frame(Mat m)
 	{
+		enc_mat = m;
 		Imgproc.cvtColor(m, m, Imgproc.COLOR_RGB2BGRA);
 		bmp = Bitmap.createBitmap(m.cols(), m.rows(), Bitmap.Config.ARGB_8888);
 		Utils.matToBitmap(m, bmp);

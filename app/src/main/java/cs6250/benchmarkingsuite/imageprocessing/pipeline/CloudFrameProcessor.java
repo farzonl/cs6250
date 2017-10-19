@@ -46,7 +46,7 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline, Ca
     {
         numFrames.incrementAndGet();
         List<ByteBuffer> frameBuffer = new ArrayList<ByteBuffer>();
-        ByteBuffer pixels = frame.getAsByteBuffer();
+        ByteBuffer pixels = frame.getAsPngByteBuffer();
         // perform the computation on the server
         frameBuffer.add(pixels);
         if (frameBuffer.size() > 0) {

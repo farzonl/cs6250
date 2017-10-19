@@ -119,11 +119,11 @@ public final class CloudClientSingelton {
 
     public static CloudClientSingelton getInstance(String serverIP, String port) {
         int Port = Integer.parseInt(port);
-        if (instance != null) {
-            instance.setServerIPandPort(serverIP, Port);
-        }
 
-        return getInstance();
+        CloudClientSingelton returnInstance = getInstance();
+        returnInstance.setServerIPandPort(serverIP, Port);
+
+        return returnInstance;
     }
     public static CloudClientSingelton getInstance() {
         if (instance == null) {

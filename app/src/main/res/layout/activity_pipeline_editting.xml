@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical" >
 
     <TextView
@@ -36,7 +38,7 @@
         android:id="@+id/horizontalScrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dip" 
-        android:layout_weight="1">
+        android:layout_weight="1.33">
 
         <LinearLayout
             android:id="@+id/pipelinesLinearLayout"
@@ -50,7 +52,8 @@
         android:id="@+id/cloudEnableLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="0.16">
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,6 +81,7 @@
                 android:digits="0123456789."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
                 android:hint="IP Address"/>
             <EditText
                 android:id="@+id/PortNumber"
@@ -85,6 +89,7 @@
                 android:digits="0123456789"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
                 android:hint="Port Number"/>
         </LinearLayout>
         <View
@@ -121,7 +126,7 @@
             android:id="@+id/button_edit_pipeline_cancel"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_weight="1.14"
+            android:layout_weight="1.41"
             android:text="@string/label_cancel" />
 
 

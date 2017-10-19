@@ -79,6 +79,12 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 				{
 					CloudOffRBtn.setChecked(true);
 				}
+				else
+				{
+					String sIpText = ipTextBox.getText().toString();
+					String sPortText = portTextBox.getText().toString();
+					CloudClientSingelton.getInstance(sIpText, sPortText);
+				}
 			}
 		}
 
@@ -139,7 +145,7 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effectsLinearLayout.addView(buttonGrayScale);
 		
 		//Static Buttons
-		/*CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
+		CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
 		String ipAddress = cloudInstance.getIPAddress();
 		if(ipAddress != null && !ipAddress.isEmpty())
 		{
@@ -150,15 +156,13 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		if(portNumber > 0)
 		{
 			portTextBox.setText("" + portNumber);
-		}*/
+		}
 
 		CloudOnRBtn = (RadioButton) findViewById(R.id.CloudOnRadBtn);
-		//CloudOnRBtn.setChecked(cloudInstance.shouldUseCloud());
-
-		CloudOnRBtn.setOnClickListener(this);
 		CloudOffRBtn = (RadioButton) findViewById(R.id.CloudOffRadBtn);
-		CloudOffRBtn.setOnClickListener(this);
 
+		if (cloudInstance.shouldUseCloud()) {CloudOffRBtn.setChecked(true);} else { CloudOffRBtn.setChecked(true); };
+		CloudOnRBtn.setOnClickListener(this);
 
 
 		buttonClearPipeline = this.findViewById(R.id.button_edit_pipeline_clear);

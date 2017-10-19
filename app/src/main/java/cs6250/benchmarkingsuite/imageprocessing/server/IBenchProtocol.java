@@ -7,7 +7,7 @@ package cs6250.benchmarkingsuite.imageprocessing.server;
 
 @SuppressWarnings("all")
 public interface IBenchProtocol {
-	public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"BenchProtocol\",\"namespace\":\"cs6250.benchmarkingsuite.imageprocessing.server\",\"types\":[],\"messages\":{\"addGrayscaleEffect\":{\"request\":[],\"response\":\"null\"},\"addIdentityEffect\":{\"request\":[],\"response\":\"null\"},\"clearEffects\":{\"request\":[],\"response\":\"null\"},\"addFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}}}}");
+	public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"BenchProtocol\",\"namespace\":\"server\",\"types\":[],\"messages\":{\"addGrayscaleEffect\":{\"request\":[],\"response\":\"null\"},\"addIdentityEffect\":{\"request\":[],\"response\":\"null\"},\"clearEffects\":{\"request\":[],\"response\":\"null\"},\"addFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}}}}");
 
   java.lang.Void addGrayscaleEffect() throws org.apache.avro.AvroRemoteException;
   java.lang.Void addIdentityEffect() throws org.apache.avro.AvroRemoteException;
