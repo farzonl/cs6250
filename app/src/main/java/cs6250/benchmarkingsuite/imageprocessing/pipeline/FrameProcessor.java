@@ -15,13 +15,13 @@ import org.opencv.core.Mat;
 //cs6250
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 
-public class FrameProcessor {
+public class FrameProcessor implements IPipeline {
 
 	private static final String TAG = "FrameProcessor";
 
-	private BlockingQueue<Mat> unprocessedFrameQueue, processedFrameQueue;
+	protected BlockingQueue<Mat> unprocessedFrameQueue, processedFrameQueue;
 
-	private HashSet<Pipeline> pipelines;
+	protected HashSet<Pipeline> pipelines;
 
 	public FrameProcessor(EffectTask[] effects) {
 		unprocessedFrameQueue = new LinkedBlockingQueue<Mat>(2);

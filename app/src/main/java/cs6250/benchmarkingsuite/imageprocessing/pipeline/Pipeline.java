@@ -11,15 +11,15 @@ import org.opencv.core.Mat;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.IdentityEffect;
 
-public class Pipeline {
+public class Pipeline implements IPipeline {
 	private static final String TAG = "Pipeline";
 
-	private BlockingQueue<Mat> unprocessedFrameQueue, processedFrameQueue;
+	protected BlockingQueue<Mat> unprocessedFrameQueue, processedFrameQueue;
 
-	private boolean running;
+	protected boolean running;
 
-	private ArrayList<Thread> effectThreads;
-	private ArrayList <EffectTask> effectTasks;
+	protected ArrayList<Thread> effectThreads;
+	protected ArrayList <EffectTask> effectTasks;
 
 
 	public Pipeline(BlockingQueue<Mat> unprocessedFrameQueue, BlockingQueue<Mat> processedFrameQueue, EffectTask[] effects) {
