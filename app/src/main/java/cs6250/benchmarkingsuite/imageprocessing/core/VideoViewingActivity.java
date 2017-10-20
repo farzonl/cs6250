@@ -8,7 +8,6 @@ import org.opencv.android.JavaCameraView;
 
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 import cs6250.benchmarkingsuite.imageprocessing.pipeline.LocalEffectTask;
-import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -50,7 +49,7 @@ public class VideoViewingActivity extends Activity {
 		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		setContentView(R.layout.activity_video_viewing);
-        Button button= findViewById(R.id.pipeline);
+        Button button= (Button) findViewById(R.id.pipeline);
 
         button.setOnClickListener(new StartPipeline(this));
 	}
@@ -88,13 +87,13 @@ public class VideoViewingActivity extends Activity {
 	public void onStart() {
 		Log.i(TAG, "onStart");
 		super.onStart();
-
+		
 		//Safety checks in case the activity's resources were deallocated.
 		if(imageProcessor == null) {
 			imageProcessor = new ImageProcessor();
 		}
 		
-		mView = this.findViewById(R.id.frameView);
+		mView = (JavaCameraView) this.findViewById(R.id.frameView);
 	}
 	
 

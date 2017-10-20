@@ -5,21 +5,25 @@ import java.util.ArrayList;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.core.*;
 import android.util.Log;
 
-import cs6250.benchmarkingsuite.imageprocessing.effects.*;
-import cs6250.benchmarkingsuite.imageprocessing.pipeline.*;
+import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.IdentityEffect;
+import cs6250.benchmarkingsuite.imageprocessing.pipeline.EffectTask;
+import cs6250.benchmarkingsuite.imageprocessing.pipeline.FrameProcessor;
+import cs6250.benchmarkingsuite.imageprocessing.pipeline.LocalEffectTask;
 
 
 public class ImageProcessor implements CvCameraViewListener {	
 	private static final String TAG = "ImageProcessor";
 	
 	//The underlying pipeline system for the image processor to pass frames to.
-	CloudFrameProcessor frameProcessor;
+	FrameProcessor frameProcessor;
 	
 	public ImageProcessor() {
-		frameProcessor = new CloudFrameProcessor(new EffectTask[]{new LocalEffectTask(new IdentityEffect())});
+		frameProcessor = new FrameProcessor(new EffectTask[]{new LocalEffectTask(new IdentityEffect())});
 	}
 	
 	/**
@@ -63,7 +67,7 @@ public class ImageProcessor implements CvCameraViewListener {
 		
 		//Makes sure that the frame passed back is the size needed by OpenCV to display it.
 		if(newFrame != null && newFrame.width() < inputFrame.width()) {
-			int diff = inputFrame.width() - newFrame.width();
+			int diff = (int) (inputFrame.width() - newFrame.width());
 			Scalar value = new Scalar(0,0,0);
 			Mat mat = new Mat();
 			Core.copyMakeBorder(newFrame, mat, 0, 0, diff/2, diff - diff/2, Core.BORDER_CONSTANT, value);
