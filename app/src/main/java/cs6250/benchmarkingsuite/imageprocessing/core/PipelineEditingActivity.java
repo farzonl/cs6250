@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.LinearLayout;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
@@ -59,6 +60,9 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effects = (ArrayList<Effect>) this.getIntent().getSerializableExtra("effects");
 		ipTextBox = this.findViewById(R.id.ip_address);
 		portTextBox = this.findViewById(R.id.PortNumber);
+		ipTextBox.setText("128.61.12.43", TextView.BufferType.EDITABLE);
+		portTextBox.setText("20001", TextView.BufferType.EDITABLE);
+
 		if(effects == null) {
 			Log.e(TAG, "effects list is null");
 			effects = new ArrayList<Effect>();
