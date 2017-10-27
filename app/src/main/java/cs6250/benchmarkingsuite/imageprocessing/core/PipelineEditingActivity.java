@@ -66,7 +66,6 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	ArrayList<Effect> effects;
 
 	//Color Detector
-	private ColorBlobDetector mDetector;
 
 	//Chessboard Detector
 	Mat pic;
@@ -83,15 +82,6 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effects = (ArrayList<Effect>) this.getIntent().getSerializableExtra("effects");
 		ipTextBox = this.findViewById(R.id.ip_address);
 		portTextBox = this.findViewById(R.id.PortNumber);
-		ipTextBox.setText("128.61.2.119", TextView.BufferType.EDITABLE);
-//		ipTextBox.setText("143.215.101.55", TextView.BufferType.EDITABLE);
-
-		portTextBox.setText("20001", TextView.BufferType.EDITABLE);
-
-//		pic = View.getDefaultSize().clone();
-//		mPic = (View) findViewById(R.id.frameView);
-//		Imgproc.resize(pic,pic,new Size(mPic.getWidth(),mPic.getHeight()));
-//		mPic.setFrame(pic);
 
 		if(effects == null) {
 			Log.e(TAG, "effects list is null");
@@ -141,10 +131,6 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 
 			if (v == buttonFaceDetection) {
 				newEffect = new FaceDetectionEffect();
-			}
-
-			if (v == buttonColorDetector) {
-				newEffect = new ColorDetectorEffect();
 			}
 
 			if (v == buttonMotionDetection) {
