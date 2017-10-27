@@ -1,6 +1,7 @@
 @namespace("cs6250.benchmarkingsuite.imageprocessing.server")
 protocol BenchProtocol {
 	void addGrayscaleEffect();
+	void addIdentityEffect();
 	void clearEffects();
 	void addCartoonEffect();
 	void addFaceDetectionEffect();
