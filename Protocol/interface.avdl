@@ -2,6 +2,11 @@
 protocol BenchProtocol {
 	void addGrayscaleEffect();
 	void clearEffects();
+	void addCartoonEffect();
+	void addFaceDetectionEffect();
+	void addMaskEffect();
+	void addMotionDetectionEffect();
+	void addCheckerBoardDetectionEffect();
 
 	array<bytes> addFrames(array<bytes> frames);
 }
