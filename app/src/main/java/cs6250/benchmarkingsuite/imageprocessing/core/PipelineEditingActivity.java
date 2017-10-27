@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
@@ -141,7 +141,7 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 			}
 
 			if (v == buttonCheckerDetection) {
-				newEffect = new CheckerBoardDetect();
+				newEffect = new CheckerBoardDetectionEffect();
 			}
 			
 			if(newEffect != null) {

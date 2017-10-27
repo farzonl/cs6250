@@ -67,8 +67,20 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline, Ca
             try {
                 if (effect.getEffect() instanceof GrayscaleEffect) {
                     CloudClientSingelton.getInstance().cloudClient.addGrayscaleEffect();
-				} else if (effect.getEffect() instanceof CartoonEffect) {
+				} else if (effect.getEffect() instanceof FaceDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addIdentityEffect();
+                } else if (effect.getEffect() instanceof IdentityEffect) {
                     CloudClientSingelton.getInstance().cloudClient.addCartoonEffect();
+                } else if (effect.getEffect() instanceof FaceDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addFaceDetectionEffect();
+                } else if (effect.getEffect() instanceof FaceDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addMaskEffect();
+                } else if (effect.getEffect() instanceof MaskEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addMotionDetectionEffect();
+                } else if (effect.getEffect() instanceof MotionDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addCheckerBoardDetectionEffect();
+                } else if (effect.getEffect() instanceof CheckerBoardDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addCheckerBoardDetectionEffect();
                 }
 
                 /*else if (effect.getEffect() instanceof IdentityEffect) {

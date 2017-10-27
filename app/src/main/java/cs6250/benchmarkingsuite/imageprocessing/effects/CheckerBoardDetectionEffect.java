@@ -19,17 +19,17 @@ import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 
 import static org.opencv.imgproc.Imgproc.resize;
 
-public class CheckerBoardDetect extends Effect {
+public class CheckerBoardDetectionEffect extends Effect {
     final int width = 5;
     final int height = 4;
     final int square_size = 20;
     Mat pic;
 
-//    public CheckerBoardDetect(Mat pic) {
+//    public CheckerBoardDetectionEffect(Mat pic) {
 //        this.pic = pic;
 //    }
 
-    public CheckerBoardDetect() {
+    public CheckerBoardDetectionEffect() {
     }
 
     @Override

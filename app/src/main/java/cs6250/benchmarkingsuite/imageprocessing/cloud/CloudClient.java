@@ -56,12 +56,28 @@ public class CloudClient implements Runnable {
 		client.addGrayscaleEffect();
 	}
 
+	public void addIdentityEffect() throws org.apache.avro.AvroRemoteException {
+		client.addIdentityEffect();
+	}
+
 	public void addCartoonEffect() throws org.apache.avro.AvroRemoteException {
 		client.addCartoonEffect();
 	}
 
-	public void addIdentityEffect() throws org.apache.avro.AvroRemoteException {
-		client.addIdentityEffect();
+	public void addFaceDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		client.addFaceDetectionEffect();
+	}
+
+	public void addMaskEffect() throws org.apache.avro.AvroRemoteException {
+		client.addMaskEffect();
+	}
+
+	public void addMotionDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		client.addMotionDetectionEffect();
+	}
+
+	public void addCheckerBoardDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		client.addCheckerBoardDetectionEffect();
 	}
 
     public void addFrames(List<ByteBuffer> frames, org.apache.avro.ipc.Callback<List<ByteBuffer>> callback) throws java.io.IOException {
