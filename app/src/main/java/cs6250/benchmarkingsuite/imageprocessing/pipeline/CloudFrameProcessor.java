@@ -58,6 +58,7 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline, Ca
         }
 
     }
+
     @Override
     public void addEffect(EffectTask effect) {
         super.addEffect(effect);
@@ -66,7 +67,11 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline, Ca
             try {
                 if (effect.getEffect() instanceof GrayscaleEffect) {
                     CloudClientSingelton.getInstance().cloudClient.addGrayscaleEffect();
-				} /*else if (effect.getEffect() instanceof IdentityEffect) {
+				} else if (effect.getEffect() instanceof CartoonEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addCartoonEffect();
+                }
+
+                /*else if (effect.getEffect() instanceof IdentityEffect) {
 					cloudClient.addIdentityEffect();*/
             } catch (Exception e) {
                 e.printStackTrace();

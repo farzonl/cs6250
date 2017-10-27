@@ -5,23 +5,39 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
 import org.opencv.objdetect.CascadeClassifier;
+import org.opencv.video.BackgroundSubtractorMOG2;
+import org.opencv.video.Video;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
 public class Storage {
     private Context ctx;
     private static Bitmap bmp;
+    private static Bitmap chessboard;
     private static Storage object;
     private static CascadeClassifier cascadeClassifier;
 
+    private static BackgroundSubtractorMOG2 mog;
+
+    public static BackgroundSubtractorMOG2 getBackgroundSubtractorMOG2() {
+        mog = Video.createBackgroundSubtractorMOG2();
+        mog.setDetectShadows(false);
+        return mog;
+    }
+
     private Storage(Context ctx) {
         this.ctx = ctx;
-        bmp = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.carnivalmask);
+        //bmp = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.carnivalmask);
+        chessboard = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.chessboard);
 
         try {
             // Copy the resource into a temp file so OpenCV can load it
@@ -59,4 +75,5 @@ public class Storage {
     public static Bitmap getbmp() {
         return bmp;
     }
+    public static Bitmap getChessboard() { return chessboard;}
 }

@@ -11,8 +11,8 @@ public class CartoonEffect extends Effect {
 
     @Override
     public Mat applyTo(Mat frame) {
-        //Downsample image using Gaussian Pyramid
-        Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGRA2BGR);
+
+        Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
 
         Mat dstMat = frame.clone();
 
@@ -38,7 +38,7 @@ public class CartoonEffect extends Effect {
         Mat res = dstMat.clone();
 
         Core.bitwise_and(dstMat, imgEdge, res);
-
+        Imgproc.cvtColor(res, res, Imgproc.COLOR_RGB2RGBA);
         return res;
     }
 

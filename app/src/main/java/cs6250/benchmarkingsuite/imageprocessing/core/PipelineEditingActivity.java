@@ -4,12 +4,15 @@ import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;;
+import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
+;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,6 +26,8 @@ import android.widget.RadioButton;
 import android.widget.LinearLayout;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.opencv.core.Mat;
 
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
@@ -42,6 +47,9 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	Button buttonCartoon;
 	Button buttonFaceDetection;
 	Button buttonMask;
+	Button buttonColorDetector;
+	Button buttonMotionDetection;
+	Button buttonCheckerDetection;
 
 
 	//Static Buttons
@@ -57,6 +65,13 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	//Current pipeline
 	ArrayList<Effect> effects;
 
+	//Color Detector
+	private ColorBlobDetector mDetector;
+
+	//Chessboard Detector
+	Mat pic;
+	private View mPic;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,8 +83,15 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effects = (ArrayList<Effect>) this.getIntent().getSerializableExtra("effects");
 		ipTextBox = this.findViewById(R.id.ip_address);
 		portTextBox = this.findViewById(R.id.PortNumber);
-		ipTextBox.setText("128.61.12.43", TextView.BufferType.EDITABLE);
+		ipTextBox.setText("128.61.2.119", TextView.BufferType.EDITABLE);
+//		ipTextBox.setText("143.215.101.55", TextView.BufferType.EDITABLE);
+
 		portTextBox.setText("20001", TextView.BufferType.EDITABLE);
+
+//		pic = View.getDefaultSize().clone();
+//		mPic = (View) findViewById(R.id.frameView);
+//		Imgproc.resize(pic,pic,new Size(mPic.getWidth(),mPic.getHeight()));
+//		mPic.setFrame(pic);
 
 		if(effects == null) {
 			Log.e(TAG, "effects list is null");
@@ -119,6 +141,18 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 
 			if (v == buttonFaceDetection) {
 				newEffect = new FaceDetectionEffect();
+			}
+
+			if (v == buttonColorDetector) {
+				newEffect = new ColorDetectorEffect();
+			}
+
+			if (v == buttonMotionDetection) {
+				newEffect = new MotionDetectionEffect();
+			}
+
+			if (v == buttonCheckerDetection) {
+				newEffect = new CheckerBoardDetect();
 			}
 			
 			if(newEffect != null) {
@@ -174,7 +208,7 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effectsLinearLayout.addView(buttonCartoon);
 
 		buttonFaceDetection = new Button(this);
-		buttonFaceDetection.setText("FaceDetection");
+		buttonFaceDetection.setText("Face");
 		buttonFaceDetection.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonFaceDetection);
 
@@ -182,7 +216,23 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		buttonMask.setText("Mask");
 		buttonMask.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonMask);
-		
+
+		buttonColorDetector = new Button(this);
+		buttonColorDetector.setText("Color");
+		buttonColorDetector.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonColorDetector);
+
+		buttonMotionDetection = new Button(this);
+		buttonMotionDetection.setText("Motion");
+		buttonMotionDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonMotionDetection);
+
+		buttonCheckerDetection = new Button(this);
+		buttonCheckerDetection.setText("Checker");
+		buttonCheckerDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonCheckerDetection);
+
+
 		//Static Buttons
 		CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
 		String ipAddress = cloudInstance.getIPAddress();
