@@ -82,6 +82,9 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		effects = (ArrayList<Effect>) this.getIntent().getSerializableExtra("effects");
 		ipTextBox = this.findViewById(R.id.ip_address);
 		portTextBox = this.findViewById(R.id.PortNumber);
+		ipTextBox.setText("128.61.2.119", TextView.BufferType.EDITABLE);
+
+		portTextBox.setText("20001", TextView.BufferType.EDITABLE);
 
 		if(effects == null) {
 			Log.e(TAG, "effects list is null");
