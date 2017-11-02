@@ -7,13 +7,13 @@
 <org.opencv.android.JavaCameraView
 android:id="@+id/frameView"
 android:layout_width="match_parent"
-android:layout_height="480dp" >
+android:layout_height="200dp" >
 
 </org.opencv.android.JavaCameraView>
 <Button
     android:layout_width= "wrap_content"
     android:layout_height="wrap_content"
-    android:text="pipline"
+    android:text="pipeline"
     android:id="@+id/pipeline"
     android:layout_below="@id/frameView"/>
 </RelativeLayout>
