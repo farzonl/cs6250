@@ -9,5 +9,13 @@ protocol BenchProtocol {
 	void addMotionDetectionEffect();
 	void addCheckerBoardDetectionEffect();
 
+	void addSnappyCompression();
+	void addGzipCompression();
+	void addDeflateCompression();
+	void addBzip2Compression();
+	void addPack200Compression();
+	void addLz4Compression();
+	void addZstdCompression();
+
 	array<bytes> addFrames(array<bytes> frames);
 }
