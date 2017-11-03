@@ -28,8 +28,7 @@ public class CloudClient implements Runnable {
 		try {
 			InitializeClient();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e("CloudClient", "Failed to initialize InitializeClient");
 		}	
 	}
 	

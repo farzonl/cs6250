@@ -10,8 +10,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import org.opencv.core.Mat;
-
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
@@ -51,10 +49,6 @@ public class PipelineEditingActivity extends Activity {
     // Current pipeline
     ArrayList<Effect> effects;
     ArrayList<Compression> compressions;
-
-    // Chessboard Detector
-    Mat pic;
-    private View mPic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -151,16 +145,17 @@ public class PipelineEditingActivity extends Activity {
         compressLinearLayout.addView(buttonZstdCompression);
 
         // Get the effects from the previous processing event.
-        effects = (ArrayList<Effect>) this.getIntent().getSerializableExtra("effects");
+        Bundle bundle = this.getIntent().getExtras();
+        effects = (ArrayList<Effect>) bundle.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects");
         if (effects == null) {
-            Log.e(TAG, "effects list is null");
+            Log.v(TAG, "effects list is null");
             effects = new ArrayList<>();
         }
 
         // Get the effects from the previous processing event.
-        compressions = (ArrayList<Compression>) this.getIntent().getSerializableExtra("compressions");
+        compressions = (ArrayList<Compression>) bundle.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
         if (compressions == null) {
-            Log.e(TAG, "compressions list is null");
+            Log.v(TAG, "compressions list is null");
             compressions = new ArrayList<>();
         }
 
@@ -224,8 +219,10 @@ public class PipelineEditingActivity extends Activity {
             CloudClientSingelton.getInstance().setUseCloud(false);
         }
         Intent result = new Intent();
-        result.putExtra("result", effects);
-        result.putExtra("result", compressions);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects", effects);
+        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions", compressions);
+        result = result.putExtras(bundle);
         this.setResult(RESULT_OK, result);
         this.finish();
     }
