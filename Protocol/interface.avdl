@@ -1,5 +1,16 @@
 @namespace("cs6250.benchmarkingsuite.imageprocessing.server")
 protocol BenchProtocol {
+	enum Compress {
+		UNKNOWN,
+		SNAPPY,
+		GZIP,
+		DELFATE,
+		BZIP2,
+		PACK200,
+		LZ4,
+		ZSTD
+	}
+
 	void addGrayscaleEffect();
 	void addIdentityEffect();
 	void clearEffects();
@@ -9,13 +20,8 @@ protocol BenchProtocol {
 	void addMotionDetectionEffect();
 	void addCheckerBoardDetectionEffect();
 
-	void addSnappyCompression();
-	void addGzipCompression();
-	void addDeflateCompression();
-	void addBzip2Compression();
-	void addPack200Compression();
-	void addLz4Compression();
-	void addZstdCompression();
-
 	array<bytes> addFrames(array<bytes> frames);
+
+	// For now just supporting a single compression algorithm`
+	array<bytes> addCompressedFrames(array<bytes> frames, Compress algo);
 }
