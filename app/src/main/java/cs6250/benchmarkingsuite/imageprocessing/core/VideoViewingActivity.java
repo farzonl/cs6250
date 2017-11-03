@@ -15,9 +15,9 @@ import org.opencv.android.JavaCameraView;
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
-import cs6250.benchmarkingsuite.imageprocessing.compressions.Compression;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 import cs6250.benchmarkingsuite.imageprocessing.pipeline.LocalEffectTask;
+import cs6250.benchmarkingsuite.imageprocessing.server.Compress;
 
 public class VideoViewingActivity extends Activity {
 
@@ -32,7 +32,7 @@ public class VideoViewingActivity extends Activity {
 
     // A list of effects that is kept in persistence in case the editing activity is canceled.
     ArrayList<Effect> effectList;
-    ArrayList<Compression> compressionList;
+    Compress compress;
 
     // Menu items that can be selected from the menu.
     MenuItem mItemEditPipeline;
@@ -60,7 +60,7 @@ public class VideoViewingActivity extends Activity {
         //compressionList = imageProcessor.getCompressions();
         Bundle bundle = new Bundle();
         bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects", effectList);
-        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions", compressionList);
+        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions", compress);
         editPipelineIntent.putExtras(bundle);
 
         // Start the editing activity.
@@ -133,16 +133,16 @@ public class VideoViewingActivity extends Activity {
 
                 Bundle b = data.getExtras();
                 effectList = (ArrayList<Effect>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects");
-                compressionList = (ArrayList<Compression>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
+                compress = (Compress) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compress");
 
                 // Safety check
                 if (effectList == null) {
                     Log.e(TAG, "Got null effects list");
                     effectList = new ArrayList<>();
                 }
-                if (compressionList == null) {
-                    Log.e(TAG, "Got null compressions list");
-                    compressionList = new ArrayList<>();
+                if (compress == null) {
+                    Log.e(TAG, "Got null compression list");
+                    compress = Compress.UNKNOWN;
                 }
             }
 
@@ -150,9 +150,6 @@ public class VideoViewingActivity extends Activity {
             imageProcessor = new ImageProcessor();
             for (Effect effect : effectList) {
                 imageProcessor.addEffect(new LocalEffectTask(effect));
-            }
-            for (Compression c : compressionList) {
-                // TODO
             }
         }
     }

@@ -10,6 +10,7 @@ import android.util.Log;
 
 import cs6250.benchmarkingsuite.imageprocessing.effects.*;
 import cs6250.benchmarkingsuite.imageprocessing.pipeline.*;
+import cs6250.benchmarkingsuite.imageprocessing.server.Compress;
 
 
 public class ImageProcessor implements CvCameraViewListener {	
