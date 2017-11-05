@@ -23,20 +23,16 @@ public class VideoViewingActivity extends Activity {
 
     private static final String TAG = "VideoViewingActivity";
     private static final int EDIT_PIPELINE = 1;
-
-    // The view that passes frames to the ImageProcessor from the camera and displays the frames from the pipeline.
-    private JavaCameraView mView;
-
     // The ImageProcessor that catches OpenCV frames and communicates with the pipeline.
     ImageProcessor imageProcessor;
-
     // A list of effects that is kept in persistence in case the editing activity is canceled.
     ArrayList<Effect> effectList;
-    Compress compress;
-
+    ArrayList<Compress> compressions;
     // Menu items that can be selected from the menu.
     MenuItem mItemEditPipeline;
     MenuItem mItemClearPipeline;
+    // The view that passes frames to the ImageProcessor from the camera and displays the frames from the pipeline.
+    private JavaCameraView mView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,10 +53,10 @@ public class VideoViewingActivity extends Activity {
     public void switchToEffectEditor() {
         Intent editPipelineIntent = new Intent(this, PipelineEditingActivity.class);
         effectList = imageProcessor.getEffects();
-        //compressionList = imageProcessor.getCompressions();
+        compressions = new ArrayList<>(); //imageProcessor.getCompressions();
         Bundle bundle = new Bundle();
         bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects", effectList);
-        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions", compress);
+        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions", compressions);
         editPipelineIntent.putExtras(bundle);
 
         // Start the editing activity.
@@ -133,16 +129,16 @@ public class VideoViewingActivity extends Activity {
 
                 Bundle b = data.getExtras();
                 effectList = (ArrayList<Effect>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects");
-                compress = (Compress) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compress");
+                compressions = (ArrayList<Compress>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
 
                 // Safety check
                 if (effectList == null) {
                     Log.e(TAG, "Got null effects list");
                     effectList = new ArrayList<>();
                 }
-                if (compress == null) {
+                if (compressions == null) {
                     Log.e(TAG, "Got null compression list");
-                    compress = Compress.UNKNOWN;
+                    compressions = new ArrayList<>();
                 }
             }
 
@@ -151,6 +147,7 @@ public class VideoViewingActivity extends Activity {
             for (Effect effect : effectList) {
                 imageProcessor.addEffect(new LocalEffectTask(effect));
             }
+            imageProcessor.setCompress(compressions.size() == 1 ? compressions.get(0) : Compress.UNKNOWN);
         }
     }
 }

@@ -10,7 +10,6 @@ public final class CloudClientSingelton {
     private static volatile CloudClientSingelton instance = null;
     public CloudClient cloudClient;
     private boolean m_bUseCloud = false;
-    private Compress compression = Compress.UNKNOWN;
     private Thread td;
 
     public String getIPAddress() {
@@ -96,14 +95,6 @@ public final class CloudClientSingelton {
             suspendThread();
         }
 
-    }
-
-    public Compress getCompression() {
-        return compression;
-    }
-
-    public void setCompression(Compress newCompression) {
-        compression = newCompression;
     }
 
     private CloudClientSingelton() {

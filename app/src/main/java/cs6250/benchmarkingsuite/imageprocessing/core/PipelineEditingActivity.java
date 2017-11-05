@@ -186,6 +186,10 @@ public class PipelineEditingActivity extends Activity {
         CheckBox cb = (CheckBox) view;
         this.findViewById(R.id.destinationFields)
                 .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
+        this.findViewById(R.id.availCompress)
+                .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
+        this.findViewById(R.id.appliedCompress)
+                .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
     }
 
     public void onCancelClicked(View view) {
