@@ -11,7 +11,6 @@ import android.util.Log;
 
 import cs6250.benchmarkingsuite.imageprocessing.effects.*;
 import cs6250.benchmarkingsuite.imageprocessing.pipeline.*;
-import cs6250.benchmarkingsuite.imageprocessing.server.Compress;
 
 
 public class ImageProcessor implements CvCameraViewListener {
@@ -76,11 +75,11 @@ public class ImageProcessor implements CvCameraViewListener {
         return newFrame;
     }
 
-    public Compress getCompress() {
+    public String getCompress() {
         return frameProcessor.getCompress();
     }
 
-    public void setCompress(Compress compress) {
+    public void setCompress(String compress) {
         frameProcessor.setCompress(compress);
     }
 }

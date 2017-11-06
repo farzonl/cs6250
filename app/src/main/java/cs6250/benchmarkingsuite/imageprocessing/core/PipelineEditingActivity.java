@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import org.apache.commons.compress.compressors.CompressorStreamFactory;
+
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
@@ -23,7 +25,6 @@ import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.server.Compress;
 
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
@@ -43,7 +44,7 @@ public class PipelineEditingActivity extends Activity {
 
     // Current pipeline
     ArrayList<Effect> effects;
-    ArrayList<Compress> compressions;
+    ArrayList<String> compressions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,37 +100,37 @@ public class PipelineEditingActivity extends Activity {
         // Add in new compressions here
         RadioButton buttonSnappyCompression = new RadioButton(this);
         buttonSnappyCompression.setText("Snappy");
-        buttonSnappyCompression.setTag(Compress.SNAPPY);
+        buttonSnappyCompression.setTag(CompressorStreamFactory.SNAPPY_FRAMED);
         compressRadioGroup.addView(buttonSnappyCompression);
 
         RadioButton buttonGzipCompression = new RadioButton(this);
         buttonGzipCompression.setText("gzip");
-        buttonGzipCompression.setTag(Compress.GZIP);
+        buttonGzipCompression.setTag(CompressorStreamFactory.GZIP);
         compressRadioGroup.addView(buttonGzipCompression);
 
         RadioButton buttonDeflateCompression = new RadioButton(this);
         buttonDeflateCompression.setText("DEFLATE");
-        buttonDeflateCompression.setTag(Compress.DELFATE);
+        buttonDeflateCompression.setTag(CompressorStreamFactory.DEFLATE);
         compressRadioGroup.addView(buttonDeflateCompression);
 
         RadioButton buttonBzip2Compression = new RadioButton(this);
         buttonBzip2Compression.setText("bzip2");
-        buttonBzip2Compression.setTag(Compress.BZIP2);
+        buttonBzip2Compression.setTag(CompressorStreamFactory.BZIP2);
         compressRadioGroup.addView(buttonBzip2Compression);
 
         RadioButton buttonPack200Compression = new RadioButton(this);
         buttonPack200Compression.setText("Pack200");
-        buttonPack200Compression.setTag(Compress.PACK200);
+        buttonPack200Compression.setTag(CompressorStreamFactory.PACK200);
         compressRadioGroup.addView(buttonPack200Compression);
 
         RadioButton buttonLz4Compression = new RadioButton(this);
         buttonLz4Compression.setText("LZ4");
-        buttonLz4Compression.setTag(Compress.LZ4);
+        buttonLz4Compression.setTag(CompressorStreamFactory.LZ4_FRAMED);
         compressRadioGroup.addView(buttonLz4Compression);
 
         RadioButton buttonZstdCompression = new RadioButton(this);
         buttonZstdCompression.setText("Zstandard");
-        buttonZstdCompression.setTag(Compress.ZSTD);
+        buttonZstdCompression.setTag("zstd");
         compressRadioGroup.addView(buttonZstdCompression);
 
         compressRadioGroup.setOnCheckedChangeListener(new AddCompressionListener());
@@ -143,7 +144,7 @@ public class PipelineEditingActivity extends Activity {
         }
 
         // Get the effects from the previous processing event.
-        compressions = (ArrayList<Compress>) bundle.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
+        compressions = (ArrayList<String>) bundle.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
         if (compressions == null) {
             Log.v(TAG, "compressions list is null");
             compressions = new ArrayList<>();
@@ -174,9 +175,9 @@ public class PipelineEditingActivity extends Activity {
             newButton.setOnClickListener(new RemoveEffectListener());
             pipelineLinearLayout.addView(newButton);
         }
-        for (Compress c : compressions) {
+        for (String c : compressions) {
             Button newButton = new Button(this);
-            newButton.setText(c.toString());
+            newButton.setText(c);
             newButton.setOnClickListener(new RemoveCompressionListener());
             compressesLinearLayout.addView(newButton);
         }
@@ -244,7 +245,7 @@ public class PipelineEditingActivity extends Activity {
     private class AddCompressionListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
-            Compress newCompression = null;
+            String newCompression = null;
             if (i == -1) {
                 // Compress choice cleared
                 if (compressesLinearLayout.getChildCount() > 0) {
@@ -257,7 +258,7 @@ public class PipelineEditingActivity extends Activity {
             Button newButton = new Button(radioGroup.getContext());
             RadioButton rb = radioGroup.findViewById(i);
             try {
-                newCompression = (Compress) rb.getTag();
+                newCompression = (String) rb.getTag();
             } catch (Exception e) {
                 Log.e(TAG, "AddCompressionListener" + e.toString());
             }
