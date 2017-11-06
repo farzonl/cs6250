@@ -2,9 +2,6 @@ package cs6250.benchmarkingsuite.imageprocessing.pipeline;
 
 import android.util.Log;
 
-import com.github.luben.zstd.ZstdInputStream;
-import com.github.luben.zstd.ZstdOutputStream;
-
 import org.apache.avro.AvroRemoteException;
 import org.apache.avro.ipc.Callback;
 import org.apache.commons.compress.compressors.CompressorException;
@@ -135,11 +132,7 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
         ByteArrayOutputStream baos = getOutputBuffer(uncompressedData.capacity());
         OutputStream outputStream = null;
         try {
-            if (compress.equals("zstd")) {
-                outputStream = new ZstdOutputStream(baos);
-            } else {
-                outputStream = csf.createCompressorOutputStream(compress, baos);
-            }
+            outputStream = csf.createCompressorOutputStream(compress, baos);
             outputStream.write(uncompressedData.array());
         } catch (IOException ioe) {
             Log.e("CloudFrameProcessor", "Error compressing", ioe);
@@ -147,6 +140,7 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
             Log.e("CloudFrameProcessor", "Unknown compressor", ce);
         } finally {
             if (outputStream != null) {
+                // TODO comment out?
                 outputStream.close();
             }
         }
@@ -158,11 +152,7 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
         InputStream inputStream = null;
         ByteBuffer toReturn;
         try {
-            if (compress.equals("zstd")) {
-                inputStream = new ZstdInputStream(bais);
-            } else {
-                inputStream = csf.createCompressorInputStream(compress, bais);
-            }
+            inputStream = csf.createCompressorInputStream(compress, bais);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
