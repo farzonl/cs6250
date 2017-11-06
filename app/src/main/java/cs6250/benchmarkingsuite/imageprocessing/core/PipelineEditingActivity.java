@@ -128,11 +128,6 @@ public class PipelineEditingActivity extends Activity {
         buttonLz4Compression.setTag(CompressorStreamFactory.LZ4_FRAMED);
         compressRadioGroup.addView(buttonLz4Compression);
 
-        RadioButton buttonZstdCompression = new RadioButton(this);
-        buttonZstdCompression.setText("Zstandard");
-        buttonZstdCompression.setTag("zstd");
-        compressRadioGroup.addView(buttonZstdCompression);
-
         compressRadioGroup.setOnCheckedChangeListener(new AddCompressionListener());
 
         // Get the effects from the previous processing event.
@@ -162,8 +157,8 @@ public class PipelineEditingActivity extends Activity {
             portTextBox.setText(Integer.toString(portNumber));
         }
 
-        //ipTextBox.setText("128.61.2.119", TextView.BufferType.EDITABLE);
-        //portTextBox.setText("20001", TextView.BufferType.EDITABLE);
+        ipTextBox.setText("128.61.92.187");
+        portTextBox.setText("20001");
 
         enableCloud.setChecked(cloudInstance.shouldUseCloud());
         onOffloadChecked(enableCloud);
@@ -180,6 +175,7 @@ public class PipelineEditingActivity extends Activity {
             newButton.setText(c);
             newButton.setOnClickListener(new RemoveCompressionListener());
             compressesLinearLayout.addView(newButton);
+            compressRadioGroup.check(compressRadioGroup.findViewWithTag(c).getId());
         }
     }
 

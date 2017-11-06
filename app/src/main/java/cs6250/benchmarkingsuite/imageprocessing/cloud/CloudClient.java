@@ -52,43 +52,64 @@ public class CloudClient implements Runnable {
 	}
 
 	public void addGrayscaleEffect() throws org.apache.avro.AvroRemoteException {
-		client.addGrayscaleEffect();
+		if (client != null) {
+			client.addGrayscaleEffect();
+		}
+
 	}
 
 	public void addIdentityEffect() throws org.apache.avro.AvroRemoteException {
-		client.addIdentityEffect();
+		if (client != null) {
+			client.addIdentityEffect();
+		}
 	}
 
 	public void addCartoonEffect() throws org.apache.avro.AvroRemoteException {
-		client.addCartoonEffect();
+		if (client != null) {
+			client.addCartoonEffect();
+		}
 	}
 
 	public void addFaceDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		client.addFaceDetectionEffect();
+		if (client != null) {
+			client.addFaceDetectionEffect();
+		}
 	}
 
 	public void addMaskEffect() throws org.apache.avro.AvroRemoteException {
-		client.addMaskEffect();
+		if (client != null) {
+			client.addMaskEffect();
+		}
 	}
 
 	public void addMotionDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		client.addMotionDetectionEffect();
+		if (client != null) {
+			client.addMotionDetectionEffect();
+		}
 	}
 
 	public void addCheckerBoardDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		client.addCheckerBoardDetectionEffect();
+		if (client != null) {
+			client.addCheckerBoardDetectionEffect();
+		}
 	}
 
     public void addFrames(List<ByteBuffer> frames, org.apache.avro.ipc.Callback<List<ByteBuffer>> callback) throws java.io.IOException {
-    	client.addFrames(frames, callback);
+		if (client != null) {
+			client.addFrames(frames, callback);
+		}
     }
 
 	public void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, String algorithm, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException {
-		client.addCompressedFrames(frames, algorithm, callback);
+		if (client != null) {
+			client.addCompressedFrames(frames, algorithm, callback);
+		}
 	}
 
     public void clearEffects() throws org.apache.avro.AvroRemoteException {
-    	client.clearEffects();
+		if (client != null) {
+			client.clearEffects();
+		}
     }
 }
 
