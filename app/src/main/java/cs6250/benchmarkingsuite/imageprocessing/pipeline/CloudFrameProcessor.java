@@ -7,18 +7,8 @@ import com.github.luben.zstd.ZstdOutputStream;
 
 import org.apache.avro.AvroRemoteException;
 import org.apache.avro.ipc.Callback;
-import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
-import org.apache.commons.compress.compressors.deflate.DeflateCompressorInputStream;
-import org.apache.commons.compress.compressors.deflate.DeflateCompressorOutputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
-import org.apache.commons.compress.compressors.lz4.FramedLZ4CompressorInputStream;
-import org.apache.commons.compress.compressors.lz4.FramedLZ4CompressorOutputStream;
-import org.apache.commons.compress.compressors.pack200.Pack200CompressorInputStream;
-import org.apache.commons.compress.compressors.pack200.Pack200CompressorOutputStream;
-import org.apache.commons.compress.compressors.snappy.FramedSnappyCompressorInputStream;
-import org.apache.commons.compress.compressors.snappy.FramedSnappyCompressorOutputStream;
+import org.apache.commons.compress.compressors.CompressorException;
+import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.opencv.core.Mat;
 
 import java.io.ByteArrayInputStream;
@@ -40,7 +30,6 @@ import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.IdentityEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.server.Compress;
 
 /**
  * Created by farzon on 10/14/17.
@@ -52,14 +41,16 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
     private UncompressedListener uncompressedListener;
     private CompressedListener compressedListener;
     private ByteArrayOutputStream outputBuffer;
-    private Compress compress;
+    private String compress;
     private static final int DEFAULT_BUFFER_SIZE = 64 * 1024;
+    private CompressorStreamFactory csf;
 
     public CloudFrameProcessor(EffectTask[] effects) {
         super(effects);
         uncompressedListener = new UncompressedListener();
         compressedListener = new CompressedListener();
-        compress = Compress.UNKNOWN;
+        compress = "";
+        csf = new CompressorStreamFactory();
     }
 
     @Override
@@ -71,11 +62,11 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
         }
     }
 
-    public Compress getCompress() {
+    public String getCompress() {
         return compress;
     }
 
-    public void setCompress(Compress compress) {
+    public void setCompress(String compress) {
         this.compress = compress;
     }
 
@@ -83,7 +74,7 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
         numFrames.incrementAndGet();
         ByteBuffer pixels = frame.getAsPngByteBuffer();
         List<ByteBuffer> frameBuffer = new ArrayList<>();
-        if (compress != null && compress != Compress.UNKNOWN) {
+        if (compress != null && !compress.isEmpty()) {
             try {
                 frameBuffer.add(compress(pixels, compress));
                 CloudClientSingelton.getInstance().cloudClient.addCompressedFrames(frameBuffer, compress, compressedListener);
@@ -140,80 +131,38 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
         }
     }
 
-    private ByteBuffer compress(ByteBuffer uncompressedData, Compress c) throws IOException {
+    private ByteBuffer compress(ByteBuffer uncompressedData, String compress) throws IOException {
         ByteArrayOutputStream baos = getOutputBuffer(uncompressedData.capacity());
         OutputStream outputStream = null;
-        switch (c) {
-            case BZIP2:
-                outputStream = new BZip2CompressorOutputStream(baos);
-                break;
-            case LZ4:
-                outputStream = new FramedLZ4CompressorOutputStream(baos);
-                break;
-            case GZIP:
-                outputStream = new GzipCompressorOutputStream(baos);
-                break;
-            case SNAPPY:
-                outputStream = new FramedSnappyCompressorOutputStream(baos);
-                break;
-            case DELFATE:
-                outputStream = new DeflateCompressorOutputStream(baos);
-                break;
-            case PACK200:
-                outputStream = new Pack200CompressorOutputStream(baos);
-                break;
-            case ZSTD:
-                outputStream = new ZstdOutputStream(baos);
-            case UNKNOWN:
-            default:
-                Log.e("CloudFrameProcessor", "Unknown compressor: " + c.toString());
-                System.exit(-1);
-        }
-
         try {
+            if (compress.equals("zstd")) {
+                outputStream = new ZstdOutputStream(baos);
+            } else {
+                outputStream = csf.createCompressorOutputStream(compress, baos);
+            }
             outputStream.write(uncompressedData.array());
         } catch (IOException ioe) {
             Log.e("CloudFrameProcessor", "Error compressing", ioe);
+        } catch (CompressorException ce) {
+            Log.e("CloudFrameProcessor", "Unknown compressor", ce);
         } finally {
-            outputStream.close();
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
-
         return ByteBuffer.wrap(baos.toByteArray());
     }
 
-    private ByteBuffer decompress(ByteBuffer compressedData, Compress c) throws IOException {
+    private ByteBuffer decompress(ByteBuffer compressedData, String compress) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(compressedData.array());
         InputStream inputStream = null;
-        switch (c) {
-            case BZIP2:
-                inputStream = new BZip2CompressorInputStream(bais);
-                break;
-            case LZ4:
-                inputStream = new FramedLZ4CompressorInputStream(bais);
-                break;
-            case GZIP:
-                inputStream = new GzipCompressorInputStream(bais);
-                break;
-            case SNAPPY:
-                inputStream = new FramedSnappyCompressorInputStream(bais);
-                break;
-            case DELFATE:
-                inputStream = new DeflateCompressorInputStream(bais);
-                break;
-            case PACK200:
-                inputStream = new Pack200CompressorInputStream(bais);
-                break;
-            case ZSTD:
-                inputStream = new ZstdInputStream(bais);
-            case UNKNOWN:
-            default:
-                Log.e("CloudFrameProcessor", "Unknown decompressor: " + c.toString());
-                System.exit(-1);
-        }
-
         ByteBuffer toReturn;
-
         try {
+            if (compress.equals("zstd")) {
+                inputStream = new ZstdInputStream(bais);
+            } else {
+                inputStream = csf.createCompressorInputStream(compress, bais);
+            }
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
             byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
@@ -227,8 +176,13 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
         } catch (IOException ioe) {
             toReturn = null;
             Log.e("CloudFrameProcessor", "Error decompressing", ioe);
+        } catch (CompressorException ce) {
+            toReturn = null;
+            Log.e("CloudFrameProcessor", "Unknown Decompress", ce);
         } finally {
-            inputStream.close();
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
         return toReturn;
     }

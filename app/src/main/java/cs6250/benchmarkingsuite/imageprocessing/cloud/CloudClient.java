@@ -83,8 +83,8 @@ public class CloudClient implements Runnable {
     	client.addFrames(frames, callback);
     }
 
-	public void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, cs6250.benchmarkingsuite.imageprocessing.server.Compress algo, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException {
-		client.addCompressedFrames(frames, algo, callback);
+	public void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, String algorithm, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException {
+		client.addCompressedFrames(frames, algorithm, callback);
 	}
 
     public void clearEffects() throws org.apache.avro.AvroRemoteException {

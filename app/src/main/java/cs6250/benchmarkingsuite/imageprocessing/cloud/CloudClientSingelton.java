@@ -1,7 +1,5 @@
 package cs6250.benchmarkingsuite.imageprocessing.cloud;
 
-import cs6250.benchmarkingsuite.imageprocessing.server.Compress;
-
 /**
  * Created by farzon on 10/14/17.
  */

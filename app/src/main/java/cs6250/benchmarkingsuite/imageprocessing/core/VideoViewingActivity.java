@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 import cs6250.benchmarkingsuite.imageprocessing.pipeline.LocalEffectTask;
-import cs6250.benchmarkingsuite.imageprocessing.server.Compress;
 
 public class VideoViewingActivity extends Activity {
 
@@ -27,7 +26,7 @@ public class VideoViewingActivity extends Activity {
     ImageProcessor imageProcessor;
     // A list of effects that is kept in persistence in case the editing activity is canceled.
     ArrayList<Effect> effectList;
-    ArrayList<Compress> compressions;
+    ArrayList<String> compressions;
     // Menu items that can be selected from the menu.
     MenuItem mItemEditPipeline;
     MenuItem mItemClearPipeline;
@@ -129,7 +128,7 @@ public class VideoViewingActivity extends Activity {
 
                 Bundle b = data.getExtras();
                 effectList = (ArrayList<Effect>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects");
-                compressions = (ArrayList<Compress>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
+                compressions = (ArrayList<String>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
 
                 // Safety check
                 if (effectList == null) {
@@ -147,7 +146,7 @@ public class VideoViewingActivity extends Activity {
             for (Effect effect : effectList) {
                 imageProcessor.addEffect(new LocalEffectTask(effect));
             }
-            imageProcessor.setCompress(compressions.size() == 1 ? compressions.get(0) : Compress.UNKNOWN);
+            imageProcessor.setCompress(compressions.size() == 1 ? compressions.get(0) : "");
         }
     }
 }
