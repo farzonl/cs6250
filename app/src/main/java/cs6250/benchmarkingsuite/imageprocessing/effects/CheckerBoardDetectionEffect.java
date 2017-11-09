@@ -34,15 +34,12 @@ public class CheckerBoardDetectionEffect extends Effect {
 
     @Override
     public Mat applyTo(Mat frame) {
-        Bitmap chessboard = Storage.getChessboard();
-        Mat newFrame = new Mat(chessboard.getWidth(), chessboard.getHeight(), CvType.CV_8UC4);
-        Utils.bitmapToMat(chessboard, newFrame);
-        //Imgproc.cvtColor(newFrame, newFrame, Imgproc.COLOR_RGBA2RGB);
+        Mat chessboard = Storage.getChessboard();
 
         Size size = new Size(frame.cols() * 0.2, frame.rows() * 0.2);
-        resize(newFrame, newFrame, size);
+        resize(chessboard, chessboard, size);
         Mat pic = new Mat();
-        pic = newFrame.clone();
+        pic = chessboard.clone();
 
 
         Mat gray = new Mat();

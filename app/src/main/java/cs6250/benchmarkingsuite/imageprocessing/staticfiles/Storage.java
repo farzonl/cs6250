@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.objdetect.CascadeClassifier;
@@ -19,25 +21,23 @@ import java.util.List;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
-public class Storage {
+public final class Storage {
     private Context ctx;
-    private static Bitmap bmp;
-    private static Bitmap chessboard;
-    private static Storage object;
+    private static Mat mask;
+    private static Mat chessboard;
+
+    //private static Storage object;
     private static CascadeClassifier cascadeClassifier;
 
-    private static BackgroundSubtractorMOG2 mog;
-
-    public static BackgroundSubtractorMOG2 getBackgroundSubtractorMOG2() {
-        mog = Video.createBackgroundSubtractorMOG2();
-        mog.setDetectShadows(false);
-        return mog;
-    }
-
-    private Storage(Context ctx) {
+    public Storage(Context ctx) {
         this.ctx = ctx;
-        //bmp = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.carnivalmask);
-        chessboard = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.chessboard);
+        Bitmap bmpMask = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.sunglasses);
+        mask = new Mat(bmpMask.getWidth(), bmpMask.getHeight(), CvType.CV_8UC4);
+        Utils.bitmapToMat(bmpMask, mask);
+
+//        Bitmap bmpChessboard = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.chessboard);
+//        chessboard = new Mat(bmpChessboard.getWidth(), bmpChessboard.getHeight(), CvType.CV_8UC4);
+//        Utils.bitmapToMat(bmpChessboard, chessboard);
 
         try {
             // Copy the resource into a temp file so OpenCV can load it
@@ -61,19 +61,23 @@ public class Storage {
             Log.e("OpenCVActivity", "Error loading cascade", e);
         }
     }
-
+/*
     public static void initStorage(Context ctx) {
         if (object == null) {
             object = new Storage(ctx);
         }
     }
 
+*/
     public static CascadeClassifier getCascadeClassifier() {
         return cascadeClassifier;
     }
 
-    public static Bitmap getbmp() {
-        return bmp;
+    public static Mat getMask() {
+        return mask;
     }
-    public static Bitmap getChessboard() { return chessboard;}
+
+    public static Mat getChessboard() {
+        return chessboard;
+    }
 }

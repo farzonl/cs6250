@@ -12,10 +12,14 @@ import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 ;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +31,8 @@ import android.widget.LinearLayout;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 /**
@@ -83,7 +89,6 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		ipTextBox = this.findViewById(R.id.ip_address);
 		portTextBox = this.findViewById(R.id.PortNumber);
 		ipTextBox.setText("128.61.2.119", TextView.BufferType.EDITABLE);
-
 		portTextBox.setText("20001", TextView.BufferType.EDITABLE);
 
 		if(effects == null) {

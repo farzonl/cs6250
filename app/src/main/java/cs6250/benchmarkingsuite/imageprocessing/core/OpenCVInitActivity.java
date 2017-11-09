@@ -90,7 +90,7 @@ public class OpenCVInitActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Storage.initStorage(getApplicationContext());
+//        Storage str = new Storage(getApplicationContext());
 //        MovementDetector.initMovementDetector();
 
         Log.i(TAG, "Trying to load OpenCV library");
