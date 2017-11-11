@@ -39,6 +39,14 @@ public class CartoonEffect extends Effect {
 
         Core.bitwise_and(dstMat, imgEdge, res);
         Imgproc.cvtColor(res, res, Imgproc.COLOR_RGB2RGBA);
+
+        frame.release();
+        dstBlur.release();
+        imgEdge.release();
+        imgGray.release();
+
+        System.gc();
+        System.runFinalization();
         return res;
     }
 

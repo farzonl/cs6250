@@ -1,15 +1,14 @@
 package com.tzutalin.dlib;
 
+import android.content.Context;
 import android.os.Environment;
 
 import java.io.File;
 
-/**
- * Created by darrenl on 2016/4/22.
- */
 public final class Constants {
-    private Constants() {
-        // Constants should be prive
+    private static Constants object;
+
+    public Constants() {
     }
 
     /**
@@ -20,5 +19,11 @@ public final class Constants {
         File sdcard = Environment.getExternalStorageDirectory();
         String targetPath = sdcard.getAbsolutePath() + File.separator + "shape_predictor_68_face_landmarks.dat";
         return targetPath;
+    }
+
+    public static void initConstants(Context ctx) {
+        if (object == null) {
+            object = new Constants();
+        }
     }
 }

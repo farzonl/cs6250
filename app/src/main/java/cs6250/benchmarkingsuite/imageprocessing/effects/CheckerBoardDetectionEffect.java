@@ -97,24 +97,17 @@ public class CheckerBoardDetectionEffect extends Effect {
         Mat warp_mat = Imgproc.getPerspectiveTransform(pointsIn, pointsRes);
 
         Mat blank = Mat.zeros(frame.size(), frame.type());
-        // Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
-        // Mat blank = Mat.zeros(frame.size(),frame.type());
-        // Mat blank = new Mat(frame.size(),frame.depth()); //NOTE: this causes
-        // mat channel errors
-        // Mat blank = frame.clone();
-        //blank.setTo(new Scalar(255));
 
         Core.bitwise_not(blank,blank);
         Mat dst = Mat.zeros(frame.size(), frame.type());
         Imgproc.warpPerspective(pic, dst, warp_mat, pic.size());
         Imgproc.warpPerspective(blank, blank, warp_mat, blank.size());
+
         Core.bitwise_not(blank,blank);
         Core.bitwise_and(blank, frame,frame);
-        //Core.add(frame, dst, frame);
+
         Core.bitwise_or(frame, dst, frame);
 
-        //Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2RGB);
-        // Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGB2RGBA);
         return frame;
     }
 

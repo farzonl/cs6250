@@ -1,6 +1,5 @@
 package cs6250.benchmarkingsuite.imageprocessing.effects;
 
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
@@ -10,17 +9,9 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
-import java.io.File;
-import java.io.InputStream;
-
-import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 
-import static android.R.attr.height;
-import static android.R.attr.width;
-
-public class FaceDetectionEffect extends Effect {
-
+public class CarDetectionEffect extends  Effect {
     @Override
     public Mat applyTo(Mat frame) {
         Mat grayscaleImage = new Mat(frame.cols(), frame.rows(), CvType.CV_8UC4);
@@ -53,6 +44,7 @@ public class FaceDetectionEffect extends Effect {
     }
 
     public String toString() {
-        return "Face Detection";
+        return "Car Detection";
     }
+
 }

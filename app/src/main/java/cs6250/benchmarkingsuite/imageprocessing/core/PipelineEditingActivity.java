@@ -4,22 +4,19 @@ import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceLandMarksEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceSwapEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 ;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,10 +27,6 @@ import android.widget.RadioButton;
 import android.widget.LinearLayout;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
@@ -53,10 +46,9 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	Button buttonCartoon;
 	Button buttonFaceDetection;
 	Button buttonMask;
-	Button buttonColorDetector;
 	Button buttonMotionDetection;
-	Button buttonCheckerDetection;
-
+	Button buttonFaceLandmarks;
+	Button buttonFaceSwap;
 
 	//Static Buttons
 	Button buttonClearPipeline;
@@ -71,11 +63,6 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	//Current pipeline
 	ArrayList<Effect> effects;
 
-	//Color Detector
-
-	//Chessboard Detector
-	Mat pic;
-	private View mPic;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -141,14 +128,18 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 				newEffect = new FaceDetectionEffect();
 			}
 
+			if (v == buttonFaceLandmarks) {
+				newEffect = new FaceLandMarksEffect();
+			}
+
 			if (v == buttonMotionDetection) {
 				newEffect = new MotionDetectionEffect();
 			}
 
-			if (v == buttonCheckerDetection) {
-				newEffect = new CheckerBoardDetectionEffect();
+			if (v == buttonFaceSwap) {
+				newEffect = new FaceSwapEffect();
 			}
-			
+
 			if(newEffect != null) {
 				effects.add(newEffect);
 				
@@ -206,25 +197,25 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		buttonFaceDetection.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonFaceDetection);
 
+		buttonFaceLandmarks = new Button(this);
+		buttonFaceLandmarks.setText("FaceLM");
+		buttonFaceLandmarks.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonFaceLandmarks);
+
 		buttonMask = new Button(this);
 		buttonMask.setText("Mask");
 		buttonMask.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonMask);
-
-		buttonColorDetector = new Button(this);
-		buttonColorDetector.setText("Color");
-		buttonColorDetector.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonColorDetector);
 
 		buttonMotionDetection = new Button(this);
 		buttonMotionDetection.setText("Motion");
 		buttonMotionDetection.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonMotionDetection);
 
-		buttonCheckerDetection = new Button(this);
-		buttonCheckerDetection.setText("Checker");
-		buttonCheckerDetection.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonCheckerDetection);
+		buttonFaceSwap = new Button(this);
+		buttonFaceSwap.setText("FaceSwapEffect");
+		buttonFaceSwap.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonFaceSwap);
 
 
 		//Static Buttons

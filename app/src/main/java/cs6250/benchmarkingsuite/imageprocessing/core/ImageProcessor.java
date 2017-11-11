@@ -68,8 +68,10 @@ public class ImageProcessor implements CvCameraViewListener {
 			Mat mat = new Mat();
 			Core.copyMakeBorder(newFrame, mat, 0, 0, diff/2, diff - diff/2, Core.BORDER_CONSTANT, value);
 			newFrame = mat;
+			mat.release();
 		}
-		
+
+		inputFrame.release();
 		return newFrame;
 	}
 }

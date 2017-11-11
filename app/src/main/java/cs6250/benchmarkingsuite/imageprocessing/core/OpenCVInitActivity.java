@@ -20,6 +20,9 @@ import android.support.v4.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
+import com.tzutalin.dlib.Constants;
+
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.CarDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 
 /**
@@ -90,7 +93,10 @@ public class OpenCVInitActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-//        Storage str = new Storage(getApplicationContext());
+        Storage str = new Storage(getApplicationContext());
+        CarDetectionClassifier cDetectionClassifier = new CarDetectionClassifier(getApplicationContext());
+
+        Constants cs = new Constants();
 //        MovementDetector.initMovementDetector();
 
         Log.i(TAG, "Trying to load OpenCV library");
