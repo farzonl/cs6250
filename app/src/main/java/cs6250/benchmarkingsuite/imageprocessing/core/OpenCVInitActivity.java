@@ -26,6 +26,7 @@ import cs6250.benchmarkingsuite.imageprocessing.staticfiles.CarDetectionClassifi
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.CatDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.EyeDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceSwapResources;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.NoseDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.MouthDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
@@ -106,6 +107,8 @@ public class OpenCVInitActivity extends Activity {
         NoseDetectionClassifier noseDetectionClassifier = new NoseDetectionClassifier(getApplicationContext());
         CarDetectionClassifier carDetectionClassifier = new CarDetectionClassifier(getApplicationContext());
         CatDetectionClassifier catDetectionClassifier = new CatDetectionClassifier(getApplicationContext());
+
+        FaceSwapResources faceSwapResources = new FaceSwapResources(getApplicationContext());
 
         Constants cs = new Constants();
 //        MovementDetector.initMovementDetector();

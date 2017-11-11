@@ -80,9 +80,6 @@ public class SimpleMaskEffect extends Effect {
 
         grayscaleImage.release();
         faces.release();
-
-        System.gc();
-        System.runFinalization();
         return frame;
     }
 

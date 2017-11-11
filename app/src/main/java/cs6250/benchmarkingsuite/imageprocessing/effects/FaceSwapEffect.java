@@ -1,6 +1,7 @@
 package cs6250.benchmarkingsuite.imageprocessing.effects;
 
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.util.Log;
 
 import com.tzutalin.dlib.Constants;
@@ -9,34 +10,24 @@ import com.tzutalin.dlib.VisionDetRet;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfInt;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.objdetect.CascadeClassifier;
-import org.opencv.photo.Photo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceSwapResources;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 
-import static android.R.attr.height;
-import static org.opencv.core.Core.addWeighted;
-import static org.opencv.core.Core.bitwise_and;
-
-public class MaskEffect extends Effect {
+public class FaceSwapEffect extends Effect{
     private Mat face;
 
     @Override
     public Mat applyTo(Mat frame) {
-        Mat mask = Storage.getMask();
+        Mat mask = FaceSwapResources.getMask();
+        Mat elli = FaceSwapResources.getElli();
 
         Bitmap bmp = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(frame, bmp);
@@ -53,17 +44,7 @@ public class MaskEffect extends Effect {
 
         for (VisionDetRet ret : results) {
 
-//            tl = new org.opencv.core.Point(ret.getLeft(), ret.getTop());
-//            br = new org.opencv.core.Point(ret.getRight(), ret.getBottom());
-//
-//            Log.e("TL", " "+ ret.getTop() + " " + ret.getLeft());
-//            Log.e("BR", " " + ret.getBottom() + " "+ ret.getRight());
-
-//            Imgproc.rectangle(frame, tl, br, new Scalar(0, 255, 0, 255), 8);
-//            Imgproc.putText(frame, " Face" , tl,
-//                    Core.FONT_HERSHEY_PLAIN, 3 , textColor);
-
-            ArrayList<android.graphics.Point> landmarks = ret.getFaceLandmarks();
+            ArrayList<Point> landmarks = ret.getFaceLandmarks();
             Log.e("Length", " " + landmarks.size());
 
             int left = 1000;
@@ -88,22 +69,41 @@ public class MaskEffect extends Effect {
             int width = Math.abs((int) (br.x - tl.x));
             int height = Math.abs((int) (br.y - tl.y));
 
+            //Resize mask
             Size size = new Size(width, height);
             Imgproc.resize(mask, maskResize, size);
 
             Mat face = maskResize.clone();
 
+            //Copy prof face to the matrix
             frame.rowRange(top, bottom).colRange(left, right).copyTo(face.rowRange(0, height).colRange(0, width));
 
-            Mat res = maskResize.clone();
+            //bitwise_and prof's face and mask
+            Mat imgInv = maskResize.clone();
+            Core.bitwise_and(face, maskResize, imgInv);
 
-            Log.e("Result", "" + res.width() + " " + res.height());
+            //Resize Elli's Img
+            Mat elliResize = new Mat();
+            Imgproc.resize(elli, elliResize, size);
 
-            Core.bitwise_and(face, maskResize, res);
+            //bitwise_not resizemask
+            Mat maskResizeInvert = new Mat();
+            Core.bitwise_not(maskResize, maskResizeInvert);
 
+            //bitwise_and maskResizeInvert and elli
+            Mat elliInvert = new Mat();
+            Core.bitwise_and(maskResizeInvert, elliResize, elliInvert);
+
+            //bitwise_or imgInv and elliInv
+            Mat res = new Mat();
+            Core.bitwise_or(imgInv, elliInvert, res);
+
+            //Copy to the original image
             res.copyTo(frame.rowRange(top, bottom).colRange(left, right));
 
             res.release();
+            elliInvert.release();
+            elliResize.release();
             maskResize.release();
             face.release();
         }
@@ -115,6 +115,6 @@ public class MaskEffect extends Effect {
 
 
     public String toString() {
-        return "MaskEffect";
+        return "Face Swap";
     }
 }

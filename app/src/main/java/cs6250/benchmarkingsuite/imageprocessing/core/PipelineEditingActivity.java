@@ -10,6 +10,7 @@ import cs6250.benchmarkingsuite.imageprocessing.effects.EyeDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceFeatureDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceLandMarksEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceSwapEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 
@@ -63,6 +64,7 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	//Dlib
 	Button buttonFaceLandmarks;
 	Button buttonMask;
+	Button buttonFaceSwap;
 
 	//Static Buttons
 	Button buttonClearPipeline;
@@ -173,6 +175,10 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 				newEffect = new MaskEffect();
 			}
 
+			if (v == buttonFaceSwap) {
+				newEffect = new FaceSwapEffect();
+			}
+
 			if(newEffect != null) {
 				effects.add(newEffect);
 				
@@ -269,6 +275,11 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		buttonMask.setText("Mask");
 		buttonMask.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonMask);
+
+		buttonFaceSwap = new Button(this);
+		buttonFaceSwap.setText("Face Swap");
+		buttonFaceSwap.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonFaceSwap);
 
 
 		//Static Buttons

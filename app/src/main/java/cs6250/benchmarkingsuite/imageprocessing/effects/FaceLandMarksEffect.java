@@ -58,9 +58,6 @@ public class FaceLandMarksEffect extends Effect {
         }
 
         faceDet.release();
-        System.gc();
-        System.runFinalization();
-
         return frame;
     }
 
