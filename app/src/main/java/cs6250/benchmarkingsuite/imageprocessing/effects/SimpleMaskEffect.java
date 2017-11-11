@@ -13,11 +13,8 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
-
-/**
- * Created by thang911 on 11/10/17.
- */
 
 public class SimpleMaskEffect extends Effect {
     private Mat face;
@@ -34,7 +31,7 @@ public class SimpleMaskEffect extends Effect {
 
         int absoluteFaceSize = (int) (frame.rows() * 0.2);
 
-        CascadeClassifier cascadeClassifier = Storage.getCascadeClassifier();
+        CascadeClassifier cascadeClassifier = FaceDetectionClassifier.getCascadeClassifier();
 
         if (cascadeClassifier != null) {
             cascadeClassifier.detectMultiScale(grayscaleImage, faces, 1.1, 2, 2,
@@ -90,6 +87,6 @@ public class SimpleMaskEffect extends Effect {
     }
 
     public String toString() {
-        return "MaskEffect";
+        return "Simple Mask Effect";
     }
 }

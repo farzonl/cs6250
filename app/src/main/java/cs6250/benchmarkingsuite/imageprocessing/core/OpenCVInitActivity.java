@@ -23,6 +23,11 @@ import android.content.pm.PackageManager;
 import com.tzutalin.dlib.Constants;
 
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.CarDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.CatDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.EyeDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.NoseDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.MouthDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 
 /**
@@ -94,7 +99,13 @@ public class OpenCVInitActivity extends Activity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Storage str = new Storage(getApplicationContext());
-        CarDetectionClassifier cDetectionClassifier = new CarDetectionClassifier(getApplicationContext());
+
+        FaceDetectionClassifier faceDetectionClassifier = new FaceDetectionClassifier(getApplicationContext());
+        EyeDetectionClassifier eyeDetectionClassifier = new EyeDetectionClassifier(getApplicationContext());
+        MouthDetectionClassifier mouthDetectionClassifier = new MouthDetectionClassifier(getApplicationContext());
+        NoseDetectionClassifier noseDetectionClassifier = new NoseDetectionClassifier(getApplicationContext());
+        CarDetectionClassifier carDetectionClassifier = new CarDetectionClassifier(getApplicationContext());
+        CatDetectionClassifier catDetectionClassifier = new CatDetectionClassifier(getApplicationContext());
 
         Constants cs = new Constants();
 //        MovementDetector.initMovementDetector();

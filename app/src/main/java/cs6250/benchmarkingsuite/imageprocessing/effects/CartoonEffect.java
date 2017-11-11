@@ -45,8 +45,6 @@ public class CartoonEffect extends Effect {
         imgEdge.release();
         imgGray.release();
 
-        System.gc();
-        System.runFinalization();
         return res;
     }
 

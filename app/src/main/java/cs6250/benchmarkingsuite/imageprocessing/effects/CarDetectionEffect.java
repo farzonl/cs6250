@@ -9,6 +9,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.CarDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 
 public class CarDetectionEffect extends  Effect {
@@ -22,7 +23,7 @@ public class CarDetectionEffect extends  Effect {
 
         int absoluteFaceSize = (int) (frame.rows() * 0.2);
 
-        CascadeClassifier cascadeClassifier = Storage.getCascadeClassifier();
+        CascadeClassifier cascadeClassifier = CarDetectionClassifier.getCascadeClassifier();
 
         if (cascadeClassifier != null) {
             cascadeClassifier.detectMultiScale(grayscaleImage, faces, 1.1, 2, 2,
@@ -38,8 +39,6 @@ public class CarDetectionEffect extends  Effect {
         faces.release();
         grayscaleImage.release();
 
-        System.gc();
-        System.runFinalization();
         return frame;
     }
 

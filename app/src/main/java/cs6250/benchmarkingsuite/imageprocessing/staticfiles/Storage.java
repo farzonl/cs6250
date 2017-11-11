@@ -24,37 +24,14 @@ import cs6250.benchmarkingsuite.imageprocessing.R;
 public final class Storage {
     private Context ctx;
     private static Mat mask;
-    private static Mat chessboard;
 
     private static Storage object;
-    private static CascadeClassifier cascadeClassifier;
 
     public Storage(Context ctx) {
         this.ctx = ctx;
         Bitmap bmpMask = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.sunglasses);
         mask = new Mat(bmpMask.getWidth(), bmpMask.getHeight(), CvType.CV_8UC4);
         Utils.bitmapToMat(bmpMask, mask);
-
-        try {
-            // Copy the resource into a temp file so OpenCV can load it
-            InputStream is = ctx.getResources().openRawResource(R.raw.cars);
-            File cascadeDir = ctx.getDir("cascade", Context.MODE_PRIVATE);
-            File mCascadeFile = new File(cascadeDir, "cars.xml");
-            FileOutputStream os = new FileOutputStream(mCascadeFile);
-
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = is.read(buffer)) != -1) {
-                os.write(buffer, 0, bytesRead);
-            }
-            is.close();
-            os.close();
-
-            // Load the cascade classifier
-            cascadeClassifier = new CascadeClassifier(mCascadeFile.getAbsolutePath());
-        } catch (Exception e) {
-            Log.e("OpenCVActivity", "Error loading cascade", e);
-        }
     }
 
     public static void initStorage(Context ctx) {
@@ -63,15 +40,7 @@ public final class Storage {
         }
     }
 
-    public static CascadeClassifier getCascadeClassifier() {
-        return cascadeClassifier;
-    }
-
     public static Mat getMask() {
         return mask;
-    }
-
-    public static Mat getChessboard() {
-        return chessboard;
     }
 }

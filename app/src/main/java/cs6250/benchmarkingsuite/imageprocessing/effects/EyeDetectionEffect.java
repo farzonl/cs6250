@@ -10,18 +10,10 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
-import java.io.File;
-import java.io.InputStream;
-
-import cs6250.benchmarkingsuite.imageprocessing.R;
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.staticfiles.EyeDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
 
-import static android.R.attr.height;
-import static android.R.attr.width;
-
-public class FaceDetectionEffect extends Effect {
-
+public class EyeDetectionEffect extends  Effect {
     @Override
     public Mat applyTo(Mat frame) {
         Mat grayscaleImage = new Mat(frame.cols(), frame.rows(), CvType.CV_8UC4);
@@ -32,7 +24,7 @@ public class FaceDetectionEffect extends Effect {
 
         int absoluteFaceSize = (int) (frame.rows() * 0.2);
 
-        CascadeClassifier cascadeClassifier = FaceDetectionClassifier.getCascadeClassifier();
+        CascadeClassifier cascadeClassifier = EyeDetectionClassifier.getCascadeClassifier();
 
         if (cascadeClassifier != null) {
             cascadeClassifier.detectMultiScale(grayscaleImage, faces, 1.1, 2, 2,
@@ -47,7 +39,7 @@ public class FaceDetectionEffect extends Effect {
         Rect[] facesArray = faces.toArray();
         for (int i = 0; i < facesArray.length; i++) {
             Imgproc.rectangle(frame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
-            Imgproc.putText(frame, " Face" , facesArray[i].tl(),
+            Imgproc.putText(frame, " Eye" , facesArray[i].tl(),
                     Core.FONT_HERSHEY_PLAIN, 3 , textColor);
         }
 
@@ -58,6 +50,7 @@ public class FaceDetectionEffect extends Effect {
     }
 
     public String toString() {
-        return "Face Detection";
+        return "Eye Detection";
     }
+
 }

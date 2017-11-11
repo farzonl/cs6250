@@ -72,6 +72,8 @@ public class ImageProcessor implements CvCameraViewListener {
 		}
 
 		inputFrame.release();
+		System.gc();
+		System.runFinalization();
 		return newFrame;
 	}
 }

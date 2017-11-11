@@ -3,16 +3,20 @@ package cs6250.benchmarkingsuite.imageprocessing.core;
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CarDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CatDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.EyeDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceFeatureDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceLandMarksEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceSwapEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.NoseDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.MouthDetectionEffect;
 ;
 
 import android.app.Activity;
@@ -44,11 +48,21 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 	Button buttonNone;
 	Button buttonGrayScale;
 	Button buttonCartoon;
+
+	//Haar Cascade
+	Button buttonCarDetection;
+	Button buttonCatDetection;
+	Button buttonEyeDetection;
+	Button buttonNoseDetection;
+	Button buttonMouthDetection;
 	Button buttonFaceDetection;
-	Button buttonMask;
-	Button buttonMotionDetection;
+
+	//Full Face
+	Button FaceFeatureDetection;
+
+	//Dlib
 	Button buttonFaceLandmarks;
-	Button buttonFaceSwap;
+	Button buttonMask;
 
 	//Static Buttons
 	Button buttonClearPipeline;
@@ -116,28 +130,47 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 				newEffect = new GrayscaleEffect();
 			}
 
-			if (v == buttonMask) {
-				newEffect = new MaskEffect();
-			}
-
 			if (v == buttonCartoon) {
 				newEffect = new CartoonEffect();
+			}
+
+			//Haar Cascade
+			if (v == buttonCarDetection) {
+				newEffect = new CarDetectionEffect();
+			}
+
+			if (v == buttonCatDetection) {
+				newEffect = new CatDetectionEffect();
+			}
+
+			if (v == buttonMouthDetection) {
+				newEffect = new MouthDetectionEffect();
+			}
+
+			if (v == buttonNoseDetection) {
+				newEffect = new NoseDetectionEffect();
 			}
 
 			if (v == buttonFaceDetection) {
 				newEffect = new FaceDetectionEffect();
 			}
 
+			if (v == buttonEyeDetection) {
+				newEffect = new EyeDetectionEffect();
+			}
+
+			//Full Face Detection
+			if (v == FaceFeatureDetection) {
+				newEffect = new FaceFeatureDetectionEffect();
+			}
+
+			//Dlib
 			if (v == buttonFaceLandmarks) {
 				newEffect = new FaceLandMarksEffect();
 			}
 
-			if (v == buttonMotionDetection) {
-				newEffect = new MotionDetectionEffect();
-			}
-
-			if (v == buttonFaceSwap) {
-				newEffect = new FaceSwapEffect();
+			if (v == buttonMask) {
+				newEffect = new MaskEffect();
 			}
 
 			if(newEffect != null) {
@@ -192,10 +225,40 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		buttonCartoon.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonCartoon);
 
+		buttonCarDetection = new Button(this);
+		buttonCarDetection.setText("Car");
+		buttonCarDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonCarDetection);
+
+		buttonCatDetection = new Button(this);
+		buttonCatDetection.setText("Cat");
+		buttonCatDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonCatDetection);
+
+		buttonEyeDetection = new Button(this);
+		buttonEyeDetection.setText("Eye");
+		buttonEyeDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonEyeDetection);
+
+		buttonNoseDetection = new Button(this);
+		buttonNoseDetection.setText("Nose");
+		buttonNoseDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonNoseDetection);
+
+		buttonMouthDetection = new Button(this);
+		buttonMouthDetection.setText("Smile");
+		buttonMouthDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(buttonMouthDetection);
+
 		buttonFaceDetection = new Button(this);
 		buttonFaceDetection.setText("Face");
 		buttonFaceDetection.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonFaceDetection);
+
+		FaceFeatureDetection = new Button(this);
+		FaceFeatureDetection.setText("FaceFeatures");
+		FaceFeatureDetection.setOnClickListener(this);
+		effectsLinearLayout.addView(FaceFeatureDetection);
 
 		buttonFaceLandmarks = new Button(this);
 		buttonFaceLandmarks.setText("FaceLM");
@@ -206,16 +269,6 @@ public class PipelineEditingActivity extends Activity implements OnClickListener
 		buttonMask.setText("Mask");
 		buttonMask.setOnClickListener(this);
 		effectsLinearLayout.addView(buttonMask);
-
-		buttonMotionDetection = new Button(this);
-		buttonMotionDetection.setText("Motion");
-		buttonMotionDetection.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonMotionDetection);
-
-		buttonFaceSwap = new Button(this);
-		buttonFaceSwap.setText("FaceSwapEffect");
-		buttonFaceSwap.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonFaceSwap);
 
 
 		//Static Buttons
