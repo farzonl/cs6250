@@ -1,263 +1,296 @@
 package cs6250.benchmarkingsuite.imageprocessing.core;
 
-import java.util.ArrayList;
-
-import cs6250.benchmarkingsuite.imageprocessing.R;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
-
-import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
-;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewParent;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.LinearLayout;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import org.opencv.core.Mat;
+import org.apache.commons.compress.compressors.CompressorStreamFactory;
+
+import java.util.ArrayList;
+
+import cs6250.benchmarkingsuite.imageprocessing.R;
+import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
 
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
  */
-public class PipelineEditingActivity extends Activity implements OnClickListener {
-	
-	private final String TAG = "PipelineEditingActivity";
-	
-	//The effects view and the pipeline view.
-	LinearLayout effectsLinearLayout;
-	LinearLayout pipelineLinearLayout;
-	LinearLayout cloudEnableLayout;
+public class PipelineEditingActivity extends Activity {
 
-	//Effect buttons
-	Button buttonNone;
-	Button buttonGrayScale;
-	Button buttonCartoon;
-	Button buttonFaceDetection;
-	Button buttonMask;
-	Button buttonColorDetector;
-	Button buttonMotionDetection;
-	Button buttonCheckerDetection;
+    private final String TAG = "PipelineEditingActivity";
 
+    // Static UI elements
+    LinearLayout effectsLinearLayout;
+    LinearLayout pipelineLinearLayout;
+    RadioGroup compressRadioGroup;
+    LinearLayout compressesLinearLayout;
+    CheckBox enableCloud;
+    EditText ipTextBox;
+    EditText portTextBox;
 
-	//Static Buttons
-	Button buttonClearPipeline;
-	Button buttonCancel;
-	Button buttonOk;
-	RadioButton  CloudOnRBtn;
-	RadioButton  CloudOffRBtn;
+    // Current pipeline
+    ArrayList<Effect> effects;
+    ArrayList<String> compressions;
 
-	EditText ipTextBox;
-	EditText portTextBox;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_pipeline_editing);
 
-	//Current pipeline
-	ArrayList<Effect> effects;
+        // Gets the views from the layout
+        effectsLinearLayout = this.findViewById(R.id.effectsLinearLayout);
+        pipelineLinearLayout = this.findViewById(R.id.pipelinesLinearLayout);
+        compressRadioGroup = this.findViewById(R.id.compressRadioGroup);
+        compressesLinearLayout = this.findViewById(R.id.compressesLinearLayout);
+        ipTextBox = this.findViewById(R.id.ip_address);
+        portTextBox = this.findViewById(R.id.PortNumber);
+        enableCloud = findViewById(R.id.enableOffloading);
 
-	//Color Detector
+        // Add in New Effects here.
+        Button buttonGrayScale = new Button(this);
+        buttonGrayScale.setText("Grayscale");
+        buttonGrayScale.setTag(GrayscaleEffect.class);
+        buttonGrayScale.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonGrayScale);
 
-	//Chessboard Detector
-	Mat pic;
-	private View mPic;
+        Button buttonCartoon = new Button(this);
+        buttonCartoon.setText("Cartoon");
+        buttonCartoon.setTag(CartoonEffect.class);
+        buttonCartoon.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonCartoon);
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.activity_pipeline_editting);
-		//Gets the views from the layout
-		effectsLinearLayout = this.findViewById(R.id.effectsLinearLayout);
-		pipelineLinearLayout = this.findViewById(R.id.pipelinesLinearLayout);
-		cloudEnableLayout = this.findViewById(R.id.cloudEnableLayout);
-		effects = (ArrayList<Effect>) this.getIntent().getSerializableExtra("effects");
-		ipTextBox = this.findViewById(R.id.ip_address);
-		portTextBox = this.findViewById(R.id.PortNumber);
-		ipTextBox.setText("128.61.2.119", TextView.BufferType.EDITABLE);
+        Button buttonFaceDetection = new Button(this);
+        buttonFaceDetection.setText("Face");
+        buttonFaceDetection.setTag(FaceDetectionEffect.class);
+        buttonFaceDetection.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonFaceDetection);
 
-		portTextBox.setText("20001", TextView.BufferType.EDITABLE);
+        Button buttonMask = new Button(this);
+        buttonMask.setText("Mask");
+        buttonMask.setTag(MaskEffect.class);
+        buttonMask.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonMask);
 
-		if(effects == null) {
-			Log.e(TAG, "effects list is null");
-			effects = new ArrayList<Effect>();
-		}
-		
-		setupButtons();
-	}
+        Button buttonMotionDetection = new Button(this);
+        buttonMotionDetection.setText("Motion");
+        buttonMotionDetection.setTag(MotionDetectionEffect.class);
+        buttonMotionDetection.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonMotionDetection);
 
-	@Override
-	public void onClick(View v) {
-		ViewParent vp = v.getParent();
+        Button buttonCheckerDetection = new Button(this);
+        buttonCheckerDetection.setText("Checker");
+        buttonCheckerDetection.setTag(CheckerBoardDetectionEffect.class);
+        buttonCheckerDetection.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonCheckerDetection);
 
-		if(vp.equals(cloudEnableLayout))
-		{
-			if( v == CloudOnRBtn)
-			{
-				if(ipTextBox.length() > 7 || portTextBox.length() == 0)
-				{
-					CloudOffRBtn.setChecked(true);
-				}
-				else
-				{
-					String sIpText = ipTextBox.getText().toString();
-					String sPortText = portTextBox.getText().toString();
-					CloudClientSingelton.getInstance(sIpText, sPortText);
-				}
-			}
-		}
+        // Add in new compressions here
+        RadioButton buttonSnappyCompression = new RadioButton(this);
+        buttonSnappyCompression.setText("Snappy");
+        buttonSnappyCompression.setTag(CompressorStreamFactory.SNAPPY_FRAMED);
+        compressRadioGroup.addView(buttonSnappyCompression);
 
-		if(vp.equals(effectsLinearLayout)) {
-			Button newButton = new Button(this);
-			Effect newEffect = null;
-			
-			//Checks which effect button was pressed to add it to the pipeline
-			if (v == buttonGrayScale) {
-				newEffect = new GrayscaleEffect();
-			}
+        RadioButton buttonGzipCompression = new RadioButton(this);
+        buttonGzipCompression.setText("gzip");
+        buttonGzipCompression.setTag(CompressorStreamFactory.GZIP);
+        compressRadioGroup.addView(buttonGzipCompression);
 
-			if (v == buttonMask) {
-				newEffect = new MaskEffect();
-			}
+        RadioButton buttonDeflateCompression = new RadioButton(this);
+        buttonDeflateCompression.setText("DEFLATE");
+        buttonDeflateCompression.setTag(CompressorStreamFactory.DEFLATE);
+        compressRadioGroup.addView(buttonDeflateCompression);
 
-			if (v == buttonCartoon) {
-				newEffect = new CartoonEffect();
-			}
+        RadioButton buttonBzip2Compression = new RadioButton(this);
+        buttonBzip2Compression.setText("bzip2");
+        buttonBzip2Compression.setTag(CompressorStreamFactory.BZIP2);
+        compressRadioGroup.addView(buttonBzip2Compression);
 
-			if (v == buttonFaceDetection) {
-				newEffect = new FaceDetectionEffect();
-			}
+        RadioButton buttonPack200Compression = new RadioButton(this);
+        buttonPack200Compression.setText("Pack200");
+        buttonPack200Compression.setTag(CompressorStreamFactory.PACK200);
+        compressRadioGroup.addView(buttonPack200Compression);
 
-			if (v == buttonMotionDetection) {
-				newEffect = new MotionDetectionEffect();
-			}
+        RadioButton buttonLz4Compression = new RadioButton(this);
+        buttonLz4Compression.setText("LZ4");
+        buttonLz4Compression.setTag(CompressorStreamFactory.LZ4_FRAMED);
+        compressRadioGroup.addView(buttonLz4Compression);
 
-			if (v == buttonCheckerDetection) {
-				newEffect = new CheckerBoardDetectionEffect();
-			}
-			
-			if(newEffect != null) {
-				effects.add(newEffect);
-				
-				newButton.setText(newEffect.toString());
-				newButton.setOnClickListener(this);
-				pipelineLinearLayout.addView(newButton);
-			}
-		} else if(vp.equals(pipelineLinearLayout)) {
-			int index = pipelineLinearLayout.indexOfChild(v);
-			pipelineLinearLayout.removeViewAt(index);
-			effects.remove(index);
-		} else {
-			if(v == buttonClearPipeline) {
-				pipelineLinearLayout.removeAllViews();
-				effects.clear();
-			} else if(v == buttonCancel) {
-				this.setResult(RESULT_CANCELED);
-				this.finish();
-			} else if(v == buttonOk) {
-				if(CloudOnRBtn.isChecked())
-				{
-					String sIpText = ipTextBox.getText().toString();
-					String sPortText = portTextBox.getText().toString();
-					CloudClientSingelton.getInstance(sIpText, sPortText).setUseCloud(true);
-				}
-				if(CloudOffRBtn.isChecked())
-				{
-					CloudClientSingelton.getInstance().setUseCloud(false);
-				}
-				Intent result = new Intent();
-				result.putExtra("result", effects);
-				this.setResult(RESULT_OK, result);
-				this.finish();
-			}
-		}
-	}
-	
-	/**
-	 * Sets up the view of the effects that can be added to the pipeline.
-	 */
-	private void setupButtons() {
-		//Effect Buttons
-		buttonGrayScale = new Button(this);
-		buttonGrayScale.setText("Grayscale");
-		buttonGrayScale.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonGrayScale);
+        compressRadioGroup.setOnCheckedChangeListener(new AddCompressionListener());
 
-		buttonCartoon = new Button(this);
-		buttonCartoon.setText("Cartoon");
-		buttonCartoon.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonCartoon);
+        // Get the effects from the previous processing event.
+        Bundle bundle = this.getIntent().getExtras();
+        effects = (ArrayList<Effect>) bundle.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects");
+        if (effects == null) {
+            Log.v(TAG, "effects list is null");
+            effects = new ArrayList<>();
+        }
 
-		buttonFaceDetection = new Button(this);
-		buttonFaceDetection.setText("Face");
-		buttonFaceDetection.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonFaceDetection);
+        // Get the effects from the previous processing event.
+        compressions = (ArrayList<String>) bundle.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions");
+        if (compressions == null) {
+            Log.v(TAG, "compressions list is null");
+            compressions = new ArrayList<>();
+        }
 
-		buttonMask = new Button(this);
-		buttonMask.setText("Mask");
-		buttonMask.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonMask);
+        // Static Buttons
+        CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
+        String ipAddress = cloudInstance.getIPAddress();
+        if (ipAddress != null && !ipAddress.isEmpty()) {
+            ipTextBox.setText(ipAddress);
+        }
 
-		buttonColorDetector = new Button(this);
-		buttonColorDetector.setText("Color");
-		buttonColorDetector.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonColorDetector);
+        int portNumber = cloudInstance.getPortNumber();
+        if (portNumber > 0) {
+            portTextBox.setText(Integer.toString(portNumber));
+        }
 
-		buttonMotionDetection = new Button(this);
-		buttonMotionDetection.setText("Motion");
-		buttonMotionDetection.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonMotionDetection);
+        ipTextBox.setText("128.61.92.187");
+        portTextBox.setText("20001");
 
-		buttonCheckerDetection = new Button(this);
-		buttonCheckerDetection.setText("Checker");
-		buttonCheckerDetection.setOnClickListener(this);
-		effectsLinearLayout.addView(buttonCheckerDetection);
+        enableCloud.setChecked(cloudInstance.shouldUseCloud());
+        onOffloadChecked(enableCloud);
 
+        // Pipeline Buttons
+        for (Effect e : effects) {
+            Button newButton = new Button(this);
+            newButton.setText(e.toString());
+            newButton.setOnClickListener(new RemoveEffectListener());
+            pipelineLinearLayout.addView(newButton);
+        }
+        for (String c : compressions) {
+            Button newButton = new Button(this);
+            newButton.setText(c);
+            newButton.setOnClickListener(new RemoveCompressionListener());
+            compressesLinearLayout.addView(newButton);
+            compressRadioGroup.check(compressRadioGroup.findViewWithTag(c).getId());
+        }
+    }
 
-		//Static Buttons
-		CloudClientSingelton cloudInstance = CloudClientSingelton.getInstance();
-		String ipAddress = cloudInstance.getIPAddress();
-		if(ipAddress != null && !ipAddress.isEmpty())
-		{
-			ipTextBox.setText(ipAddress);
-		}
+    public void onOffloadChecked(View view) {
+        CheckBox cb = (CheckBox) view;
+        this.findViewById(R.id.destinationFields)
+                .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
+        this.findViewById(R.id.availCompress)
+                .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
+        this.findViewById(R.id.appliedCompress)
+                .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
+    }
 
-		int portNumber = cloudInstance.getPortNumber();
-		if(portNumber > 0)
-		{
-			portTextBox.setText("" + portNumber);
-		}
+    public void onCancelClicked(View view) {
+        this.setResult(RESULT_CANCELED);
+        this.finish();
+    }
 
-		CloudOnRBtn = (RadioButton) findViewById(R.id.CloudOnRadBtn);
-		CloudOffRBtn = (RadioButton) findViewById(R.id.CloudOffRadBtn);
+    public void onPipeClearClicked(View view) {
+        pipelineLinearLayout.removeAllViews();
+        compressesLinearLayout.removeAllViews();
+        compressRadioGroup.clearCheck();
+        effects.clear();
+        compressions.clear();
+    }
 
-		if (cloudInstance.shouldUseCloud()) {CloudOffRBtn.setChecked(true);} else { CloudOffRBtn.setChecked(true); };
-		CloudOnRBtn.setOnClickListener(this);
+    public void onOkClicked(View view) {
+        if (enableCloud.isChecked()) {
+            String ipText = ipTextBox.getText().toString();
+            String portText = portTextBox.getText().toString();
+            CloudClientSingelton.getInstance(ipText, portText).setUseCloud(true);
+        } else {
+            CloudClientSingelton.getInstance().setUseCloud(false);
+        }
+        Intent result = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects", effects);
+        bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions", compressions);
+        result = result.putExtras(bundle);
+        this.setResult(RESULT_OK, result);
+        this.finish();
+    }
 
+    // Attach to the programmatically added available effects buttons to add effect to the pipeline.
+    private class AddEffectListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            Effect newEffect = null;
+            Button newButton = new Button(v.getContext());
+            try {
+                newEffect = (Effect) ((Class) v.getTag()).getConstructor().newInstance();
+            } catch (Exception e) {
+                Log.e(TAG, "AddEffectListener" + e.toString());
+            }
+            effects.add(newEffect);
+            newButton.setText(((Button) v).getText());
+            newButton.setOnClickListener(new RemoveEffectListener());
+            pipelineLinearLayout.addView(newButton);
+        }
+    }
 
-		buttonClearPipeline = this.findViewById(R.id.button_edit_pipeline_clear);
-		buttonClearPipeline.setOnClickListener(this);
-		
-		buttonCancel = this.findViewById(R.id.button_edit_pipeline_cancel);
-		buttonCancel.setOnClickListener(this);
-		
-		buttonOk = this.findViewById(R.id.button_edit_pipeline_ok);
-		buttonOk.setOnClickListener(this);
-		
-		//Pipeline Buttons
-		for(Effect e : effects) {
-			Button newButton = new Button(this);
-			newButton.setText(e.toString());
-			newButton.setOnClickListener(this);
-			pipelineLinearLayout.addView(newButton);
-		}
-	}
+    // Attach to the programmatically added available compress buttons to add compression to the pipeline.
+    private class AddCompressionListener implements RadioGroup.OnCheckedChangeListener {
+        @Override
+        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            String newCompression = null;
+            if (i == -1) {
+                // Compress choice cleared
+                if (compressesLinearLayout.getChildCount() > 0) {
+                    // if there was on selected before, then clear it
+                    compressesLinearLayout.getChildAt(0).callOnClick();
+                }
+                return;
+            }
+
+            Button newButton = new Button(radioGroup.getContext());
+            RadioButton rb = radioGroup.findViewById(i);
+            try {
+                newCompression = (String) rb.getTag();
+            } catch (Exception e) {
+                Log.e(TAG, "AddCompressionListener" + e.toString());
+            }
+
+            /* ---- To maintain only one compression ---- */
+            compressions.clear();
+            compressesLinearLayout.removeAllViews();
+            /* ------------------------------------------ */
+
+            compressions.add(newCompression);
+            newButton.setText(rb.getText());
+            newButton.setOnClickListener(new RemoveCompressionListener());
+            compressesLinearLayout.addView(newButton);
+        }
+    }
+
+    // Attach to the programmatically added applied effect buttons to remove effects from the pipeline.
+    private class RemoveEffectListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            LinearLayout ll = (LinearLayout) v.getParent();
+            int index = ll.indexOfChild(v);
+            pipelineLinearLayout.removeViewAt(index);
+            effects.remove(index);
+        }
+    }
+
+    // Attach to the programmatically added applied compression buttons to remove compressions from the pipeline.
+    private class RemoveCompressionListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            LinearLayout ll = (LinearLayout) v.getParent();
+            int index = ll.indexOfChild(v);
+            compressesLinearLayout.removeViewAt(index);
+            compressions.remove(index);
+            compressRadioGroup.clearCheck();
+        }
+    }
 }

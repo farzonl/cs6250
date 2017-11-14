@@ -8,7 +8,7 @@ package cs6250.benchmarkingsuite.imageprocessing.server;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public interface IBenchProtocol {
-  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"BenchProtocol\",\"namespace\":\"cs6250.benchmarkingsuite.imageprocessing.server\",\"types\":[],\"messages\":{\"addGrayscaleEffect\":{\"request\":[],\"response\":\"null\"},\"addIdentityEffect\":{\"request\":[],\"response\":\"null\"},\"clearEffects\":{\"request\":[],\"response\":\"null\"},\"addCartoonEffect\":{\"request\":[],\"response\":\"null\"},\"addFaceDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addMaskEffect\":{\"request\":[],\"response\":\"null\"},\"addMotionDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addCheckerBoardDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}}}}");
+  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"BenchProtocol\",\"namespace\":\"cs6250.benchmarkingsuite.imageprocessing.server\",\"types\":[],\"messages\":{\"addGrayscaleEffect\":{\"request\":[],\"response\":\"null\"},\"addIdentityEffect\":{\"request\":[],\"response\":\"null\"},\"clearEffects\":{\"request\":[],\"response\":\"null\"},\"addCartoonEffect\":{\"request\":[],\"response\":\"null\"},\"addFaceDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addMaskEffect\":{\"request\":[],\"response\":\"null\"},\"addMotionDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addCheckerBoardDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}},\"addCompressedFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}},{\"name\":\"algo\",\"type\":\"string\"}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}}}}");
   /**
    */
   java.lang.Void addGrayscaleEffect() throws org.apache.avro.AvroRemoteException;
@@ -36,6 +36,9 @@ public interface IBenchProtocol {
   /**
    */
   java.util.List<java.nio.ByteBuffer> addFrames(java.util.List<java.nio.ByteBuffer> frames) throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.util.List<java.nio.ByteBuffer> addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, java.lang.CharSequence algo) throws org.apache.avro.AvroRemoteException;
 
   @SuppressWarnings("all")
   public interface Callback extends IBenchProtocol {
@@ -76,5 +79,9 @@ public interface IBenchProtocol {
      * @throws java.io.IOException The async call could not be completed.
      */
     void addFrames(java.util.List<java.nio.ByteBuffer> frames, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, java.lang.CharSequence algo, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException;
   }
 }
