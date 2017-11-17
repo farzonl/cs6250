@@ -143,6 +143,7 @@ public class VideoViewingActivity extends Activity {
 
             // Load the effects in to the new ImageProcessor
             imageProcessor = new ImageProcessor();
+            imageProcessor.clearPipeline();
             for (Effect effect : effectList) {
                 imageProcessor.addEffect(new LocalEffectTask(effect));
             }
