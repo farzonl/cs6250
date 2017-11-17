@@ -51,8 +51,6 @@ public class VideoViewingActivity extends Activity {
 
     public void switchToEffectEditor() {
         Intent editPipelineIntent = new Intent(this, PipelineEditingActivity.class);
-        effectList = imageProcessor.getEffects();
-        compressions = new ArrayList<>(); //imageProcessor.getCompressions();
         Bundle bundle = new Bundle();
         bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects", effectList);
         bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.compressions", compressions);
