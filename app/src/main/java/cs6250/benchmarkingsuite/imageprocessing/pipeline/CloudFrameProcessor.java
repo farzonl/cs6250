@@ -1,5 +1,6 @@
 package cs6250.benchmarkingsuite.imageprocessing.pipeline;
 
+import android.hardware.camera2.params.Face;
 import android.util.Log;
 
 import org.apache.avro.AvroRemoteException;
@@ -19,14 +20,22 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CarDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.CatDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.EyeDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceFeatureDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceLandMarksEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.FaceSwapEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Frame;
 import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.IdentityEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.MouthDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.NoseDetectionEffect;
 
 /**
  * Created by farzon on 10/14/17.
@@ -104,11 +113,24 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
                     CloudClientSingelton.getInstance().cloudClient.addCartoonEffect();
                 } else if (effect.getEffect() instanceof MaskEffect) {
                     CloudClientSingelton.getInstance().cloudClient.addMaskEffect();
-                } else if (effect.getEffect() instanceof MotionDetectionEffect) {
-                    CloudClientSingelton.getInstance().cloudClient.addMotionDetectionEffect();
-                } else if (effect.getEffect() instanceof CheckerBoardDetectionEffect) {
-                    CloudClientSingelton.getInstance().cloudClient.addCheckerBoardDetectionEffect();
+                } else if (effect.getEffect() instanceof FaceSwapEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addFaceSwapEffect();
+                } else if (effect.getEffect() instanceof CarDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addCarDetectionEffect();
+                } else if (effect.getEffect() instanceof CatDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addCatDetectionEffect();
+                } else if (effect.getEffect() instanceof MouthDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addMouthDetectionEffect();
+                } else if (effect.getEffect() instanceof NoseDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addNoseDetectionEffect();
+                } else if (effect.getEffect() instanceof EyeDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addEyeDetectionEffect();
+                } else if (effect.getEffect() instanceof FaceFeatureDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addFaceFeatureDetectionEffect();
+                } else if (effect.getEffect() instanceof FaceLandMarksEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addFaceLandmarksDetectionEffect();
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -70,27 +70,63 @@ public class CloudClient implements Runnable {
 		}
 	}
 
+	public void addMouthDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addMouthDetectionEffect();
+		}
+	}
+
+	public void addNoseDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addNoseDetectionEffect();
+		}
+	}
+
+	public void addEyeDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addEyeDetectionEffect();
+		}
+	}
+
 	public void addFaceDetectionEffect() throws org.apache.avro.AvroRemoteException {
 		if (client != null) {
 			client.addFaceDetectionEffect();
 		}
 	}
 
+	public void addCarDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addCarDetectionEffect();
+		}
+	}
+
+	public void addCatDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addCatDetectionEffect();
+		}
+	}
+
+	public void addFaceFeatureDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addFaceFeatureDetectionEffect();
+		}
+	}
+
+	public void addFaceLandmarksDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addFaceLandmarksDetectionEffect();
+		}
+	}
+
+	public void addFaceSwapEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addFaceSwapEffect();
+		}
+	}
+
 	public void addMaskEffect() throws org.apache.avro.AvroRemoteException {
 		if (client != null) {
 			client.addMaskEffect();
-		}
-	}
-
-	public void addMotionDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addMotionDetectionEffect();
-		}
-	}
-
-	public void addCheckerBoardDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addCheckerBoardDetectionEffect();
 		}
 	}
 
