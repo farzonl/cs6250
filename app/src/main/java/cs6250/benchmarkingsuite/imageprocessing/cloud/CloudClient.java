@@ -14,7 +14,7 @@ import org.apache.avro.ipc.specific.SpecificRequestor;
 import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
 
 public class CloudClient implements Runnable {
-	
+
 
 	NettyTransceiver transceiver;
 	IBenchProtocol.Callback client;
@@ -22,24 +22,23 @@ public class CloudClient implements Runnable {
 	public int port;
 
 	//BandwidthMeasurement bandwidth;
-	
+
 	@Override
 	public void run() {
 		try {
 			InitializeClient();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+			Log.e("CloudClient", "Failed to initialize InitializeClient");
+		}
 	}
-	
+
 	private void InitializeClient() throws IOException {
-		
+
 		Log.v("CloudClient", "Initializing client");
 		//bandwidth = new BandwidthMeasurement(serverIP);
-		
+
 		InetAddress serverAddr = null;
-		
+
 		try {
 			serverAddr  = InetAddress.getByName(serverIP);
 			transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
@@ -53,40 +52,101 @@ public class CloudClient implements Runnable {
 	}
 
 	public void addGrayscaleEffect() throws org.apache.avro.AvroRemoteException {
-		client.addGrayscaleEffect();
+		if (client != null) {
+			client.addGrayscaleEffect();
+		}
+
 	}
 
 	public void addIdentityEffect() throws org.apache.avro.AvroRemoteException {
-		client.addIdentityEffect();
+		if (client != null) {
+			client.addIdentityEffect();
+		}
 	}
 
 	public void addCartoonEffect() throws org.apache.avro.AvroRemoteException {
-		client.addCartoonEffect();
+		if (client != null) {
+			client.addCartoonEffect();
+		}
+	}
+
+	public void addMouthDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addMouthDetectionEffect();
+		}
+	}
+
+	public void addNoseDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addNoseDetectionEffect();
+		}
+	}
+
+	public void addEyeDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addEyeDetectionEffect();
+		}
 	}
 
 	public void addFaceDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		client.addFaceDetectionEffect();
+		if (client != null) {
+			client.addFaceDetectionEffect();
+		}
+	}
+
+	public void addCarDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addCarDetectionEffect();
+		}
+	}
+
+	public void addCatDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addCatDetectionEffect();
+		}
+	}
+
+	public void addFaceFeatureDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addFaceFeatureDetectionEffect();
+		}
+	}
+
+	public void addFaceLandmarksDetectionEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addFaceLandmarksDetectionEffect();
+		}
+	}
+
+	public void addFaceSwapEffect() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.addFaceSwapEffect();
+		}
 	}
 
 	public void addMaskEffect() throws org.apache.avro.AvroRemoteException {
-		client.addMaskEffect();
+		if (client != null) {
+			client.addMaskEffect();
+		}
 	}
 
-	public void addMotionDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		client.addMotionDetectionEffect();
+	public void addFrames(List<ByteBuffer> frames, org.apache.avro.ipc.Callback<List<ByteBuffer>> callback) throws java.io.IOException {
+		if (client != null) {
+			client.addFrames(frames, callback);
+		}
 	}
 
-	public void addCheckerBoardDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		client.addCheckerBoardDetectionEffect();
+	public void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, String algorithm, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException {
+		if (client != null) {
+			client.addCompressedFrames(frames, algorithm, callback);
+		}
 	}
 
-    public void addFrames(List<ByteBuffer> frames, org.apache.avro.ipc.Callback<List<ByteBuffer>> callback) throws java.io.IOException {
-    	client.addFrames(frames, callback);
-    }
-
-    public void clearEffects() throws org.apache.avro.AvroRemoteException {
-    	client.clearEffects();
-    }
+	public void clearEffects() throws org.apache.avro.AvroRemoteException {
+		if (client != null) {
+			client.clearEffects();
+		}
+	}
 }
 
 
