@@ -1,5 +1,7 @@
 package cs6250.benchmarkingsuite.imageprocessing.cloud;
 
+import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
+
 /**
  * Created by farzon on 10/14/17.
  */
@@ -24,6 +26,10 @@ public final class CloudClientSingelton {
         return cloudClient.port;
     }
 
+    public BandwidthMeasurement getBandwidthMeasurement()
+    {
+        return cloudClient.getBandwidthMeasurement();
+    }
     private void suspendThread() {
         try {
             if (td != null && td.isAlive()) {

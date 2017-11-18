@@ -68,7 +68,37 @@ def grepFile(file, grepPattern) {
     return lines
 }
 
+def getIP() {
+    InetAddress result = null;
+    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+    while (interfaces.hasMoreElements()) {
+        Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses();
+        while (addresses.hasMoreElements()) {
+            InetAddress address = addresses.nextElement();
+            if (!address.isLoopbackAddress()) {
+                if (address.isSiteLocalAddress()) {
+                    return address.getHostAddress();
+                } else if (result == null) {
+                    result = address;
+                }
+            }
+        }
+    }
+    return (result != null ? result : InetAddress.getLocalHost()).getHostAddress();
+}
 
+task generate_ipFile() {
+    def ipFilePath = "app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/core/IpFile.java"
+    def file = new File(ipFilePath)
+    file.createNewFile()
+    file.withWriter { out ->
+
+        out.println "package cs6250.benchmarkingsuite.imageprocessing.core;\n"
+        out.println "public class IpFile {\n"
+        out.println "public static String ipAddress = \"${getIP()}\";\n"
+        out.println "private IpFile() {} \n}"
+    }
+}
 
 task generate_iperf_version_string_h() {
     //
@@ -114,3 +144,4 @@ task generate_iperf_version_string_h() {
 }
 
 preBuild.dependsOn generate_iperf_version_string_h
+preBuild.dependsOn generate_ipFile

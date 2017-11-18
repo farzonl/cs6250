@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.opencv.android.JavaCameraView;
-
+import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
+import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
 import cs6250.benchmarkingsuite.imageprocessing.pipeline.LocalEffectTask;
 
 public class VideoViewingActivity extends Activity {
@@ -33,6 +36,8 @@ public class VideoViewingActivity extends Activity {
     // The view that passes frames to the ImageProcessor from the camera and displays the frames from the pipeline.
     private JavaCameraView mView;
 
+    TextView downloadBandwidth, uploadBandwidth, hostCpuUtilization, serverCpuUtilization;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "onCreate");
@@ -45,6 +50,17 @@ public class VideoViewingActivity extends Activity {
 
         setContentView(R.layout.activity_video_viewing);
         Button button = findViewById(R.id.pipeline);
+
+        downloadBandwidth = (TextView) findViewById(R.id.text_view_idDownloadBandwidth);
+        uploadBandwidth = (TextView) findViewById(R.id.text_view_idUploadBandwidth);
+
+        hostCpuUtilization = (TextView) findViewById(R.id.text_view_idHostCpuUtil);
+        serverCpuUtilization = (TextView) findViewById(R.id.text_view_idServerCpuUtil);
+
+        downloadBandwidth.setVisibility(View.INVISIBLE);
+        uploadBandwidth.setVisibility(View.INVISIBLE);
+        hostCpuUtilization.setVisibility(View.INVISIBLE);
+        serverCpuUtilization.setVisibility(View.INVISIBLE);
 
         button.setOnClickListener(new StartPipeline(this));
     }
@@ -122,6 +138,24 @@ public class VideoViewingActivity extends Activity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(TAG, "onActivityResult");
 
+        if(CloudClientSingelton.getInstance().shouldUseCloud())
+        {
+            downloadBandwidth.setVisibility(View.VISIBLE);
+            uploadBandwidth.setVisibility(View.VISIBLE);
+            hostCpuUtilization.setVisibility(View.VISIBLE);
+            serverCpuUtilization.setVisibility(View.VISIBLE);
+            BandwidthMeasurement measurements =  CloudClientSingelton.getInstance().getBandwidthMeasurement();
+            String upBandwidthMsg = "Upload bandwidth: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
+            String dwnBandwidthMsg = "Download bandwidth: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
+            String cpuUtilizationMsg  = "host cpu util: " + measurements.getHostCpuUtil();
+            String serverUtilizationMsg  = "server cpu util: " + measurements.getServerCpuUtil();
+
+            downloadBandwidth.setText(dwnBandwidthMsg);
+            uploadBandwidth.setText(upBandwidthMsg);
+            hostCpuUtilization.setText(cpuUtilizationMsg);
+            serverCpuUtilization.setText(serverUtilizationMsg);
+
+        }
         if (requestCode == EDIT_PIPELINE) {
             if (resultCode == RESULT_OK) {
                 Log.i(TAG, "RESULT_OK");

@@ -7,7 +7,7 @@
     <org.opencv.android.JavaCameraView
         android:id="@+id/frameView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="300dp"/>
 
     <Button
         android:id="@+id/pipeline"
@@ -15,4 +15,32 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/frameView"
         android:text="@string/label_pipeline" />
+    <TextView
+        android:id="@+id/text_view_idUploadBandwidth"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/frameView"
+        android:layout_toRightOf="@+id/pipeline"
+        android:text="@string/uploadBandwidth" />
+    <TextView
+        android:id="@+id/text_view_idDownloadBandwidth"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/frameView"
+        android:layout_toRightOf="@+id/text_view_idUploadBandwidth"
+        android:text="@string/downloadBandwidth" />
+    <TextView
+        android:id="@+id/text_view_idHostCpuUtil"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/frameView"
+        android:layout_toRightOf="@+id/text_view_idDownloadBandwidth"
+        android:text="@string/hostCpuUtil" />
+    <TextView
+        android:id="@+id/text_view_idServerCpuUtil"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/frameView"
+        android:layout_toRightOf="@+id/text_view_idHostCpuUtil"
+        android:text="@string/serverCpuUtil" />
 </RelativeLayout>

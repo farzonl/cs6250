@@ -99,4 +99,18 @@ public class OpenCVInitActivity extends Activity {
             Log.e(TAG, "Cannot connect to OpenCV Manager");
         }
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (!OpenCVLoader.initDebug()) {
+            Log.d("OpenCV", "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mOpenCVCallBack);
+        } else {
+            Log.d("OpenCV", "OpenCV library found inside package. Using it!");
+            mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
+    }
+
 }

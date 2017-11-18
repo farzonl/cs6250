@@ -23,8 +23,11 @@ public class CloudClient implements Runnable {
 	public int port;
 	BandwidthMeasurement bandwidth;
 
-	//BandwidthMeasurement bandwidth;
-	
+	public BandwidthMeasurement getBandwidthMeasurement()
+	{
+		return bandwidth;
+	}
+
 	@Override
 	public void run() {
 		try {

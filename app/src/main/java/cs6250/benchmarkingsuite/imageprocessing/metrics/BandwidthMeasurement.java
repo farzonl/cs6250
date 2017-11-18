@@ -39,8 +39,6 @@ public class BandwidthMeasurement implements Closeable {
             uploadBandwidth     = bytes_sent / ((1 << 20) * time_taken);
             downloadBandwidth   = bytes_recv / ((1 << 20) * time_taken);
 
-            String bandwidthMsg = String.format("%.2f", uploadBandwidth) + " MBps";
-
             Log.i("test", "test done\n");
 
             return status;
