@@ -12,6 +12,7 @@ import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
 
 import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
+import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
 
 public class CloudClient implements Runnable {
 	
@@ -20,6 +21,7 @@ public class CloudClient implements Runnable {
 	IBenchProtocol.Callback client;
 	public String serverIP;
 	public int port;
+	BandwidthMeasurement bandwidth;
 
 	//BandwidthMeasurement bandwidth;
 	
@@ -38,7 +40,7 @@ public class CloudClient implements Runnable {
 		//bandwidth = new BandwidthMeasurement(serverIP);
 		
 		InetAddress serverAddr = null;
-		
+		bandwidth = new BandwidthMeasurement(serverIP);
 		try {
 			serverAddr  = InetAddress.getByName(serverIP);
 			transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
