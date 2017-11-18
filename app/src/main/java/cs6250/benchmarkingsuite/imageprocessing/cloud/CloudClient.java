@@ -43,7 +43,6 @@ public class CloudClient implements Runnable {
 		//bandwidth = new BandwidthMeasurement(serverIP);
 		
 		InetAddress serverAddr = null;
-		bandwidth = new BandwidthMeasurement(serverIP);
 		try {
 			serverAddr  = InetAddress.getByName(serverIP);
 			transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));

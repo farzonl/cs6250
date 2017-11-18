@@ -144,7 +144,7 @@ public class VideoViewingActivity extends Activity {
             uploadBandwidth.setVisibility(View.VISIBLE);
             hostCpuUtilization.setVisibility(View.VISIBLE);
             serverCpuUtilization.setVisibility(View.VISIBLE);
-            BandwidthMeasurement measurements =  CloudClientSingelton.getInstance().getBandwidthMeasurement();
+            /*BandwidthMeasurement measurements =  CloudClientSingelton.getInstance().getBandwidthMeasurement();
             String upBandwidthMsg = "Upload bandwidth: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
             String dwnBandwidthMsg = "Download bandwidth: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
             String cpuUtilizationMsg  = "host cpu util: " + measurements.getHostCpuUtil();
@@ -153,7 +153,7 @@ public class VideoViewingActivity extends Activity {
             downloadBandwidth.setText(dwnBandwidthMsg);
             uploadBandwidth.setText(upBandwidthMsg);
             hostCpuUtilization.setText(cpuUtilizationMsg);
-            serverCpuUtilization.setText(serverUtilizationMsg);
+            serverCpuUtilization.setText(serverUtilizationMsg);*/
 
         }
         if (requestCode == EDIT_PIPELINE) {
