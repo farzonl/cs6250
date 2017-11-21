@@ -15,7 +15,6 @@ import org.apache.avro.ipc.specific.SpecificRequestor;
 
 import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
 
-
 public class CloudClient implements Runnable {
 
     //NettyTransceiver transceiver;
@@ -187,3 +186,5 @@ public class CloudClient implements Runnable {
         client.clearEffects();
     }
 }
+
+
