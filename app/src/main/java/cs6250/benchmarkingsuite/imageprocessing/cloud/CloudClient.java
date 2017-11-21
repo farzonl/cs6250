@@ -2,7 +2,6 @@ package cs6250.benchmarkingsuite.imageprocessing.cloud;
 
 import android.util.Log;
 
-import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
 import java.io.IOException;
 import java.net.InetAddress;
