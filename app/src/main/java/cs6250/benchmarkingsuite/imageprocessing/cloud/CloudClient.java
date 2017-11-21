@@ -4,19 +4,23 @@ import android.util.Log;
 
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.List;
+import org.apache.avro.ipc.DatagramTransceiver;
+import org.apache.avro.ipc.NettyTransceiver;
+import org.apache.avro.ipc.specific.SpecificRequestor;
 
 import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
 
+
 public class CloudClient implements Runnable {
 
-    NettyTransceiver transceiver;
+    //NettyTransceiver transceiver;
+	DatagramTransceiver transceiver;
     IBenchProtocol.Callback client;
     public String serverIP;
     public int port;
@@ -39,8 +43,10 @@ public class CloudClient implements Runnable {
 
         try {
             serverAddr = InetAddress.getByName(serverIP);
-            transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
-            client = SpecificRequestor.getClient(IBenchProtocol.Callback.class, transceiver);
+            //transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
+			transceiver = new DatagramTransceiver(new InetSocketAddress(serverAddr, port));
+
+			client = SpecificRequestor.getClient(IBenchProtocol.Callback.class, transceiver);
             synchronized (syncObj) {
                 syncObj.notifyAll();
             }
