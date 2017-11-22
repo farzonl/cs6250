@@ -82,6 +82,18 @@ iperf_get_results(struct iperf_test *test)
     iTotals.total_time = end_time - start_time;
 }
 
+void iperf_test* initClient(const jbyte *server_ip_j)
+{
+    char *server_ip = malloc(strlen(server_ip_j) + 1);
+    strncpy(server_ip, server_ip_j, strlen(server_ip_j));
+    server_ip[strlen(server_ip_j)] = '\0';
+    LOGI("server ip from main: %s", server_ip);
+    char *argv[] = {"iperf", "-c", server_ip};
+    return main_launch(3, argv);
+
+}
+
+
 JNIEXPORT jboolean JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_BandwidthMeasurement_launchBandwidthTest
   (JNIEnv *jenv, jobject jobj, jstring serverIp)
 {
@@ -106,6 +118,15 @@ JNIEXPORT jboolean JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics
     return 0;
 }
 
+JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_BandwidthMeasurement_initFileTemplate
+        (JNIEnv *env, jobject thiz, jstring j_template)
+{
+    const char *template = (*env)->GetStringUTFChars(env, j_template, 0);
+
+    iperf_set_test_template(gTest, template);
+
+    (*env)->ReleaseStringUTFChars(env, j_template, template);
+}
 
 JNIEXPORT jlong JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_BandwidthMeasurement_getUploadedBytes
   (JNIEnv * jenv, jobject jobj)
@@ -272,6 +293,7 @@ iperf_run(struct iperf_test *test)
             iperf_delete_pidfile(test);
             break;
         case 'c': {
+            test->outfile = fopen(test->logfile, "a+");
             int clientPerfRunErrorCode = iperf_run_client(test);
             if (clientPerfRunErrorCode < 0) {
                 LOGI("client iperf setup failed with error code: %i", clientPerfRunErrorCode);
