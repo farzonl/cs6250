@@ -14,7 +14,7 @@ public class BandwidthMeasurement implements Closeable {
     String serverIpString;
 
     static {
-        System.loadLibrary("libiperf");
+        System.loadLibrary("iperf");
     }
 
     // send the message to the server in a thread
@@ -88,18 +88,55 @@ public class BandwidthMeasurement implements Closeable {
     public void close()
     {
         cleanup();
-        try {
-            td.join();
-        } catch(InterruptedException ie)
-        {
+        suspendThread();
+    }
 
+    private void suspendThread() {
+        try {
+            if (td != null && td.isAlive()) {
+                td.join();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
-    public BandwidthMeasurement(String serverIp) {
+    private BandwidthMeasurement(String serverIp) {
         serverIpString = serverIp;
-        myClient = new ClientClass();
-        td = new Thread(myClient);
-        td.start();
-        myClient.TestBandwidth();
+    }
+
+    boolean m_bUseIperf = false;
+
+    public boolean isIperfOn()
+    {
+        return m_bUseIperf;
+    }
+    public void setUseIperf(boolean bUseIperf) {
+        m_bUseIperf = bUseIperf;
+        if (m_bUseIperf) {
+            myClient = new ClientClass();
+            td = new Thread(myClient);
+            td.start();
+            myClient.TestBandwidth();
+        } else {
+            close();
+        }
+    }
+
+    private static volatile BandwidthMeasurement instance = null;
+
+    public static BandwidthMeasurement init(String serverIP) {
+
+        if (instance == null) {
+            synchronized (BandwidthMeasurement.class) {
+                if (instance == null) {
+                    instance = new BandwidthMeasurement(serverIP);
+                }
+            }
+        }
+        return instance;
+    }
+
+    public static BandwidthMeasurement getInstance() {
+        return instance;
     }
 }

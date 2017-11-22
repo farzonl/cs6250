@@ -271,9 +271,13 @@ iperf_run(struct iperf_test *test)
             }
             iperf_delete_pidfile(test);
             break;
-        case 'c':
-            if (iperf_run_client(test) < 0)
-                iperf_errexit(test, "error - %s", iperf_strerror(i_errno));
+        case 'c': {
+            int clientPerfRunErrorCode = iperf_run_client(test);
+            if (clientPerfRunErrorCode < 0) {
+                LOGI("client iperf setup failed with error code: %i", clientPerfRunErrorCode);
+                //iperf_errexit(test, "error - %s", iperf_strerror(i_errno));
+            }
+        }
             break;
         default:
             usage();

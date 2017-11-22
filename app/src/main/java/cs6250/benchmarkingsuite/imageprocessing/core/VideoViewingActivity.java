@@ -144,17 +144,18 @@ public class VideoViewingActivity extends Activity {
             uploadBandwidth.setVisibility(View.VISIBLE);
             hostCpuUtilization.setVisibility(View.VISIBLE);
             serverCpuUtilization.setVisibility(View.VISIBLE);
-            /*BandwidthMeasurement measurements =  CloudClientSingelton.getInstance().getBandwidthMeasurement();
-            String upBandwidthMsg = "Upload bandwidth: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
-            String dwnBandwidthMsg = "Download bandwidth: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
-            String cpuUtilizationMsg  = "host cpu util: " + measurements.getHostCpuUtil();
-            String serverUtilizationMsg  = "server cpu util: " + measurements.getServerCpuUtil();
+            BandwidthMeasurement measurements =  BandwidthMeasurement.getInstance();
+            if(measurements != null) {
+                String upBandwidthMsg = "Upload bandwidth: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
+                String dwnBandwidthMsg = "Download bandwidth: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
+                String cpuUtilizationMsg = "host cpu util: " + measurements.getHostCpuUtil();
+                String serverUtilizationMsg = "server cpu util: " + measurements.getServerCpuUtil();
 
-            downloadBandwidth.setText(dwnBandwidthMsg);
-            uploadBandwidth.setText(upBandwidthMsg);
-            hostCpuUtilization.setText(cpuUtilizationMsg);
-            serverCpuUtilization.setText(serverUtilizationMsg);*/
-
+                downloadBandwidth.setText(dwnBandwidthMsg);
+                uploadBandwidth.setText(upBandwidthMsg);
+                hostCpuUtilization.setText(cpuUtilizationMsg);
+                serverCpuUtilization.setText(serverUtilizationMsg);
+            }
         }
         if (requestCode == EDIT_PIPELINE) {
             if (resultCode == RESULT_OK) {

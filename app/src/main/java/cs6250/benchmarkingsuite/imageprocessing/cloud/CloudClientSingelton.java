@@ -26,10 +26,6 @@ public final class CloudClientSingelton {
         return cloudClient.port;
     }
 
-    public BandwidthMeasurement getBandwidthMeasurement()
-    {
-        return cloudClient.getBandwidthMeasurement();
-    }
     private void suspendThread() {
         try {
             if (td != null && td.isAlive()) {

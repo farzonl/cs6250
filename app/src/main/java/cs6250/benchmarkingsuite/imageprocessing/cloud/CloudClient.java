@@ -21,12 +21,6 @@ public class CloudClient implements Runnable {
 	IBenchProtocol.Callback client;
 	public String serverIP;
 	public int port;
-	BandwidthMeasurement bandwidth;
-
-	public BandwidthMeasurement getBandwidthMeasurement()
-	{
-		return bandwidth;
-	}
 
 	@Override
 	public void run() {
@@ -40,8 +34,6 @@ public class CloudClient implements Runnable {
 	private void InitializeClient() throws IOException {
 		
 		Log.v("CloudClient", "Initializing client");
-		//bandwidth = new BandwidthMeasurement(serverIP);
-		
 		InetAddress serverAddr = null;
 		try {
 			serverAddr  = InetAddress.getByName(serverIP);
