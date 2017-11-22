@@ -29,10 +29,20 @@ public class IperfWrapper {
     public native long getUploadedBytes();
     public native long getDownloadedBytes();
     public native double getTimeTaken();
-    public native long getHostCpuUtilization(long ref);
-    public native long getServerCpuUtilization(long ref);
+    private native double[] getHostCpuUtilization(long ref);
+    private native double[] getServerCpuUtilization(long ref);
 
-    public Iperf newTest() throws IperfException {
+    public double[] getHostCpuUtilization()
+    {
+     return getHostCpuUtilization(testRef);
+    }
+
+    public double[] getServerCpuUtilization()
+    {
+        return getServerCpuUtilization(testRef);
+    }
+
+    public IperfWrapper newTest() throws IperfException {
         if (testRef!=0) {
             freeTest();
         }
@@ -50,50 +60,43 @@ public class IperfWrapper {
         }
     }
 
-    public Iperf testRole(char role) {
+    public IperfWrapper testRole(char role) {
         testRoleImpl(testRef, role);
         return this;
     }
 
-    public Iperf defaults() {
+    public IperfWrapper defaults() {
         defaultsImpl(testRef);
         return this;
     }
 
-    public Iperf defaults(DefaultConfig config) {
-        defaultsImpl(testRef);
-        config.defaults(this);
-        return this;
-    }
-
-    public Iperf hostname(String host) {
+    public IperfWrapper hostname(String host) {
         hostnameImpl(testRef, host);
         return this;
     }
 
-    public Iperf tempFileTemplate(String template) {
+    public IperfWrapper tempFileTemplate(String template) {
         tempFileTemplateImpl(testRef, template);
         return this;
     }
 
-    public Iperf durationInSeconds(int duration) {
+    public IperfWrapper durationInSeconds(int duration) {
         durationImpl(testRef, duration);
         return this;
     }
 
-    public Iperf logfile(String file) {
+    public IperfWrapper logfile(String file) {
         logFileImpl(testRef, file);
         return this;
     }
 
-    public Iperf runClient() {
+    public IperfWrapper runClient() {
         runClientImpl(testRef);
         return this;
     }
 
-    public Iperf outputJson(boolean useJson) {
+    public IperfWrapper outputJson(boolean useJson) {
         outputJsonImpl(testRef, useJson);
         return this;
     }
-
 }

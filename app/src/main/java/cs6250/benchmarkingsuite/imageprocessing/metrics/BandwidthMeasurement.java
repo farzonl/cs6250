@@ -6,42 +6,58 @@ package cs6250.benchmarkingsuite.imageprocessing.metrics;
 
 import android.util.Log;
 import java.io.Closeable;
+import java.io.File;
 
-public class BandwidthMeasurement implements Closeable {
+public class BandwidthMeasurement {
 
     static String TAG = "BandwidthMeasurement";
     final BenchTimer timer = new  BenchTimer();
     String serverIpString;
 
-    static {
-        System.loadLibrary("iperf");
-    }
+
 
     // send the message to the server in a thread
     public class ClientClass implements Runnable {
 
         public boolean TestBandwidth() {
 
+            boolean bStatus = true;
             Log.i("test", "server ip is " + serverIpString);
-            boolean status = launchBandwidthTest(serverIpString);
+            IperfWrapper iperf = null;
+            try {
 
-            if (status) {
-                Log.e("test", "Error: bandwidth test failed\n");
-                return status;
+                iperf = new IperfWrapper();
+                iperf
+                        .newTest()
+                        .tempFileTemplate(initFileTemplate())
+                        .defaults()
+                        .testRole(IperfWrapper.ROLE_CLIENT)
+                        .hostname(serverIpString)
+                        .logfile(path.getPath()+"/output.txt")
+                        .outputJson(true)
+                        .runClient();
+
+                long bytes_sent     = iperf.getUploadedBytes();
+                long bytes_recv     = iperf.getDownloadedBytes();
+                double time_taken   = iperf.getTimeTaken();
+                hostCpuUtil         = iperf.getHostCpuUtilization()[0];
+                serverCpuUtil       = iperf.getServerCpuUtilization()[0];
+                uploadBandwidth     = bytes_sent / ((1 << 20) * time_taken);
+                downloadBandwidth   = bytes_recv / ((1 << 20) * time_taken);
+
             }
-
-            long bytes_sent     = getUploadedBytes();
-            long bytes_recv     = getDownloadedBytes();
-            double time_taken   = getTimeTaken();
-            hostCpuUtil    = getHostCpuUtilization();
-            serverCpuUtil  = getServerCpuUtilization();
-
-            uploadBandwidth     = bytes_sent / ((1 << 20) * time_taken);
-            downloadBandwidth   = bytes_recv / ((1 << 20) * time_taken);
+            catch (IperfException e) {
+                Log.e("test", "Error: bandwidth test failed\n");
+                e.printStackTrace();
+                bStatus = false;
+            }
+            finally {
+                iperf.freeTest();
+            }
 
             Log.i("test", "test done\n");
 
-            return status;
+            return bStatus;
         }
 
         @Override
@@ -54,16 +70,8 @@ public class BandwidthMeasurement implements Closeable {
         }
     }
 
-    public native boolean launchBandwidthTest(String serverIp);
-    public native long getUploadedBytes();
-    public native long getDownloadedBytes();
-    public native double getTimeTaken();
-    public native long getHostCpuUtilization();
-    public native long getServerCpuUtilization();
-    public native boolean cleanup();
-
     private double uploadBandwidth, downloadBandwidth;
-    private long hostCpuUtil, serverCpuUtil;
+    private double hostCpuUtil, serverCpuUtil;
     private Thread td;
     public double getUploadBandwidth() {
         return uploadBandwidth;
@@ -73,23 +81,16 @@ public class BandwidthMeasurement implements Closeable {
         return downloadBandwidth;
     }
 
-    public long  getHostCpuUtil()
+    public double  getHostCpuUtil()
     {
         return hostCpuUtil;
     }
 
-    public long getServerCpuUtil() {
+    public double getServerCpuUtil() {
         return serverCpuUtil;
     }
 
     ClientClass myClient;
-
-    @Override
-    public void close()
-    {
-        cleanup();
-        suspendThread();
-    }
 
     private void suspendThread() {
         try {
@@ -100,8 +101,10 @@ public class BandwidthMeasurement implements Closeable {
             e.printStackTrace();
         }
     }
-    private BandwidthMeasurement(String serverIp) {
+    private GetPathDefaults path;
+    private BandwidthMeasurement(String serverIp, GetPathDefaults path) {
         serverIpString = serverIp;
+        this.path = path;
     }
 
     boolean m_bUseIperf = false;
@@ -114,22 +117,29 @@ public class BandwidthMeasurement implements Closeable {
         m_bUseIperf = bUseIperf;
         if (m_bUseIperf) {
             myClient = new ClientClass();
+            new File(path.getPath()+"/output.txt").delete();
             td = new Thread(myClient);
             td.start();
             myClient.TestBandwidth();
         } else {
-            close();
+            suspendThread();
         }
+    }
+    public String initFileTemplate()
+    {
+        File cacheDir = path.getPath();
+        File tempFile = new File(cacheDir, "iperf3tempXXXXXX");
+        return tempFile.getAbsolutePath();
     }
 
     private static volatile BandwidthMeasurement instance = null;
 
-    public static BandwidthMeasurement init(String serverIP) {
+    public static BandwidthMeasurement init(String serverIP, GetPathDefaults path) {
 
         if (instance == null) {
             synchronized (BandwidthMeasurement.class) {
                 if (instance == null) {
-                    instance = new BandwidthMeasurement(serverIP);
+                    instance = new BandwidthMeasurement(serverIP, path);
                 }
             }
         }

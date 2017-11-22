@@ -46,7 +46,7 @@ add_library( # build libiperf.so
              ${IPERF_SRC}/src/tcp_window_size.c
              ${IPERF_SRC}/src/timer.c
              ${IPERF_SRC}/src/units.c
-             ${WRAPPER_SRC}/BandwidthMeasurement.c
+             ${WRAPPER_SRC}/IperfWrapper.c
              )
 
 # Searches for a specified prebuilt library and stores the path as a

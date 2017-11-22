@@ -26,7 +26,7 @@ import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
 import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
 import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
-
+import cs6250.benchmarkingsuite.imageprocessing.metrics.AndroidDefaults;
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
  */
@@ -214,7 +214,7 @@ public class PipelineEditingActivity extends Activity {
 
             if(enabledIperf.isChecked())
             {
-                BandwidthMeasurement.init(ipText);
+                BandwidthMeasurement.init(ipText, new AndroidDefaults(PipelineEditingActivity.this));
                 BandwidthMeasurement.getInstance().setUseIperf(true);
             }
             else
