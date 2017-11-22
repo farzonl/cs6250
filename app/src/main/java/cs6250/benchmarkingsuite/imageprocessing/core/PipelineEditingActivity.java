@@ -121,11 +121,6 @@ public class PipelineEditingActivity extends Activity {
         buttonBzip2Compression.setTag(CompressorStreamFactory.BZIP2);
         compressRadioGroup.addView(buttonBzip2Compression);
 
-        RadioButton buttonPack200Compression = new RadioButton(this);
-        buttonPack200Compression.setText("Pack200");
-        buttonPack200Compression.setTag(CompressorStreamFactory.PACK200);
-        compressRadioGroup.addView(buttonPack200Compression);
-
         RadioButton buttonLz4Compression = new RadioButton(this);
         buttonLz4Compression.setText("LZ4");
         buttonLz4Compression.setTag(CompressorStreamFactory.LZ4_FRAMED);
