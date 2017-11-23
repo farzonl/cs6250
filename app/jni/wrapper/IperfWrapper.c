@@ -1,10 +1,10 @@
 #include "cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper.h"
-#include <stdio.h>
 #include <sys/select.h>
-#include <iperf_api.h>
+#include <stdio.h>
+#include "iperf.h"
+#include "iperf_api.h"
+#include "iperf_util.h"
 #include <android/log.h>
-#include <iperf.h>
-#include <iperf_util.h>
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "IPERF", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "IPERF", __VA_ARGS__)
@@ -28,7 +28,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved)
 
     //  Get jclass with env->FindClass.
     // Register methods with env->RegisterNatives.
-
+    LOGI("JNI Loaded");
     return JNI_VERSION_1_6;
 }
 
@@ -75,155 +75,161 @@ JNIEXPORT jlong JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_Ip
 JNIEXPORT jdouble JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_getTimeTaken
   (JNIEnv * jenv, jobject jobj)
 {
+    LOGI("Time Taken: %f", gITotals.total_time);
 	return gITotals.total_time;
 }
 
 JNIEXPORT jdoubleArray JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_getHostCpuUtilization
-  (JNIEnv * jenv, jobject jobj, jlong ref)
+  (JNIEnv * jenv, jobject jobj)
 {
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
-
     jdoubleArray result;
-	if (test) {
-        int len = sizeof(test->cpu_util) / sizeof(test->cpu_util[0]);
+	if (gTest) {
+        int len = sizeof(gTest->cpu_util) / sizeof(gTest->cpu_util[0]);
         result = (*jenv)->NewDoubleArray(jenv, len);
 
-        (*jenv)->SetDoubleArrayRegion(jenv, result, 0, len, test->cpu_util);
+        (*jenv)->SetDoubleArrayRegion(jenv, result, 0, len, gTest->cpu_util);
     }
     return result;
 }
 
 JNIEXPORT jdoubleArray JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_getServerCpuUtilization
-  (JNIEnv * jenv, jobject jobj, jlong ref)
+  (JNIEnv * jenv, jobject jobj)
 {
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
-
     jdoubleArray result;
 
-    if (!test) {
-        int len = sizeof(test->remote_cpu_util) / sizeof(test->remote_cpu_util[0]);
+    if (gTest) {
+        int len = sizeof(gTest->remote_cpu_util) / sizeof(gTest->remote_cpu_util[0]);
         result = (*jenv)->NewDoubleArray(jenv, len);
 
-        (*jenv)->SetDoubleArrayRegion(jenv, result, 0, len, test->remote_cpu_util);
+        (*jenv)->SetDoubleArrayRegion(jenv, result, 0, len, gTest->remote_cpu_util);
     }
 	return result;
 }
 
 
-JNIEXPORT jlong JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_newTestImpl
+JNIEXPORT jboolean JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_initNativeIperfImpl
 ( JNIEnv* env, jobject thiz )
 {
-
-    struct iperf_test *test;
-    test = iperf_new_test();
-    LOGI("new test %lld", (long long)test);
-
-    return (jlong)(intptr_t)test;
+    LOGI("creating new IPERF Test");
+    gTest = iperf_new_test();
+    if(gTest == NULL)
+    {
+        LOGI("IPERF Test failed to initialize");
+        return JNI_FALSE;
+    }
+    LOGI("IPERF Test initialization succeed");
+    return JNI_TRUE;
 
 }
 
-JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_freeTestImpl
-( JNIEnv* env, jobject thiz, jlong ref)
+JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_cleanUp
+( JNIEnv* env, jobject thiz)
 {
 
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
-
-    iperf_free_test(test);
-
+    if(gTest == NULL)
+    {
+        return;
+    }
+    iperf_free_test(gTest);
+    LOGI("IPERF Test run memory freed");
+    gTest = NULL;
 }
 
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_testRoleImpl
-( JNIEnv* env, jobject thiz, jlong ref, jchar role)
+( JNIEnv* env, jobject thiz, jchar role)
 {
-
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
+    if(gTest == NULL)
+    {
+        return;
+    }
 
     LOGI("set role %c", (char)role);
 
-    iperf_set_test_role(test, (char)role );
+    iperf_set_test_role(gTest, (char)role );
 
 }
 
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_defaultsImpl
-( JNIEnv* env, jobject thiz, jlong ref)
+( JNIEnv* env, jobject thiz)
 {
+    if(gTest == NULL)
+    {
+        return;
+    }
 
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
-
-    iperf_defaults(test);
+    iperf_defaults(gTest);
+    LOGI("defaults set");
 
 }
 
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_hostnameImpl
-( JNIEnv* env, jobject thiz, jlong ref, jstring j_hostname)
+( JNIEnv* env, jobject thiz, jstring j_hostname)
 {
-
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
+    if(gTest == NULL)
+    {
+        return;
+    }
 
     const char *hostname = (*env)->GetStringUTFChars(env, j_hostname, 0);
 
-    iperf_set_test_server_hostname(test, hostname);
-
+    iperf_set_test_server_hostname(gTest, hostname);
+    LOGI("host name set: %s", hostname);
     (*env)->ReleaseStringUTFChars(env, j_hostname, hostname);
-
-
 }
 
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_tempFileTemplateImpl
-( JNIEnv* env, jobject thiz, jlong ref, jstring j_template)
+( JNIEnv* env, jobject thiz, jstring j_template)
 {
-
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
+    if(gTest == NULL)
+    {
+        return;
+    }
 
     const char *template = (*env)->GetStringUTFChars(env, j_template, 0);
 
-    iperf_set_test_template(test, template);
-
+    iperf_set_test_template(gTest, template);
+    LOGI("temp file template set: %s", template);
     (*env)->ReleaseStringUTFChars(env, j_template, template);
-
 
 }
 
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_durationImpl
-( JNIEnv* env, jobject thiz, jlong ref, jint duration)
+( JNIEnv* env, jobject thiz, jint duration)
 {
+    if(gTest == NULL)
+    {
+        return;
+    }
 
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
-
-    iperf_set_test_duration(test, duration);
-
-
+    iperf_set_test_duration(gTest, duration);
+    LOGI("Test duration set to : %i", duration);
 }
 
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_runClientImpl
-( JNIEnv* env, jobject thiz, jlong ref)
+( JNIEnv* env, jobject thiz)
 {
+    if(gTest == NULL)
+    {
+        return;
+    }
 
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
-
-    test->outfile = fopen(test->logfile, "a+");
-    iperf_run_client(test);
-    iperf_get_results(test);
+    gTest->outfile = fopen(gTest->logfile, "a+");
+    iperf_run_client(gTest);
+    iperf_get_results(gTest);
 
 }
 
 
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_outputJsonImpl
-( JNIEnv* env, jobject thiz, jlong ref, jboolean useJson)
+( JNIEnv* env, jobject thiz, jboolean useJson)
 {
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
+    if(gTest == NULL)
+    {
+        return;
+    }
 
-    iperf_set_test_json_output(test, (int)useJson);
+    iperf_set_test_json_output(gTest, (int)useJson);
+    LOGI("Test output  set to json");
 }
 
 /*
@@ -233,15 +239,17 @@ JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_Ipe
 
 // OPT_LOG
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_logFileImpl
-( JNIEnv* env, jobject thiz, jlong ref, jstring j_logfile)
+( JNIEnv* env, jobject thiz, jstring j_logfile)
 {
-
-    struct iperf_test *test;
-    test = (struct iperf_test *)(intptr_t)ref;
+    if(gTest == NULL)
+    {
+        return;
+    }
 
     const char *logfile = (*env)->GetStringUTFChars(env, j_logfile, 0);
 
-    test->logfile = strdup(logfile);
+    gTest->logfile = strdup(logfile);
 
+    LOGI("log file path set to: %s", logfile);
     (*env)->ReleaseStringUTFChars(env, j_logfile, logfile);
 }

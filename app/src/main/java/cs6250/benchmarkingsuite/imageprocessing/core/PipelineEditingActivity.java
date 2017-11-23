@@ -40,7 +40,6 @@ public class PipelineEditingActivity extends Activity {
     RadioGroup compressRadioGroup;
     LinearLayout compressesLinearLayout;
     CheckBox enableCloud;
-    CheckBox enabledIperf;
     EditText ipTextBox;
     EditText portTextBox;
 
@@ -61,7 +60,7 @@ public class PipelineEditingActivity extends Activity {
         ipTextBox = this.findViewById(R.id.ip_address);
         portTextBox = this.findViewById(R.id.PortNumber);
         enableCloud = findViewById(R.id.enableOffloading);
-        enabledIperf = findViewById(R.id.enableIperf);
+
 
         // Add in New Effects here.
         Button buttonGrayScale = new Button(this);
@@ -159,10 +158,6 @@ public class PipelineEditingActivity extends Activity {
         portTextBox.setText("20001");
 
         enableCloud.setChecked(cloudInstance.shouldUseCloud());
-        BandwidthMeasurement bwidth = BandwidthMeasurement.getInstance();
-        if( bwidth != null) {
-            enabledIperf.setChecked(bwidth.isIperfOn());
-        }
         onOffloadChecked(enableCloud);
 
         // Pipeline Buttons
@@ -189,8 +184,6 @@ public class PipelineEditingActivity extends Activity {
                 .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
         this.findViewById(R.id.appliedCompress)
                 .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
-        this.findViewById(R.id.enableIperf)
-                .setVisibility(cb.isChecked() ? View.VISIBLE : View.INVISIBLE);
     }
 
     public void onCancelClicked(View view) {
@@ -211,20 +204,6 @@ public class PipelineEditingActivity extends Activity {
             String ipText = ipTextBox.getText().toString();
             String portText = portTextBox.getText().toString();
             CloudClientSingelton.getInstance(ipText, portText).setUseCloud(true);
-
-            if(enabledIperf.isChecked())
-            {
-                BandwidthMeasurement.init(ipText, new AndroidDefaults(PipelineEditingActivity.this));
-                BandwidthMeasurement.getInstance().setUseIperf(true);
-            }
-            else
-            {
-                BandwidthMeasurement bandwidth = BandwidthMeasurement.getInstance();
-                if(bandwidth != null)
-                {
-                    bandwidth.setUseIperf(false);
-                }
-            }
         } else {
             CloudClientSingelton.getInstance().setUseCloud(false);
         }

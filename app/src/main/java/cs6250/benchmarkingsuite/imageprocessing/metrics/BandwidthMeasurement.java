@@ -5,9 +5,7 @@ package cs6250.benchmarkingsuite.imageprocessing.metrics;
  */
 
 import android.util.Log;
-import java.io.Closeable;
 import java.io.File;
-
 public class BandwidthMeasurement {
 
     static String TAG = "BandwidthMeasurement";
@@ -22,15 +20,12 @@ public class BandwidthMeasurement {
         public boolean TestBandwidth() {
 
             boolean bStatus = true;
-            Log.i("test", "server ip is " + serverIpString);
-            IperfWrapper iperf = null;
-            try {
-
-                iperf = new IperfWrapper();
+            Log.i("IPERF", "server ip is " + serverIpString);
+            try (IperfWrapper iperf = new IperfWrapper()) {
                 iperf
-                        .newTest()
-                        .tempFileTemplate(initFileTemplate())
+                        .initNativeIperf()
                         .defaults()
+                        .tempFileTemplate(initFileTemplate())
                         .testRole(IperfWrapper.ROLE_CLIENT)
                         .hostname(serverIpString)
                         .logfile(path.getPath()+"/output.txt")
@@ -40,23 +35,21 @@ public class BandwidthMeasurement {
                 long bytes_sent     = iperf.getUploadedBytes();
                 long bytes_recv     = iperf.getDownloadedBytes();
                 double time_taken   = iperf.getTimeTaken();
+
                 hostCpuUtil         = iperf.getHostCpuUtilization()[0];
                 serverCpuUtil       = iperf.getServerCpuUtilization()[0];
                 uploadBandwidth     = bytes_sent / ((1 << 20) * time_taken);
                 downloadBandwidth   = bytes_recv / ((1 << 20) * time_taken);
-
             }
             catch (IperfException e) {
                 Log.e("test", "Error: bandwidth test failed\n");
                 e.printStackTrace();
                 bStatus = false;
             }
-            finally {
-                iperf.freeTest();
-            }
 
             Log.i("test", "test done\n");
 
+            m_bUseIperf = false;
             return bStatus;
         }
 
@@ -101,6 +94,18 @@ public class BandwidthMeasurement {
             e.printStackTrace();
         }
     }
+
+    public void waitTillIperfComplete()
+    {
+        try {
+            while (td.isAlive()) {
+                Thread.sleep(100);
+            }
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }
+    }
+
     private GetPathDefaults path;
     private BandwidthMeasurement(String serverIp, GetPathDefaults path) {
         serverIpString = serverIp;
@@ -113,6 +118,8 @@ public class BandwidthMeasurement {
     {
         return m_bUseIperf;
     }
+
+
     public void setUseIperf(boolean bUseIperf) {
         m_bUseIperf = bUseIperf;
         if (m_bUseIperf) {
@@ -120,7 +127,7 @@ public class BandwidthMeasurement {
             new File(path.getPath()+"/output.txt").delete();
             td = new Thread(myClient);
             td.start();
-            myClient.TestBandwidth();
+
         } else {
             suspendThread();
         }

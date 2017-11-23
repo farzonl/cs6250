@@ -3,6 +3,7 @@ package cs6250.benchmarkingsuite.imageprocessing.core;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,14 +11,17 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
-
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CompoundButton;
 import org.opencv.android.JavaCameraView;
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
+import cs6250.benchmarkingsuite.imageprocessing.metrics.AndroidDefaults;
 import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
 import cs6250.benchmarkingsuite.imageprocessing.pipeline.LocalEffectTask;
 
@@ -36,7 +40,9 @@ public class VideoViewingActivity extends Activity {
     // The view that passes frames to the ImageProcessor from the camera and displays the frames from the pipeline.
     private JavaCameraView mView;
 
-    TextView downloadBandwidth, uploadBandwidth, hostCpuUtilization, serverCpuUtilization;
+    TextView downloadBandwidth, uploadBandwidth, hostCpuUtilization, serverCpuUtilization, iperfLabel;
+    Button iperfLogBtn;
+    CheckBox enabledIperf;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,18 +57,58 @@ public class VideoViewingActivity extends Activity {
         setContentView(R.layout.activity_video_viewing);
         Button button = findViewById(R.id.pipeline);
 
-        downloadBandwidth = (TextView) findViewById(R.id.text_view_idDownloadBandwidth);
-        uploadBandwidth = (TextView) findViewById(R.id.text_view_idUploadBandwidth);
+        downloadBandwidth = findViewById(R.id.text_view_idDownloadBandwidth);
+        uploadBandwidth = findViewById(R.id.text_view_idUploadBandwidth);
 
-        hostCpuUtilization = (TextView) findViewById(R.id.text_view_idHostCpuUtil);
-        serverCpuUtilization = (TextView) findViewById(R.id.text_view_idServerCpuUtil);
-
-        downloadBandwidth.setVisibility(View.INVISIBLE);
-        uploadBandwidth.setVisibility(View.INVISIBLE);
-        hostCpuUtilization.setVisibility(View.INVISIBLE);
-        serverCpuUtilization.setVisibility(View.INVISIBLE);
-
+        hostCpuUtilization = findViewById(R.id.text_view_idHostCpuUtil);
+        serverCpuUtilization = findViewById(R.id.text_view_idServerCpuUtil);
+        iperfLogBtn = findViewById(R.id.iperLog);
+        iperfLabel = findViewById(R.id.textView_iperf);
+        enabledIperf = findViewById(R.id.enableIperf);
+        
         button.setOnClickListener(new StartPipeline(this));
+
+        enabledIperf.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()) {
+                    BandwidthMeasurement.init(CloudClientSingelton.getInstance().getIPAddress(), new AndroidDefaults(VideoViewingActivity.this));
+                    final BandwidthMeasurement measurements = BandwidthMeasurement.getInstance();
+                    measurements.setUseIperf(true);
+                    AsyncTask.execute(new Runnable() {
+                        public void run() {
+                            measurements.waitTillIperfComplete();
+                            VideoViewingActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    iperfLogBtn.setVisibility(View.VISIBLE);
+                                    downloadBandwidth.setVisibility(View.VISIBLE);
+                                    uploadBandwidth.setVisibility(View.VISIBLE);
+                                    hostCpuUtilization.setVisibility(View.VISIBLE);
+                                    serverCpuUtilization.setVisibility(View.VISIBLE);
+
+                                    String upBandwidthMsg = "Upload bandwidth: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
+                                    String dwnBandwidthMsg = "Download bandwidth: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
+                                    String cpuUtilizationMsg = "host cpu util: " + measurements.getHostCpuUtil();
+                                    String serverUtilizationMsg = "server cpu util: " + measurements.getServerCpuUtil();
+
+                                    downloadBandwidth.setText(dwnBandwidthMsg);
+                                    uploadBandwidth.setText(upBandwidthMsg);
+                                    hostCpuUtilization.setText(cpuUtilizationMsg);
+                                    serverCpuUtilization.setText(serverUtilizationMsg);
+                                    enabledIperf.setChecked(false);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    BandwidthMeasurement bandwidth = BandwidthMeasurement.getInstance();
+                    if (bandwidth != null) {
+                        bandwidth.setUseIperf(false);
+                    }
+                }
+            }
+        });
     }
 
     public void switchToEffectEditor() {
@@ -132,28 +178,19 @@ public class VideoViewingActivity extends Activity {
         return true;
     }
 
+    public void onPerfLogClicked(View view) {
+        Intent perfLogViewIntent = new Intent(this, IperfLogViewerActivity.class);
+        startActivity(perfLogViewIntent);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(TAG, "onActivityResult");
 
         if(CloudClientSingelton.getInstance().shouldUseCloud())
         {
-            downloadBandwidth.setVisibility(View.VISIBLE);
-            uploadBandwidth.setVisibility(View.VISIBLE);
-            hostCpuUtilization.setVisibility(View.VISIBLE);
-            serverCpuUtilization.setVisibility(View.VISIBLE);
-            BandwidthMeasurement measurements =  BandwidthMeasurement.getInstance();
-            if(measurements != null) {
-                String upBandwidthMsg = "Upload bandwidth: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
-                String dwnBandwidthMsg = "Download bandwidth: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
-                String cpuUtilizationMsg = "host cpu util: " + measurements.getHostCpuUtil();
-                String serverUtilizationMsg = "server cpu util: " + measurements.getServerCpuUtil();
-
-                downloadBandwidth.setText(dwnBandwidthMsg);
-                uploadBandwidth.setText(upBandwidthMsg);
-                hostCpuUtilization.setText(cpuUtilizationMsg);
-                serverCpuUtilization.setText(serverUtilizationMsg);
-            }
+            enabledIperf.setVisibility(View.VISIBLE);
+            iperfLabel.setVisibility(View.VISIBLE);
         }
         if (requestCode == EDIT_PIPELINE) {
             if (resultCode == RESULT_OK) {

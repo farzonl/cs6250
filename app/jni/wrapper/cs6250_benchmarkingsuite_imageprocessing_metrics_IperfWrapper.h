@@ -9,83 +9,83 @@ extern "C" {
 #endif
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
- * Method:    newTestImpl
- * Signature: ()J
+ * Method:    initNativeIperfImpl
+ * Signature: ()Z
  */
-JNIEXPORT jlong JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_newTestImpl
+JNIEXPORT jboolean JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_initNativeIperfImpl
   (JNIEnv *, jobject);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
- * Method:    freeTestImpl
- * Signature: (J)V
+ * Method:    cleanUp
+ * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_freeTestImpl
-  (JNIEnv *, jobject, jlong);
+JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_cleanUp
+  (JNIEnv *, jobject);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    testRoleImpl
- * Signature: (JC)V
+ * Signature: (C)V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_testRoleImpl
-  (JNIEnv *, jobject, jlong, jchar);
+  (JNIEnv *, jobject, jchar);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    defaultsImpl
- * Signature: (J)V
+ * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_defaultsImpl
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    hostnameImpl
- * Signature: (JLjava/lang/String;)V
+ * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_hostnameImpl
-  (JNIEnv *, jobject, jlong, jstring);
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    tempFileTemplateImpl
- * Signature: (JLjava/lang/String;)V
+ * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_tempFileTemplateImpl
-  (JNIEnv *, jobject, jlong, jstring);
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    durationImpl
- * Signature: (JI)V
+ * Signature: (I)V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_durationImpl
-  (JNIEnv *, jobject, jlong, jint);
+  (JNIEnv *, jobject, jint);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    logFileImpl
- * Signature: (JLjava/lang/String;)V
+ * Signature: (Ljava/lang/String;)V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_logFileImpl
-  (JNIEnv *, jobject, jlong, jstring);
+  (JNIEnv *, jobject, jstring);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    runClientImpl
- * Signature: (J)V
+ * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_runClientImpl
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    outputJsonImpl
- * Signature: (JZ)V
+ * Signature: (Z)V
  */
 JNIEXPORT void JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_outputJsonImpl
-  (JNIEnv *, jobject, jlong, jboolean);
+  (JNIEnv *, jobject, jboolean);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
@@ -114,18 +114,18 @@ JNIEXPORT jdouble JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    getHostCpuUtilization
- * Signature: (J)[D
+ * Signature: ()[D
  */
 JNIEXPORT jdoubleArray JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_getHostCpuUtilization
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper
  * Method:    getServerCpuUtilization
- * Signature: (J)[D
+ * Signature: ()[D
  */
 JNIEXPORT jdoubleArray JNICALL Java_cs6250_benchmarkingsuite_imageprocessing_metrics_IperfWrapper_getServerCpuUtilization
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *, jobject);
 
 #ifdef __cplusplus
 }
