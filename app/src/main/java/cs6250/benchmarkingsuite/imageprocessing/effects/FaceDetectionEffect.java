@@ -10,15 +10,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
-import java.io.File;
-import java.io.InputStream;
-
-import cs6250.benchmarkingsuite.imageprocessing.R;
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
-
-import static android.R.attr.height;
-import static android.R.attr.width;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceDetectionClassifier;
 
 public class FaceDetectionEffect extends Effect {
 

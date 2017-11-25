@@ -18,8 +18,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.FaceSwapResources;
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceSwapResources;
 
 public class FaceSwapEffect extends Effect{
     private Mat face;

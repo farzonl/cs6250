@@ -1,4 +1,4 @@
-package cs6250.benchmarkingsuite.imageprocessing.staticfiles;
+package cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -31,6 +31,18 @@ public class FaceSwapResources {
         if (object == null) {
             object = new FaceSwapResources(ctx);
         }
+    }
+
+    public static void initStorage() {
+        if (object == null) {
+            object = new FaceSwapResources();
+        }
+    }
+
+    public FaceSwapResources() {
+        //To Do: Load mask and elli's image.
+        mask = new Mat();
+        elli = new Mat();
     }
 
     public static Mat getMask() {

@@ -1,13 +1,8 @@
-package cs6250.benchmarkingsuite.imageprocessing.staticfiles;
+package cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
@@ -20,14 +15,23 @@ public class CarDetectionClassifier {
     private static CarDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
+    public static void initStorage() {
+        if (object == null) {
+            object = new CarDetectionClassifier();
+        }
+    }
+
+    public CarDetectionClassifier() {
+        String classifierPath = "../xml_files/cars.xml";
+        String resource = getClass().getResource(classifierPath).getPath();
+        cascadeClassifier = new CascadeClassifier();
+        cascadeClassifier.load(resource);
+    }
+
     public static void initStorage(Context ctx) {
         if (object == null) {
             object = new CarDetectionClassifier(ctx);
         }
-    }
-
-    public static CascadeClassifier getCascadeClassifier() {
-        return cascadeClassifier;
     }
 
     public CarDetectionClassifier(Context ctx) {
@@ -51,5 +55,9 @@ public class CarDetectionClassifier {
         } catch (Exception e) {
             Log.e("OpenCVActivity", "Error loading cascade", e);
         }
+    }
+
+    public static CascadeClassifier getCascadeClassifier() {
+        return cascadeClassifier;
     }
 }

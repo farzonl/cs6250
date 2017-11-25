@@ -1,4 +1,4 @@
-package cs6250.benchmarkingsuite.imageprocessing.staticfiles;
+package cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,13 +11,13 @@ import java.io.InputStream;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
-public class CatDetectionClassifier {
-    private static CatDetectionClassifier object;
+public class NoseDetectionClassifier {
+    private static NoseDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
     public static void initStorage(Context ctx) {
         if (object == null) {
-            object = new CatDetectionClassifier(ctx);
+            object = new NoseDetectionClassifier(ctx);
         }
     }
 
@@ -25,12 +25,12 @@ public class CatDetectionClassifier {
         return cascadeClassifier;
     }
 
-    public CatDetectionClassifier(Context ctx) {
+    public NoseDetectionClassifier(Context ctx) {
         try {
             // Copy the resource into a temp file so OpenCV can load it
-            InputStream is = ctx.getResources().openRawResource(R.raw.haarcascade_frontalcatface_extended);
+            InputStream is = ctx.getResources().openRawResource(R.raw.nose);
             File cascadeDir = ctx.getDir("cascade", Context.MODE_PRIVATE);
-            File mCascadeFile = new File(cascadeDir, "haarcascade_frontalcatface_extended.xml");
+            File mCascadeFile = new File(cascadeDir, "nose.xml");
             FileOutputStream os = new FileOutputStream(mCascadeFile);
 
             byte[] buffer = new byte[4096];
@@ -46,5 +46,17 @@ public class CatDetectionClassifier {
         } catch (Exception e) {
             Log.e("OpenCVActivity", "Error loading cascade", e);
         }
+    }
+
+    public static void initStorage() {
+        if (object == null) {
+            object = new NoseDetectionClassifier();
+        }
+    }
+    public NoseDetectionClassifier() {
+        String classifierPath = "../xml_files/nose.xml";
+        String resource = getClass().getResource(classifierPath).getPath();
+        cascadeClassifier = new CascadeClassifier();
+        cascadeClassifier.load(resource);
     }
 }

@@ -10,7 +10,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.NoseDetectionClassifier;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.NoseDetectionClassifier;
 
 public class NoseDetectionEffect extends Effect {
     @Override

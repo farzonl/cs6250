@@ -10,8 +10,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.EyeDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.EyeDetectionClassifier;
 
 public class EyeDetectionEffect extends  Effect {
     @Override

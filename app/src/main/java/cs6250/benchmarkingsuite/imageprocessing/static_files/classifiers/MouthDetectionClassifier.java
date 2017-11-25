@@ -1,4 +1,4 @@
-package cs6250.benchmarkingsuite.imageprocessing.staticfiles;
+package cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,13 +11,13 @@ import java.io.InputStream;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
-public class FaceDetectionClassifier {
-    private static FaceDetectionClassifier object;
+public class MouthDetectionClassifier {
+    private static MouthDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
     public static void initStorage(Context ctx) {
         if (object == null) {
-            object = new FaceDetectionClassifier(ctx);
+            object = new MouthDetectionClassifier(ctx);
         }
     }
 
@@ -25,12 +25,12 @@ public class FaceDetectionClassifier {
         return cascadeClassifier;
     }
 
-    public FaceDetectionClassifier(Context ctx) {
+    public MouthDetectionClassifier(Context ctx) {
         try {
             // Copy the resource into a temp file so OpenCV can load it
-            InputStream is = ctx.getResources().openRawResource(R.raw.lbpcascade_frontalface);
+            InputStream is = ctx.getResources().openRawResource(R.raw.haarcascade_mcs_mouth);
             File cascadeDir = ctx.getDir("cascade", Context.MODE_PRIVATE);
-            File mCascadeFile = new File(cascadeDir, "lbpcascade_frontalface.xml");
+            File mCascadeFile = new File(cascadeDir, "haarcascade_mcs_mouth.xml");
             FileOutputStream os = new FileOutputStream(mCascadeFile);
 
             byte[] buffer = new byte[4096];
@@ -46,5 +46,17 @@ public class FaceDetectionClassifier {
         } catch (Exception e) {
             Log.e("OpenCVActivity", "Error loading cascade", e);
         }
+    }
+
+    public static void initStorage() {
+        if (object == null) {
+            object = new MouthDetectionClassifier();
+        }
+    }
+    public MouthDetectionClassifier() {
+        String classifierPath = "../xml_files/haarcascade_mcs_mouth.xml";
+        String resource = getClass().getResource(classifierPath).getPath();
+        cascadeClassifier = new CascadeClassifier();
+        cascadeClassifier.load(resource);
     }
 }

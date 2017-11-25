@@ -9,25 +9,16 @@ import com.tzutalin.dlib.VisionDetRet;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfInt;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.objdetect.CascadeClassifier;
-import org.opencv.photo.Photo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cs6250.benchmarkingsuite.imageprocessing.staticfiles.Storage;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.Storage;
 
-import static android.R.attr.height;
 import static org.opencv.core.Core.addWeighted;
 import static org.opencv.core.Core.bitwise_and;
 

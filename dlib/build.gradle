@@ -49,6 +49,20 @@ dependencies {
     javadocDeps "com.android.support:support-annotations:${rootProject.ext.androidSupportSdkVersion}"
 }
 
+task deleteJar(type: Delete) {
+    delete 'libs/dlib.jar'
+}
+
+task createJar(type: Copy) {
+    from('build/intermediates/bundles/release/')
+    into('libs/jars/')
+    include('classes.jar')
+    rename('classes.jar', 'dlib.jar')
+}
+
+createJar.dependsOn(deleteJar, build)
+
+
 buildscript {
     repositories {
         mavenCentral()
