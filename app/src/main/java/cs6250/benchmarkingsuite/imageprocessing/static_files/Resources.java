@@ -18,8 +18,8 @@ public class Resources {
         MouthDetectionClassifier.initMouthDetectionClassifier();
         EyeDetectionClassifier.initEyeDetectionClassifier();
         FaceDetectionClassifier.initFaceDetectionClassifier();
-        MaskResources.initMaskResources();
-        FaceSwapResources.initFaceSwapResources();
+//        MaskResources.initMaskResources();
+//        FaceSwapResources.initFaceSwapResources();
     }
 
     public static void initServerResources(Context ctx) {
