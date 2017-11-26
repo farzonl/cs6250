@@ -15,7 +15,7 @@ public class FaceDetectionClassifier {
     private static FaceDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
-    public static void initStorage(Context ctx) {
+    public static void initFaceDetectionClassifier(Context ctx) {
         if (object == null) {
             object = new FaceDetectionClassifier(ctx);
         }
@@ -48,13 +48,13 @@ public class FaceDetectionClassifier {
         }
     }
 
-    public static void initStorage() {
+    public static void initFaceDetectionClassifier() {
         if (object == null) {
             object = new FaceDetectionClassifier();
         }
     }
     public FaceDetectionClassifier() {
-        String classifierPath = "../xml_files/lbpcascade_frontalface.xml";
+        String classifierPath = "../xml/lbpcascade_frontalface.xml";
         String resource = getClass().getResource(classifierPath).getPath();
         cascadeClassifier = new CascadeClassifier();
         cascadeClassifier.load(resource);

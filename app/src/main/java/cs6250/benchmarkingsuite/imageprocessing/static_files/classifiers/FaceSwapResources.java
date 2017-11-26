@@ -27,13 +27,13 @@ public class FaceSwapResources {
         Utils.bitmapToMat(bmpElli, elli);
     }
 
-    public static void initStorage(Context ctx) {
+    public static void initFaceSwapResources(Context ctx) {
         if (object == null) {
             object = new FaceSwapResources(ctx);
         }
     }
 
-    public static void initStorage() {
+    public static void initFaceSwapResources() {
         if (object == null) {
             object = new FaceSwapResources();
         }

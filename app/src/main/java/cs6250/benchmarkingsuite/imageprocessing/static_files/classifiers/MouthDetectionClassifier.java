@@ -15,7 +15,7 @@ public class MouthDetectionClassifier {
     private static MouthDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
-    public static void initStorage(Context ctx) {
+    public static void initMouthDetectionClassifier(Context ctx) {
         if (object == null) {
             object = new MouthDetectionClassifier(ctx);
         }
@@ -48,13 +48,13 @@ public class MouthDetectionClassifier {
         }
     }
 
-    public static void initStorage() {
+    public static void initMouthDetectionClassifier() {
         if (object == null) {
             object = new MouthDetectionClassifier();
         }
     }
     public MouthDetectionClassifier() {
-        String classifierPath = "../xml_files/haarcascade_mcs_mouth.xml";
+        String classifierPath = "../xml/haarcascade_mcs_mouth.xml";
         String resource = getClass().getResource(classifierPath).getPath();
         cascadeClassifier = new CascadeClassifier();
         cascadeClassifier.load(resource);

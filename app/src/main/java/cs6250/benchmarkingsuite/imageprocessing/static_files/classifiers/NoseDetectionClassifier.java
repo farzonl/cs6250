@@ -15,7 +15,7 @@ public class NoseDetectionClassifier {
     private static NoseDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
-    public static void initStorage(Context ctx) {
+    public static void initNoseDetectionClassifier(Context ctx) {
         if (object == null) {
             object = new NoseDetectionClassifier(ctx);
         }
@@ -48,13 +48,13 @@ public class NoseDetectionClassifier {
         }
     }
 
-    public static void initStorage() {
+    public static void initNoseDetectionClassifier() {
         if (object == null) {
             object = new NoseDetectionClassifier();
         }
     }
     public NoseDetectionClassifier() {
-        String classifierPath = "../xml_files/nose.xml";
+        String classifierPath = "../xml/nose.xml";
         String resource = getClass().getResource(classifierPath).getPath();
         cascadeClassifier = new CascadeClassifier();
         cascadeClassifier.load(resource);

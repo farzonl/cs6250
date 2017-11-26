@@ -15,7 +15,7 @@ public class CatDetectionClassifier {
     private static CatDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
-    public static void initStorage(Context ctx) {
+    public static void initCatDetectionClassifier(Context ctx) {
         if (object == null) {
             object = new CatDetectionClassifier(ctx);
         }
@@ -48,13 +48,13 @@ public class CatDetectionClassifier {
         }
     }
 
-    public static void initStorage() {
+    public static void initCatDetectionClassifier() {
         if (object == null) {
             object = new CatDetectionClassifier();
         }
     }
     public CatDetectionClassifier() {
-        String classifierPath = "../xml_files/lbpcascade_frontalcatface.xml";
+        String classifierPath = "../xml/lbpcascade_frontalcatface.xml";
         String resource = getClass().getResource(classifierPath).getPath();
         cascadeClassifier = new CascadeClassifier();
         cascadeClassifier.load(resource);

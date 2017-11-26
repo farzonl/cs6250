@@ -15,20 +15,20 @@ public class CarDetectionClassifier {
     private static CarDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
-    public static void initStorage() {
+    public static void initCarDetectionClassifier() {
         if (object == null) {
             object = new CarDetectionClassifier();
         }
     }
 
     public CarDetectionClassifier() {
-        String classifierPath = "../xml_files/cars.xml";
+        String classifierPath = "../xml/cars.xml";
         String resource = getClass().getResource(classifierPath).getPath();
         cascadeClassifier = new CascadeClassifier();
         cascadeClassifier.load(resource);
     }
 
-    public static void initStorage(Context ctx) {
+    public static void initCarDetectionClassifier(Context ctx) {
         if (object == null) {
             object = new CarDetectionClassifier(ctx);
         }

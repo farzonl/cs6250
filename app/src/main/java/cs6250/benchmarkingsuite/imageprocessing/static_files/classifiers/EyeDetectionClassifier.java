@@ -15,7 +15,7 @@ public class EyeDetectionClassifier {
     private static EyeDetectionClassifier object;
     private static CascadeClassifier cascadeClassifier;
 
-    public static void initStorage(Context ctx) {
+    public static void initEyeDetectionClassifier(Context ctx) {
         if (object == null) {
             object = new EyeDetectionClassifier(ctx);
         }
@@ -48,13 +48,13 @@ public class EyeDetectionClassifier {
         }
     }
 
-    public static void initStorage() {
+    public static void initEyeDetectionClassifier() {
         if (object == null) {
             object = new EyeDetectionClassifier();
         }
     }
     public EyeDetectionClassifier() {
-        String classifierPath = "../xml_files/haarcascade_eye_tree_eyeglasses.xml";
+        String classifierPath = "../xml/haarcascade_eye_tree_eyeglasses.xml";
         String resource = getClass().getResource(classifierPath).getPath();
         cascadeClassifier = new CascadeClassifier();
         cascadeClassifier.load(resource);
