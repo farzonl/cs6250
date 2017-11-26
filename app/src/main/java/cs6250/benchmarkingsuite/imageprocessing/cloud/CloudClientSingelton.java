@@ -6,7 +6,7 @@ package cs6250.benchmarkingsuite.imageprocessing.cloud;
 
 public final class CloudClientSingelton {
     private static volatile CloudClientSingelton instance = null;
-    public CloudClient cloudClient;
+    public UDPCloudClient cloudClient;
     private boolean m_bUseCloud = false;
     private Thread td;
 
@@ -96,7 +96,7 @@ public final class CloudClientSingelton {
     }
 
     private CloudClientSingelton() {
-        cloudClient = new CloudClient();
+        cloudClient = new UDPCloudClient();
 
     }
 
