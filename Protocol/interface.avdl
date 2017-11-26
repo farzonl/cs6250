@@ -1,0 +1,7 @@
+@namespace("cs6250.benchmarkingsuite.imageprocessing.server")
+protocol BenchProtocol {
+	void addGrayscaleEffect();
+	void clearEffects();
+
+	array<bytes> addFrames(array<bytes> frames);
+}
