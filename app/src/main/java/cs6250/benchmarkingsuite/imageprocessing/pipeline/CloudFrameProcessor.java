@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
+import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClient;
 import cs6250.benchmarkingsuite.imageprocessing.effects.*;
 
 /**
@@ -102,8 +103,32 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
                 } else if (effect.getEffect() instanceof CheckerBoardDetectionEffect) {
                     CloudClientSingelton.getInstance().cloudClient.addCheckerBoardDetectionEffect();
                 }else if (effect.getEffect() instanceof BlurEffect ) {
-                    CloudClientSingelton.getInstance().cloudClient.addCheckerBoardDetectionEffect();
+                    CloudClientSingelton.getInstance().cloudClient.addBlurEffect();
+                }else if (effect.getEffect() instanceof ColorSaturationEffect ) {
+                CloudClientSingelton.getInstance().cloudClient.addColorSaturationEffect();
+                }else if (effect.getEffect() instanceof GradientMagnitudeEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addGradientMagnitudeEffect();
+                }else if (effect.getEffect() instanceof EdgeDetectionEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addEdgeDetectionEffect();
+                }else if (effect.getEffect() instanceof HoughCircleEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addHoughCircleEffect();
+                } else if (effect.getEffect() instanceof HoughLineEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addHoughLineEffect();
+                } else if (effect.getEffect() instanceof HorizontalFlipEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addHorizontalFlipEffect();
+                } else if (effect.getEffect() instanceof XrayEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addXrayEffect();
+                } else if (effect.getEffect() instanceof VerticalFlipEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addVerticalEffect();
+                } else if (effect.getEffect() instanceof SepiaEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addSepiaEffect();
+                } else if (effect.getEffect() instanceof NegativeEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addNegativeEffect();
+                } else if (effect.getEffect() instanceof MotionHistoryEffect ) {
+                    CloudClientSingelton.getInstance().cloudClient.addMotionHistoryEffect();
                 }
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
