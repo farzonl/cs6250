@@ -10,32 +10,32 @@ import org.opencv.core.Mat;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
-public final class Storage {
+public final class MaskResources {
     private Context ctx;
     private static Mat mask;
 
-    private static Storage object;
+    private static MaskResources object;
 
-    public Storage(Context ctx) {
+    public MaskResources(Context ctx) {
         this.ctx = ctx;
         Bitmap bmpMask = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.sunglasses);
         mask = new Mat(bmpMask.getWidth(), bmpMask.getHeight(), CvType.CV_8UC4);
         Utils.bitmapToMat(bmpMask, mask);
     }
 
-    public static void initStorage(Context ctx) {
+    public static void initMaskResources(Context ctx) {
         if (object == null) {
-            object = new Storage(ctx);
+            object = new MaskResources(ctx);
         }
     }
 
-    public static void initStorage() {
+    public static void initMaskResources() {
         if (object == null) {
-            object = new Storage();
+            object = new MaskResources();
         }
     }
 
-    public Storage() {
+    public MaskResources() {
         //To Do
         mask = new Mat();
     }

@@ -22,6 +22,7 @@ import android.content.pm.PackageManager;
 
 import com.tzutalin.dlib.Constants;
 
+import cs6250.benchmarkingsuite.imageprocessing.static_files.Resources;
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.CarDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.CatDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.EyeDetectionClassifier;
@@ -29,7 +30,7 @@ import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceDet
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceSwapResources;
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.NoseDetectionClassifier;
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.MouthDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.Storage;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.MaskResources;
 
 /**
  * Starting point of the app that makes sure that the user has the OpenCV package installed on their device.
@@ -99,19 +100,7 @@ public class OpenCVInitActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        Storage str = new Storage(getApplicationContext());
-
-        FaceDetectionClassifier faceDetectionClassifier = new FaceDetectionClassifier(getApplicationContext());
-        EyeDetectionClassifier eyeDetectionClassifier = new EyeDetectionClassifier(getApplicationContext());
-        MouthDetectionClassifier mouthDetectionClassifier = new MouthDetectionClassifier(getApplicationContext());
-        NoseDetectionClassifier noseDetectionClassifier = new NoseDetectionClassifier(getApplicationContext());
-        CarDetectionClassifier carDetectionClassifier = new CarDetectionClassifier(getApplicationContext());
-        CatDetectionClassifier catDetectionClassifier = new CatDetectionClassifier(getApplicationContext());
-
-        FaceSwapResources faceSwapResources = new FaceSwapResources(getApplicationContext());
-
-        Constants cs = new Constants();
-//        MovementDetector.initMovementDetector();
+        Resources.initServerResources(getApplicationContext());
 
         Log.i(TAG, "Trying to load OpenCV library");
         if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_3_0, this, mOpenCVCallBack))

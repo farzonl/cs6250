@@ -17,7 +17,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.Storage;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.MaskResources;
 
 import static org.opencv.core.Core.addWeighted;
 import static org.opencv.core.Core.bitwise_and;
@@ -27,7 +27,7 @@ public class MaskEffect extends Effect {
 
     @Override
     public Mat applyTo(Mat frame) {
-        Mat mask = Storage.getMask();
+        Mat mask = MaskResources.getMask();
 
         Bitmap bmp = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(frame, bmp);

@@ -14,14 +14,14 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.Storage;
+import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.MaskResources;
 
 public class SimpleMaskEffect extends Effect {
     private Mat face;
 
     @Override
     public Mat applyTo(Mat frame) {
-        Mat mask = Storage.getMask();
+        Mat mask = MaskResources.getMask();
 
         Mat grayscaleImage = new Mat(frame.cols(), frame.rows(), CvType.CV_8UC4);
 
