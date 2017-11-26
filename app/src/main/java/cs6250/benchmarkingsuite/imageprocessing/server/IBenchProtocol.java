@@ -8,7 +8,7 @@ package cs6250.benchmarkingsuite.imageprocessing.server;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public interface IBenchProtocol {
-  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"BenchProtocol\",\"namespace\":\"cs6250.benchmarkingsuite.imageprocessing.server\",\"types\":[],\"messages\":{\"addGrayscaleEffect\":{\"request\":[],\"response\":\"null\"},\"addIdentityEffect\":{\"request\":[],\"response\":\"null\"},\"clearEffects\":{\"request\":[],\"response\":\"null\"},\"addCartoonEffect\":{\"request\":[],\"response\":\"null\"},\"addFaceDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addMaskEffect\":{\"request\":[],\"response\":\"null\"},\"addMotionDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addCheckerBoardDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}},\"addCompressedFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}},{\"name\":\"algo\",\"type\":\"string\"}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}}}}");
+  public static final org.apache.avro.Protocol PROTOCOL = org.apache.avro.Protocol.parse("{\"protocol\":\"IBenchProtocol\",\"namespace\":\"cs6250.benchmarkingsuite.imageprocessing.server\",\"types\":[],\"messages\":{\"addGrayscaleEffect\":{\"request\":[],\"response\":\"null\"},\"addIdentityEffect\":{\"request\":[],\"response\":\"null\"},\"clearEffects\":{\"request\":[],\"response\":\"null\"},\"addCartoonEffect\":{\"request\":[],\"response\":\"null\"},\"addFaceDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addMaskEffect\":{\"request\":[],\"response\":\"null\"},\"addMotionDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addCheckerBoardDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addMotionHistoryEffect\":{\"request\":[],\"response\":\"null\"},\"addNegativeEffect\":{\"request\":[],\"response\":\"null\"},\"addSepiaEffect\":{\"request\":[],\"response\":\"null\"},\"addVerticalEffect\":{\"request\":[],\"response\":\"null\"},\"addXrayEffect\":{\"request\":[],\"response\":\"null\"},\"addHorizontalFlipEffect\":{\"request\":[],\"response\":\"null\"},\"addHoughCircleEffect\":{\"request\":[],\"response\":\"null\"},\"addHoughLineEffect\":{\"request\":[],\"response\":\"null\"},\"addEdgeDetectionEffect\":{\"request\":[],\"response\":\"null\"},\"addGradientMagnitudeEffect\":{\"request\":[],\"response\":\"null\"},\"addBlurEffect\":{\"request\":[],\"response\":\"null\"},\"addColorSaturationEffect\":{\"request\":[],\"response\":\"null\"},\"addFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}},\"addCompressedFrames\":{\"request\":[{\"name\":\"frames\",\"type\":{\"type\":\"array\",\"items\":\"bytes\"}},{\"name\":\"algo\",\"type\":\"string\"}],\"response\":{\"type\":\"array\",\"items\":\"bytes\"}}}}");
   /**
    */
   java.lang.Void addGrayscaleEffect() throws org.apache.avro.AvroRemoteException;
@@ -33,6 +33,42 @@ public interface IBenchProtocol {
   /**
    */
   java.lang.Void addCheckerBoardDetectionEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addMotionHistoryEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addNegativeEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addSepiaEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addVerticalEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addXrayEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addHorizontalFlipEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addHoughCircleEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addHoughLineEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addEdgeDetectionEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addGradientMagnitudeEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addBlurEffect() throws org.apache.avro.AvroRemoteException;
+  /**
+   */
+  java.lang.Void addColorSaturationEffect() throws org.apache.avro.AvroRemoteException;
   /**
    */
   java.util.List<java.nio.ByteBuffer> addFrames(java.util.List<java.nio.ByteBuffer> frames) throws org.apache.avro.AvroRemoteException;
@@ -75,6 +111,54 @@ public interface IBenchProtocol {
      * @throws java.io.IOException The async call could not be completed.
      */
     void addCheckerBoardDetectionEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addMotionHistoryEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addNegativeEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addSepiaEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addVerticalEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addXrayEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addHorizontalFlipEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addHoughCircleEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addHoughLineEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addEdgeDetectionEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addGradientMagnitudeEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addBlurEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
+    /**
+     * @throws java.io.IOException The async call could not be completed.
+     */
+    void addColorSaturationEffect(org.apache.avro.ipc.Callback<java.lang.Void> callback) throws java.io.IOException;
     /**
      * @throws java.io.IOException The async call could not be completed.
      */
