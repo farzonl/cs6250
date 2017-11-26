@@ -17,34 +17,9 @@ import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CarDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CatDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.EyeDetectionEffect;
+
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
-import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceFeatureDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceLandMarksEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceSwapEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.NoseDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MouthDetectionEffect;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewParent;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.LinearLayout;
-import android.widget.EditText;
-import android.widget.TextView;
-
+import cs6250.benchmarkingsuite.imageprocessing.effects.*;
 
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
@@ -153,6 +128,78 @@ public class PipelineEditingActivity extends Activity {
 		buttonMask.setOnClickListener(new AddEffectListener());
 		effectsLinearLayout.addView(buttonMask);
 
+        Button buttonBlur = new Button(this);
+        buttonBlur.setText("Blur");
+        buttonBlur.setTag(BlurEffect.class);
+        buttonBlur.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonBlur);
+
+        Button buttonColorSat = new Button(this);
+        buttonColorSat.setText("Saturate");
+        buttonColorSat.setTag(ColorSaturationEffect.class);
+        buttonColorSat.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonColorSat);
+
+        Button buttonEdgeDetect = new Button(this);
+        buttonEdgeDetect.setText("Edge Detect");
+        buttonEdgeDetect.setTag(EdgeDetectionEffect.class);
+        buttonEdgeDetect.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonEdgeDetect);
+
+        Button buttonGradientMag = new Button(this);
+        buttonGradientMag.setText("Gradient Magnify");
+        buttonGradientMag.setTag(GradientMagnitudeEffect.class);
+        buttonGradientMag.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonGradientMag);
+
+        Button buttonHflip = new Button(this);
+        buttonHflip.setText("Horizontal flip");
+        buttonHflip.setTag(HorizontalFlipEffect.class);
+        buttonHflip.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonHflip);
+
+        Button buttonVflip = new Button(this);
+        buttonVflip.setText("Vertical flip");
+        buttonVflip.setTag(VerticalFlipEffect.class);
+        buttonVflip.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonVflip);
+
+        Button buttonHoughCircle = new Button(this);
+        buttonHoughCircle.setText("Hough Circle");
+        buttonHoughCircle.setTag(HoughCircleEffect.class);
+        buttonHoughCircle.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonHoughCircle);
+
+        Button buttonHoughLine = new Button(this);
+        buttonHoughLine.setText("Hough Line");
+        buttonHoughLine.setTag(HoughLineEffect.class);
+        buttonHoughLine.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonHoughLine);
+
+        Button buttonMotionHistory = new Button(this);
+        buttonMotionHistory.setText("Motion History");
+        buttonMotionHistory.setTag(MotionHistoryEffect.class);
+        buttonMotionHistory.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonMotionHistory);
+
+        Button buttonNegative = new Button(this);
+        buttonNegative.setText("Negative");
+        buttonNegative.setTag(NegativeEffect.class);
+        buttonNegative.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonNegative);
+
+        Button buttonSepia = new Button(this);
+        buttonSepia.setText("Sepia");
+        buttonSepia.setTag(SepiaEffect.class);
+        buttonSepia.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonSepia);
+
+        Button buttonXray = new Button(this);
+        buttonXray.setText("X-Ray");
+        buttonXray.setTag(XrayEffect.class);
+        buttonXray.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonXray);
+
         // Add in new compressions here
         RadioButton buttonSnappyCompression = new RadioButton(this);
         buttonSnappyCompression.setText("Snappy");
@@ -173,11 +220,6 @@ public class PipelineEditingActivity extends Activity {
         buttonBzip2Compression.setText("bzip2");
         buttonBzip2Compression.setTag(CompressorStreamFactory.BZIP2);
         compressRadioGroup.addView(buttonBzip2Compression);
-
-        RadioButton buttonPack200Compression = new RadioButton(this);
-        buttonPack200Compression.setText("Pack200");
-        buttonPack200Compression.setTag(CompressorStreamFactory.PACK200);
-        compressRadioGroup.addView(buttonPack200Compression);
 
         RadioButton buttonLz4Compression = new RadioButton(this);
         buttonLz4Compression.setText("LZ4");

@@ -1,0 +1,36 @@
+@namespace("cs6250.benchmarkingsuite.imageprocessing.server")
+protocol IBenchProtocol {
+	void addGrayscaleEffect();
+	void addIdentityEffect();
+	void clearEffects();
+	void addCartoonEffect();
+	void addFaceDetectionEffect();
+	void addMaskEffect();
+	
+	void addMotionHistoryEffect();
+	void addNegativeEffect();
+	void addSepiaEffect();
+	void addVerticalEffect();
+	void addXrayEffect();
+	void addHorizontalFlipEffect();
+	void addHoughCircleEffect();
+	void addHoughLineEffect();
+	void addEdgeDetectionEffect();
+	void addGradientMagnitudeEffect();
+	void addBlurEffect();
+	void addColorSaturationEffect();
+
+	void addCatDetectionEffect(); 
+	void addCarDetectionEffect();
+	void addMouthDetectionEffect(); 
+	void addNoseDetectionEffect(); 
+	void addEyeDetectionEffect();
+	void addFaceFeatureDetectionEffect();
+	void addFaceLandmarksDetectionEffect();
+	void addFaceSwapEffect(); 
+
+	array<bytes> addFrames(array<bytes> frames);
+
+	// For now just supporting a single compression algorithm`
+	array<bytes> addCompressedFrames(array<bytes> frames, string algo);
+}

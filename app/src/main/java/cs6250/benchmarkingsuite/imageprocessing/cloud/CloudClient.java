@@ -1,6 +1,10 @@
 package cs6250.benchmarkingsuite.imageprocessing.cloud;
 
 import android.util.Log;
+
+import org.apache.avro.ipc.NettyTransceiver;
+import org.apache.avro.ipc.specific.SpecificRequestor;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -8,145 +12,410 @@ import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-import org.apache.avro.ipc.NettyTransceiver;
-import org.apache.avro.ipc.specific.SpecificRequestor;
-
 import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
 
 public class CloudClient implements Runnable {
 
+    NettyTransceiver transceiver;
+    IBenchProtocol.Callback client;
+    public String serverIP;
+    public int port;
+    final private Object syncObj = new Object();
 
-	NettyTransceiver transceiver;
-	IBenchProtocol.Callback client;
-	public String serverIP;
-	public int port;
+    //BandwidthMeasurement bandwidth;
 
-	//BandwidthMeasurement bandwidth;
+    @Override
+    public void run() {
+        try {
+            InitializeClient();
+        } catch (IOException e) {
+            Log.e("CloudClient", "Failed to initialize InitializeClient");
+        }
+    }
 
-	@Override
-	public void run() {
-		try {
-			InitializeClient();
-		} catch (IOException e) {
-			Log.e("CloudClient", "Failed to initialize InitializeClient");
-		}
-	}
+    private void InitializeClient() throws IOException {
+        Log.v("CloudClient", "Initializing client");
+        InetAddress serverAddr = null;
 
-	private void InitializeClient() throws IOException {
+        try {
+            serverAddr = InetAddress.getByName(serverIP);
+            transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
+            client = SpecificRequestor.getClient(IBenchProtocol.Callback.class, transceiver);
+            synchronized (syncObj) {
+                syncObj.notifyAll();
+            }
+            Log.v("CloudClient", "Connecting to server " + serverIP);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-		Log.v("CloudClient", "Initializing client");
-		//bandwidth = new BandwidthMeasurement(serverIP);
+    public synchronized void addGrayscaleEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addGrayscaleEffect();
+    }
 
-		InetAddress serverAddr = null;
+    public void addIdentityEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addIdentityEffect();
+    }
 
-		try {
-			serverAddr  = InetAddress.getByName(serverIP);
-			transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
-			client      = SpecificRequestor.getClient(IBenchProtocol.Callback.class, transceiver);
-			Log.v("CloudClient", "Connecting to server " + serverIP);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    public void addCartoonEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addCartoonEffect();
+    }
 
-	public void addGrayscaleEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addGrayscaleEffect();
-		}
+    public void addFaceDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addFaceDetectionEffect();
+    }
 
-	}
+    public void addMaskEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addMaskEffect();
+    }
 
-	public void addIdentityEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addIdentityEffect();
-		}
-	}
+    public void addBlurEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addBlurEffect();
+    }
 
-	public void addCartoonEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addCartoonEffect();
-		}
-	}
+    public void addColorSaturationEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addColorSaturationEffect();
+    }
 
-	public void addMouthDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addMouthDetectionEffect();
-		}
-	}
+    public void addMotionHistoryEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addMotionHistoryEffect();
+    }
 
-	public void addNoseDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addNoseDetectionEffect();
-		}
-	}
+    public void addNegativeEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addNegativeEffect();
+    }
 
-	public void addEyeDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addEyeDetectionEffect();
-		}
-	}
+    public void addSepiaEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addSepiaEffect();
+    }
 
-	public void addFaceDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addFaceDetectionEffect();
-		}
-	}
+    public void addVerticalEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addVerticalEffect();
+    }
 
-	public void addCarDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addCarDetectionEffect();
-		}
-	}
+    public void addXrayEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addXrayEffect();
+    }
 
-	public void addCatDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addCatDetectionEffect();
-		}
-	}
+    public void addHorizontalFlipEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addHorizontalFlipEffect();
+    }
 
-	public void addFaceFeatureDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addFaceFeatureDetectionEffect();
-		}
-	}
+    public void addHoughCircleEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addHoughCircleEffect();
+    }
 
-	public void addFaceLandmarksDetectionEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addFaceLandmarksDetectionEffect();
-		}
-	}
+    public void addHoughLineEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addHoughLineEffect();
+    }
 
-	public void addFaceSwapEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addFaceSwapEffect();
-		}
-	}
+    public void addEdgeDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addEdgeDetectionEffect();
+    }
 
-	public void addMaskEffect() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.addMaskEffect();
-		}
-	}
+    public void addGradientMagnitudeEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addGradientMagnitudeEffect();
+    }
 
-	public void addFrames(List<ByteBuffer> frames, org.apache.avro.ipc.Callback<List<ByteBuffer>> callback) throws java.io.IOException {
-		if (client != null) {
-			client.addFrames(frames, callback);
-		}
-	}
+    public void addFrames(List<ByteBuffer> frames, org.apache.avro.ipc.Callback<List<ByteBuffer>> callback) throws java.io.IOException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addFrames(frames, callback);
+    }
 
-	public void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, String algorithm, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException {
-		if (client != null) {
-			client.addCompressedFrames(frames, algorithm, callback);
-		}
-	}
+    public void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, String algorithm, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addCompressedFrames(frames, algorithm, callback);
+    }
 
-	public void clearEffects() throws org.apache.avro.AvroRemoteException {
-		if (client != null) {
-			client.clearEffects();
-		}
-	}
+    public void clearEffects() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.clearEffects();
+    }
+
+
+    public void addMouthDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addMouthDetectionEffect();
+    }
+
+    public void addNoseDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addNoseDetectionEffect();
+    }
+
+    public void addEyeDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addEyeDetectionEffect();
+    }
+
+    public void addCarDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addCarDetectionEffect();
+    }
+
+    public void addCatDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addCatDetectionEffect();
+    }
+
+    public void addFaceFeatureDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addFaceFeatureDetectionEffect();
+    }
+
+    public void addFaceLandmarksDetectionEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addFaceLandmarksDetectionEffect();
+    }
+
+
+    public void addFaceSwapEffect() throws org.apache.avro.AvroRemoteException {
+        if (client == null) {
+            try {
+                synchronized (syncObj) {
+                    syncObj.wait();
+                }
+            } catch (InterruptedException e) {
+                Log.e("CloudClient", e.getMessage(), e);
+            }
+        }
+        client.addFaceSwapEffect();
+    }
+
 }
-
-
