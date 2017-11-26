@@ -19,14 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.Frame;
-import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.IdentityEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
+import cs6250.benchmarkingsuite.imageprocessing.effects.*;
 
 /**
  * Created by farzon on 10/14/17.
@@ -107,6 +100,8 @@ public class CloudFrameProcessor extends FrameProcessor implements IPipeline {
                 } else if (effect.getEffect() instanceof MotionDetectionEffect) {
                     CloudClientSingelton.getInstance().cloudClient.addMotionDetectionEffect();
                 } else if (effect.getEffect() instanceof CheckerBoardDetectionEffect) {
+                    CloudClientSingelton.getInstance().cloudClient.addCheckerBoardDetectionEffect();
+                }else if (effect.getEffect() instanceof BlurEffect ) {
                     CloudClientSingelton.getInstance().cloudClient.addCheckerBoardDetectionEffect();
                 }
             } catch (Exception e) {
