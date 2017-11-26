@@ -23,14 +23,14 @@ public class Resources {
     }
 
     public static void initServerResources(Context ctx) {
-        FaceDetectionClassifier.initFaceDetectionClassifier(ctx.getApplicationContext());
-        EyeDetectionClassifier.initEyeDetectionClassifier(ctx.getApplicationContext());
-        MouthDetectionClassifier.initMouthDetectionClassifier(ctx.getApplicationContext());
-        NoseDetectionClassifier.initNoseDetectionClassifier(ctx.getApplicationContext());
-        CarDetectionClassifier.initCarDetectionClassifier(ctx.getApplicationContext());
-        CatDetectionClassifier.initCatDetectionClassifier(ctx.getApplicationContext());
-        FaceSwapResources.initFaceSwapResources(ctx.getApplicationContext());
-        MaskResources.initMaskResources(ctx.getApplicationContext());
+        FaceDetectionClassifier.initFaceDetectionClassifier(ctx);
+        EyeDetectionClassifier.initEyeDetectionClassifier(ctx);
+        MouthDetectionClassifier.initMouthDetectionClassifier(ctx);
+        NoseDetectionClassifier.initNoseDetectionClassifier(ctx);
+        CarDetectionClassifier.initCarDetectionClassifier(ctx);
+        CatDetectionClassifier.initCatDetectionClassifier(ctx);
+        FaceSwapResources.initFaceSwapResources(ctx);
+        MaskResources.initMaskResources(ctx);
         Constants cs = new Constants();
     }
 }
