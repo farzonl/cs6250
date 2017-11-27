@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
 import cs6250.benchmarkingsuite.imageprocessing.effects.*;
+
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
  */
@@ -52,6 +53,7 @@ public class PipelineEditingActivity extends Activity {
         ipTextBox = this.findViewById(R.id.ip_address);
         portTextBox = this.findViewById(R.id.PortNumber);
         enableCloud = findViewById(R.id.enableOffloading);
+
 
         // Add in New Effects here.
         Button buttonGrayScale = new Button(this);
@@ -217,7 +219,7 @@ public class PipelineEditingActivity extends Activity {
             portTextBox.setText(Integer.toString(portNumber));
         }
 
-        ipTextBox.setText("128.61.92.187");
+        ipTextBox.setText(IpFile.ipAddress);
         portTextBox.setText("20001");
 
         enableCloud.setChecked(cloudInstance.shouldUseCloud());
@@ -270,6 +272,7 @@ public class PipelineEditingActivity extends Activity {
         } else {
             CloudClientSingelton.getInstance().setUseCloud(false);
         }
+
         Intent result = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects", effects);
