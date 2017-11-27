@@ -18,15 +18,8 @@ import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CartoonEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.CheckerBoardDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.FaceDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.GrayscaleEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MaskEffect;
-import cs6250.benchmarkingsuite.imageprocessing.effects.MotionDetectionEffect;
-import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
-import cs6250.benchmarkingsuite.imageprocessing.metrics.AndroidDefaults;
+import cs6250.benchmarkingsuite.imageprocessing.effects.*;
+
 /**
  * Activity where the user is able to edit the pipeline by inserting and removing effects.
  */
@@ -74,6 +67,78 @@ public class PipelineEditingActivity extends Activity {
         buttonCartoon.setTag(CartoonEffect.class);
         buttonCartoon.setOnClickListener(new AddEffectListener());
         effectsLinearLayout.addView(buttonCartoon);
+
+        Button buttonBlur = new Button(this);
+        buttonBlur.setText("Blur");
+        buttonBlur.setTag(BlurEffect.class);
+        buttonBlur.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonBlur);
+
+        Button buttonColorSat = new Button(this);
+        buttonColorSat.setText("Saturate");
+        buttonColorSat.setTag(ColorSaturationEffect.class);
+        buttonColorSat.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonColorSat);
+
+        Button buttonEdgeDetect = new Button(this);
+        buttonEdgeDetect.setText("Edge Detect");
+        buttonEdgeDetect.setTag(EdgeDetectionEffect.class);
+        buttonEdgeDetect.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonEdgeDetect);
+
+        Button buttonGradientMag = new Button(this);
+        buttonGradientMag.setText("Gradient Magnify");
+        buttonGradientMag.setTag(GradientMagnitudeEffect.class);
+        buttonGradientMag.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonGradientMag);
+
+        Button buttonHflip = new Button(this);
+        buttonHflip.setText("Horizontal flip");
+        buttonHflip.setTag(HorizontalFlipEffect.class);
+        buttonHflip.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonHflip);
+
+        Button buttonVflip = new Button(this);
+        buttonVflip.setText("Vertical flip");
+        buttonVflip.setTag(VerticalFlipEffect.class);
+        buttonVflip.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonVflip);
+
+        Button buttonHoughCircle = new Button(this);
+        buttonHoughCircle.setText("Hough Circle");
+        buttonHoughCircle.setTag(HoughCircleEffect.class);
+        buttonHoughCircle.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonHoughCircle);
+
+        Button buttonHoughLine = new Button(this);
+        buttonHoughLine.setText("Hough Line");
+        buttonHoughLine.setTag(HoughLineEffect.class);
+        buttonHoughLine.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonHoughLine);
+
+        Button buttonMotionHistory = new Button(this);
+        buttonMotionHistory.setText("Motion History");
+        buttonMotionHistory.setTag(MotionHistoryEffect.class);
+        buttonMotionHistory.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonMotionHistory);
+
+        Button buttonNegative = new Button(this);
+        buttonNegative.setText("Negative");
+        buttonNegative.setTag(NegativeEffect.class);
+        buttonNegative.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonNegative);
+
+        Button buttonSepia = new Button(this);
+        buttonSepia.setText("Sepia");
+        buttonSepia.setTag(SepiaEffect.class);
+        buttonSepia.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonSepia);
+
+        Button buttonXray = new Button(this);
+        buttonXray.setText("X-Ray");
+        buttonXray.setTag(XrayEffect.class);
+        buttonXray.setOnClickListener(new AddEffectListener());
+        effectsLinearLayout.addView(buttonXray);
 
         Button buttonFaceDetection = new Button(this);
         buttonFaceDetection.setText("Face");
