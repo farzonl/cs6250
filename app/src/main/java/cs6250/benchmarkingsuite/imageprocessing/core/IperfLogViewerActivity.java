@@ -39,8 +39,7 @@ public class IperfLogViewerActivity extends Activity {
     }
 
     public void onOkClicked(View view) {
-        Intent videoViewIntent = new Intent(this, VideoViewingActivity.class);
-        startActivity(videoViewIntent);
+        this.finish();
     }
 
 }
