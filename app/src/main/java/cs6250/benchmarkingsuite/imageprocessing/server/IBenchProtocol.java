@@ -83,5 +83,7 @@ public interface IBenchProtocol {
      * @throws java.io.IOException The async call could not be completed.
      */
     void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, java.lang.CharSequence algo, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException;
+    void TCPCloudClient(java.util.List<java.nio.ByteBuffer> frames, java.lang.CharSequence algo, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException;
+    void UDPCloudClient(java.util.List<java.nio.ByteBuffer> frames, java.lang.CharSequence algo, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException;
   }
 }

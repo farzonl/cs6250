@@ -17,8 +17,8 @@ import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
 
 public class CloudClient implements Runnable {
 
-    //NettyTransceiver transceiver;
-	DatagramTransceiver transceiver;
+    NettyTransceiver transceiver;
+	//DatagramTransceiver transceiver;
     IBenchProtocol.Callback client;
     public String serverIP;
     public int port;
@@ -41,13 +41,14 @@ public class CloudClient implements Runnable {
 
         try {
             serverAddr = InetAddress.getByName(serverIP);
-            //transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
-			transceiver = new DatagramTransceiver(new InetSocketAddress(serverAddr, port));
+            transceiver = new NettyTransceiver(new InetSocketAddress(serverAddr, port));
+			//transceiver = new DatagramTransceiver(new InetSocketAddress(serverAddr, port));
+            //transceiver = new UDPTransceiver(new InetSocketAddress(serverAddr, port));
 
 			client = SpecificRequestor.getClient(IBenchProtocol.Callback.class, transceiver);
             synchronized (syncObj) {
                 syncObj.notifyAll();
-            }
+           }
             Log.v("CloudClient", "Connecting to server " + serverIP);
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -185,6 +186,7 @@ public class CloudClient implements Runnable {
         }
         client.clearEffects();
     }
-}
+    
+    }
 
 
