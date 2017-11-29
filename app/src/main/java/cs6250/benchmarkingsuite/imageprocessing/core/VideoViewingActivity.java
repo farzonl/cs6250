@@ -2,24 +2,24 @@ package cs6250.benchmarkingsuite.imageprocessing.core;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.TextView;
+
 import org.opencv.android.JavaCameraView;
-import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
+
 import java.util.ArrayList;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
+import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
 import cs6250.benchmarkingsuite.imageprocessing.effects.Effect;
 import cs6250.benchmarkingsuite.imageprocessing.metrics.AndroidDefaults;
 import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
@@ -46,15 +46,9 @@ public class VideoViewingActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.i(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-
-        // Sets fullscreen and keeps the screen on.
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         setContentView(R.layout.activity_video_viewing);
+
         Button button = findViewById(R.id.pipeline);
 
         downloadBandwidth = findViewById(R.id.text_view_idDownloadBandwidth);
@@ -65,7 +59,7 @@ public class VideoViewingActivity extends Activity {
         iperfLogBtn = findViewById(R.id.iperLog);
         iperfLabel = findViewById(R.id.textView_iperf);
         enabledIperf = findViewById(R.id.enableIperf);
-        
+
         button.setOnClickListener(new StartPipeline(this));
 
         enabledIperf.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -87,10 +81,10 @@ public class VideoViewingActivity extends Activity {
                                     hostCpuUtilization.setVisibility(View.VISIBLE);
                                     serverCpuUtilization.setVisibility(View.VISIBLE);
 
-                                    String upBandwidthMsg = "Upload bandwidth: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
-                                    String dwnBandwidthMsg = "Download bandwidth: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
-                                    String cpuUtilizationMsg = "host cpu util: " + measurements.getHostCpuUtil();
-                                    String serverUtilizationMsg = "server cpu util: " + measurements.getServerCpuUtil();
+                                    String upBandwidthMsg = "Up bw: " + String.format("%.2f", measurements.getUploadBandwidth()) + " MBps";
+                                    String dwnBandwidthMsg = "Dn bw: " + String.format("%.2f", measurements.getDownloadBandwidth()) + " MBps";
+                                    String cpuUtilizationMsg = "hstcpu: " + measurements.getHostCpuUtil();
+                                    String serverUtilizationMsg = "servcpu: " + measurements.getServerCpuUtil();
 
                                     downloadBandwidth.setText(dwnBandwidthMsg);
                                     uploadBandwidth.setText(upBandwidthMsg);

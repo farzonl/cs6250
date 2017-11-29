@@ -37,9 +37,4 @@ public class IperfLogViewerActivity extends Activity {
             }
         });
     }
-
-    public void onOkClicked(View view) {
-        this.finish();
-    }
-
 }
