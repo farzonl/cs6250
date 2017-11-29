@@ -134,7 +134,9 @@ public class VideoViewingActivity extends Activity {
         // incredibly stupid have to cast before setting null
         mView.setCvCameraViewListener((ImageProcessor) null);
 
-        Debug.stopMethodTracing();
+        if (((CheckBox) findViewById(R.id.enabletraceview)).isChecked()) {
+            Debug.stopMethodTracing();
+        }
     }
 
     @Override
@@ -220,7 +222,10 @@ public class VideoViewingActivity extends Activity {
             // To view File: View -> Tool Windows -> Device File Explorer
             // sdcard -> Android -> data -> imageprocessing -> files
             // bufferSize: "If not given, it defaults to 8MB." -> "not given" = 0?
-            Debug.startMethodTracingSampling(date.format(new Date()), 0, 50);
+
+            if (((CheckBox) findViewById(R.id.enabletraceview)).isChecked()) {
+                Debug.startMethodTracingSampling(date.format(new Date()), 0, 50);
+            }
         }
     }
 }
