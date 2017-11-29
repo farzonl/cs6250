@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +17,10 @@ import android.widget.TextView;
 
 import org.opencv.android.JavaCameraView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 import cs6250.benchmarkingsuite.imageprocessing.cloud.CloudClientSingelton;
@@ -44,6 +48,8 @@ public class VideoViewingActivity extends Activity {
     Button iperfLogBtn;
     CheckBox enabledIperf;
 
+    DateFormat date;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,8 @@ public class VideoViewingActivity extends Activity {
         enabledIperf = findViewById(R.id.enableIperf);
 
         button.setOnClickListener(new StartPipeline(this));
+
+        date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
         enabledIperf.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -118,30 +126,31 @@ public class VideoViewingActivity extends Activity {
 
     @Override
     protected void onPause() {
-        Log.i(TAG, "onPause");
         super.onPause();
 
-        //Shuts off the camera view so that it doesn't use unneeded resources.
+        // Shuts off the camera view so that it doesn't use unneeded resources.
         mView.disableView();
-        mView.setCvCameraViewListener((ImageProcessor) null); // incredibly stupid have to cast before setting null
+
+        // incredibly stupid have to cast before setting null
+        mView.setCvCameraViewListener((ImageProcessor) null);
+
+        Debug.stopMethodTracing();
     }
 
     @Override
     protected void onResume() {
-        Log.i(TAG, "onResume");
         super.onResume();
 
-        //Restarts the camera view to start retrieving frames.
+        // Restarts the camera view to start retrieving frames.
         mView.setCvCameraViewListener(imageProcessor);
         mView.enableView();
     }
 
     @Override
     public void onStart() {
-        Log.i(TAG, "onStart");
         super.onStart();
 
-        //Safety checks in case the activity's resources were deallocated.
+        // Safety checks in case the activity's resources were deallocated.
         if (imageProcessor == null) {
             imageProcessor = new ImageProcessor();
         }
@@ -151,22 +160,19 @@ public class VideoViewingActivity extends Activity {
 
     @Override
     public void onStop() {
-        Log.i(TAG, "onStop");
         super.onStop();
 
-        //Problems occur if the same processor is used after the activity stops.
+        // Problems occur if the same processor is used after the activity stops.
         imageProcessor = null;
     }
 
     @Override
     public void onDestroy() {
-        Log.i(TAG, "onDestroy()");
         super.onDestroy();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.i(TAG, "onCreateOptionsMenu");
         mItemEditPipeline = menu.add("Edit Pipeline");
         mItemClearPipeline = menu.add("Clear Pipeline");
         return true;
@@ -179,16 +185,13 @@ public class VideoViewingActivity extends Activity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.i(TAG, "onActivityResult");
-
-        if(CloudClientSingelton.getInstance().shouldUseCloud())
-        {
+        // TODO: Move to onResume()?
+        if (CloudClientSingelton.getInstance().shouldUseCloud()) {
             enabledIperf.setVisibility(View.VISIBLE);
             iperfLabel.setVisibility(View.VISIBLE);
         }
         if (requestCode == EDIT_PIPELINE) {
             if (resultCode == RESULT_OK) {
-                Log.i(TAG, "RESULT_OK");
 
                 Bundle b = data.getExtras();
                 effectList = (ArrayList<Effect>) b.getSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects");
@@ -212,6 +215,12 @@ public class VideoViewingActivity extends Activity {
                 imageProcessor.addEffect(new LocalEffectTask(effect));
             }
             imageProcessor.setCompress(compressions.size() == 1 ? compressions.get(0) : "");
+
+            // Begin Profiling new Pipeline
+            // To view File: View -> Tool Windows -> Device File Explorer
+            // sdcard -> Android -> data -> imageprocessing -> files
+            // bufferSize: "If not given, it defaults to 8MB." -> "not given" = 0?
+            Debug.startMethodTracingSampling(date.format(new Date()), 0, 50);
         }
     }
 }
