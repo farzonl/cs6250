@@ -1,14 +1,9 @@
 package cs6250.benchmarkingsuite.imageprocessing.effects;
 
-import android.graphics.Bitmap;
-//import android.graphics.Point;
-import android.util.Log;
-
 import com.tzutalin.dlib.FaceDet;
 import com.tzutalin.dlib.Point;
 import com.tzutalin.dlib.VisionDetRet;
 
-import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
@@ -29,8 +24,6 @@ public class FaceSwapEffect extends Effect{
         Mat mask = FaceSwapResources.getMask();
         Mat elli = FaceSwapResources.getElli();
 
-        Bitmap bmp = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(frame, bmp);
         FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
 
         List<VisionDetRet> results = faceDet.detect(frame);
@@ -45,7 +38,6 @@ public class FaceSwapEffect extends Effect{
         for (VisionDetRet ret : results) {
 
             ArrayList<Point> landmarks = ret.getFaceLandmarks();
-            Log.e("Length", " " + landmarks.size());
 
             int left = 1000;
             int right = 0;
@@ -64,7 +56,6 @@ public class FaceSwapEffect extends Effect{
             //Imgproc.rectangle(frame, tl, br, new Scalar(0, 255, 0, 255), 8);
 
             Mat maskResize = new Mat();
-            Log.e("mask", "" + mask.width() + " " + mask.height());
 
             int width = Math.abs((int) (br.x - tl.x));
             int height = Math.abs((int) (br.y - tl.y));

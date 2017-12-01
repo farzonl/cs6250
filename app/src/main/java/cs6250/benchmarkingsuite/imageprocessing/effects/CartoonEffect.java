@@ -1,7 +1,5 @@
 package cs6250.benchmarkingsuite.imageprocessing.effects;
 
-import android.util.Log;
-
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
