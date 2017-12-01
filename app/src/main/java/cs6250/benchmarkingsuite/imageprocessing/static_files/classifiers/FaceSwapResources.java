@@ -41,8 +41,8 @@ public class FaceSwapResources {
     }
 
     public FaceSwapResources() {
-        mask = Imgcodecs.imread("../images/faceswapmask.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
-        elli = Imgcodecs.imread("../images/elli.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        mask = Imgcodecs.imread( System.getProperty("user.dir") + "/cs6250/app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/static_files/images/faceswapmask.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        elli = Imgcodecs.imread( System.getProperty("user.dir") + "/cs6250/app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/static_files/images/elli.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
     }
 
     public static Mat getMask() {

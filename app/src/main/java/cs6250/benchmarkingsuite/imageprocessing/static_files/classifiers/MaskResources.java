@@ -38,7 +38,7 @@ public final class MaskResources {
     }
 
     public MaskResources() {
-        mask = Imgcodecs.imread("../images/sunglasses.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        mask = Imgcodecs.imread( System.getProperty("user.dir") + "/cs6250/app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/static_files/images/sunglasses.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
     }
 
     public static Mat getMask() {
