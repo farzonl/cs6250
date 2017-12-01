@@ -1,11 +1,6 @@
 package com.tzutalin.dlib;
 
-import android.graphics.Bitmap;
-import android.support.annotation.Keep;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
-import android.util.Log;
+import org.opencv.core.Mat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,9 +21,7 @@ public class FaceDet {
         try {
             System.loadLibrary("android_dlib");
             jniNativeClassInit();
-            Log.d(TAG, "jniNativeClassInit success");
         } catch (UnsatisfiedLinkError e) {
-            Log.e(TAG, "library not found");
         }
     }
 
@@ -42,21 +35,16 @@ public class FaceDet {
         jniInit(mLandMarkPath);
     }
 
-    @Nullable
-    @WorkerThread
-    public List<VisionDetRet> detect(@NonNull String path) {
+
+    public List<VisionDetRet> detect(String path) {
         VisionDetRet[] detRets = jniDetect(path);
         return Arrays.asList(detRets);
     }
 
-    @Nullable
-    @WorkerThread
-    public List<VisionDetRet> detect(@NonNull Bitmap bitmap) {
-        VisionDetRet[] detRets = jniBitmapDetect(bitmap);
+    public List<VisionDetRet> detect(Mat mat) {
+        VisionDetRet[] detRets = jniBitmapDetect(mat.getNativeObjAddr());
         return Arrays.asList(detRets);
     }
-
-
 
 
 
@@ -70,18 +58,13 @@ public class FaceDet {
         jniDeInit();
     }
 
-    @Keep
     private native static void jniNativeClassInit();
 
-    @Keep
     private synchronized native int jniInit(String landmarkModelPath);
 
-    @Keep
     private synchronized native int jniDeInit();
 
-    @Keep
-    private synchronized native VisionDetRet[] jniBitmapDetect(Bitmap bitmap);
+    private synchronized native VisionDetRet[] jniBitmapDetect(long matAddr);
 
-    @Keep
     private synchronized native VisionDetRet[] jniDetect(String path);
 }

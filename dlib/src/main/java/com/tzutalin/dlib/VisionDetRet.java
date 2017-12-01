@@ -20,8 +20,6 @@ package com.tzutalin.dlib;
  * Created by Tzutalin on 2015/10/20.
  */
 
-import android.graphics.Point;
-
 import java.util.ArrayList;
 
 /**

@@ -1,11 +1,12 @@
 package cs6250.benchmarkingsuite.imageprocessing.effects;
 
 import android.graphics.Bitmap;
-import android.graphics.Point;
+//import android.graphics.Point;
 import android.util.Log;
 
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
+import com.tzutalin.dlib.Point;
 import com.tzutalin.dlib.VisionDetRet;
 
 import org.opencv.android.Utils;
@@ -23,9 +24,11 @@ public class FaceLandMarksEffect extends Effect {
     public Mat applyTo(Mat frame) {
         Bitmap bmp = Bitmap.createBitmap(frame.cols(), frame.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(frame, bmp);
+        Log.e("Frame Channel", frame.channels() + " ");
         FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
 
-        List<VisionDetRet> results = faceDet.detect(bmp);
+        List<VisionDetRet> results = faceDet.detect(frame);
+
         org.opencv.core.Point tl = new org.opencv.core.Point();
         org.opencv.core.Point br = new org.opencv.core.Point();
         org.opencv.core.Point center = new org.opencv.core.Point();

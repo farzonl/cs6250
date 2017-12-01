@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
+import com.tzutalin.dlib.Point;
 import com.tzutalin.dlib.VisionDetRet;
 
 import org.opencv.android.Utils;
@@ -33,7 +34,7 @@ public class MaskEffect extends Effect {
         Utils.matToBitmap(frame, bmp);
         FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
 
-        List<VisionDetRet> results = faceDet.detect(bmp);
+        List<VisionDetRet> results = faceDet.detect(frame);
         org.opencv.core.Point tl = new org.opencv.core.Point();
         org.opencv.core.Point br = new org.opencv.core.Point();
         org.opencv.core.Point center = new org.opencv.core.Point();
@@ -44,17 +45,7 @@ public class MaskEffect extends Effect {
 
         for (VisionDetRet ret : results) {
 
-//            tl = new org.opencv.core.Point(ret.getLeft(), ret.getTop());
-//            br = new org.opencv.core.Point(ret.getRight(), ret.getBottom());
-//
-//            Log.e("TL", " "+ ret.getTop() + " " + ret.getLeft());
-//            Log.e("BR", " " + ret.getBottom() + " "+ ret.getRight());
-
-//            Imgproc.rectangle(frame, tl, br, new Scalar(0, 255, 0, 255), 8);
-//            Imgproc.putText(frame, " Face" , tl,
-//                    Core.FONT_HERSHEY_PLAIN, 3 , textColor);
-
-            ArrayList<android.graphics.Point> landmarks = ret.getFaceLandmarks();
+            ArrayList<Point> landmarks = ret.getFaceLandmarks();
             Log.e("Length", " " + landmarks.size());
 
             int left = 1000;
@@ -62,7 +53,7 @@ public class MaskEffect extends Effect {
             int top = 1000;
             int bottom = 0;
 
-            for (android.graphics.Point point : landmarks) {
+            for (Point point : landmarks) {
                 left = Math.min(left, point.x);
                 right = Math.max(right, point.x);
                 top = Math.min(top, point.y);

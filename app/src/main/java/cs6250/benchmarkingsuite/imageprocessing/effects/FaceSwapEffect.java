@@ -1,11 +1,12 @@
 package cs6250.benchmarkingsuite.imageprocessing.effects;
 
 import android.graphics.Bitmap;
-import android.graphics.Point;
+//import android.graphics.Point;
 import android.util.Log;
 
 import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
+import com.tzutalin.dlib.Point;
 import com.tzutalin.dlib.VisionDetRet;
 
 import org.opencv.android.Utils;
@@ -32,7 +33,7 @@ public class FaceSwapEffect extends Effect{
         Utils.matToBitmap(frame, bmp);
         FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
 
-        List<VisionDetRet> results = faceDet.detect(bmp);
+        List<VisionDetRet> results = faceDet.detect(frame);
         org.opencv.core.Point tl = new org.opencv.core.Point();
         org.opencv.core.Point br = new org.opencv.core.Point();
         org.opencv.core.Point center = new org.opencv.core.Point();
@@ -51,7 +52,7 @@ public class FaceSwapEffect extends Effect{
             int top = 1000;
             int bottom = 0;
 
-            for (android.graphics.Point point : landmarks) {
+            for (Point point : landmarks) {
                 left = Math.min(left, point.x);
                 right = Math.max(right, point.x);
                 top = Math.min(top, point.y);
