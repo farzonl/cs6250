@@ -3,10 +3,12 @@ package cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
@@ -36,8 +38,7 @@ public final class MaskResources {
     }
 
     public MaskResources() {
-        //To Do
-        mask = new Mat();
+        mask = Imgcodecs.imread("../images/sunglasses.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
     }
 
     public static Mat getMask() {

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
@@ -40,9 +41,8 @@ public class FaceSwapResources {
     }
 
     public FaceSwapResources() {
-        //To Do: Load mask and elli's image.
-        mask = new Mat();
-        elli = new Mat();
+        mask = Imgcodecs.imread("../images/faceswapmask.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        elli = Imgcodecs.imread("../images/elli.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
     }
 
     public static Mat getMask() {

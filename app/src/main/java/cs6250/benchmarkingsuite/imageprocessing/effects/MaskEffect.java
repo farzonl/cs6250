@@ -25,6 +25,8 @@ public class MaskEffect extends Effect {
     @Override
     public Mat applyTo(Mat frame) {
         Mat mask = MaskResources.getMask();
+        Mat newMask = new Mat();
+        Imgproc.resize(mask, mask, new Size(100, 100));
 
         FaceDet faceDet = new FaceDet(Constants.getFaceShapeModelPath());
 
