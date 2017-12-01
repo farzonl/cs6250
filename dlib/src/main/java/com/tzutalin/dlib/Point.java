@@ -1,9 +1,5 @@
 package com.tzutalin.dlib;
 
-/**
- * Created by thang911 on 11/30/17.
- */
-
 public class Point {
     public int x;
     public int y;

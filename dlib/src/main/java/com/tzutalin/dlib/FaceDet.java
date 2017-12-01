@@ -19,7 +19,6 @@ public class FaceDet {
 
     static {
         try {
-            System.loadLibrary("android_dlib");
             jniNativeClassInit();
         } catch (UnsatisfiedLinkError e) {
         }
@@ -45,8 +44,6 @@ public class FaceDet {
         VisionDetRet[] detRets = jniBitmapDetect(mat.getNativeObjAddr());
         return Arrays.asList(detRets);
     }
-
-
 
     @Override
     protected void finalize() throws Throwable {

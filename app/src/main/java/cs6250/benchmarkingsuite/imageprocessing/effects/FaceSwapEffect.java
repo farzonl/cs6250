@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 //import android.graphics.Point;
 import android.util.Log;
 
-import com.tzutalin.dlib.Constants;
 import com.tzutalin.dlib.FaceDet;
 import com.tzutalin.dlib.Point;
 import com.tzutalin.dlib.VisionDetRet;
@@ -19,6 +18,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
+import cs6250.benchmarkingsuite.imageprocessing.static_files.Constants;
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceSwapResources;
 
 public class FaceSwapEffect extends Effect{

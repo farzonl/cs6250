@@ -2,13 +2,7 @@ package cs6250.benchmarkingsuite.imageprocessing.static_files;
 
 import android.content.Context;
 
-import com.tzutalin.dlib.Constants;
-
 import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.*;
-
-/**
- * Created by thang911 on 11/26/17.
- */
 
 public class Resources {
     public static void initServerResources() {
@@ -18,6 +12,7 @@ public class Resources {
         MouthDetectionClassifier.initMouthDetectionClassifier();
         EyeDetectionClassifier.initEyeDetectionClassifier();
         FaceDetectionClassifier.initFaceDetectionClassifier();
+        Constants.initConstants();
 //        MaskResources.initMaskResources();
 //        FaceSwapResources.initFaceSwapResources();
     }
@@ -31,6 +26,6 @@ public class Resources {
         CatDetectionClassifier.initCatDetectionClassifier(ctx);
         FaceSwapResources.initFaceSwapResources(ctx);
         MaskResources.initMaskResources(ctx);
-        Constants cs = new Constants();
+        Constants.initConstants(ctx);
     }
 }

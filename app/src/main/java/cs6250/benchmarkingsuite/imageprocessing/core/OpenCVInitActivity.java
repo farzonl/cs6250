@@ -20,24 +20,17 @@ import android.support.v4.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
-import com.tzutalin.dlib.Constants;
-
 import cs6250.benchmarkingsuite.imageprocessing.static_files.Resources;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.CarDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.CatDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.EyeDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceSwapResources;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.NoseDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.MouthDetectionClassifier;
-import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.MaskResources;
 
 /**
  * Starting point of the app that makes sure that the user has the OpenCV package installed on their device.
  */
 public class OpenCVInitActivity extends Activity {
     private final String TAG = "OpenCVInitActivity";
-    static { System.loadLibrary("opencv_java3"); }
+    static {
+        System.loadLibrary("opencv_java3");
+        System.loadLibrary("android_dlib");
+    }
 
     private void checkPermissions()
     {
