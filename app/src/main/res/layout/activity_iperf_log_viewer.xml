@@ -1,0 +1,26 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d3d3d3"
+    tools:context="cs6250.benchmarkingsuite.imageprocessing.core.IperfLogViewerActivity">
+
+    <ScrollView
+        android:id="@+id/textAreaScroller"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical">
+
+        <TextView
+            android:id="@+id/fullscreen_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:keepScreenOn="true"
+            android:scrollbars="vertical"
+            android:text=""
+            android:textColor="#33b5e5"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </ScrollView>
+
+</FrameLayout>

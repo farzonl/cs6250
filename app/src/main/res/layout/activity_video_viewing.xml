@@ -1,18 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <org.opencv.android.JavaCameraView
         android:id="@+id/frameView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:minHeight="100dp" />
 
-    <Button
-        android:id="@+id/pipeline"
+    <LinearLayout
+        android:id="@+id/VideoViewingFooter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/frameView"
-        android:text="@string/label_pipeline" />
-</RelativeLayout>
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/pipeline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_pipeline" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView_traceview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_traceview"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+                <CheckBox
+                    android:id="@+id/enabletraceview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView_iperf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_iperf"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:visibility="invisible" />
+
+                <CheckBox
+                    android:id="@+id/enableIperf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/iperLog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onPerfLogClicked"
+                android:text="@string/label_openIperfLog"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_view_idUploadBandwidth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/uploadBandwidth"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/text_view_idDownloadBandwidth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/downloadBandwidth"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/text_view_idHostCpuUtil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hostCpuUtil"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/text_view_idServerCpuUtil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/serverCpuUtil"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

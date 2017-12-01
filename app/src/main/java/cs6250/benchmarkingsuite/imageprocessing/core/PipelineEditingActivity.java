@@ -255,7 +255,8 @@ public class PipelineEditingActivity extends Activity {
             portTextBox.setText(Integer.toString(portNumber));
         }
 
-        ipTextBox.setText("128.61.11.119");
+
+        ipTextBox.setText(IpFile.ipAddress);
         portTextBox.setText("20001");
 
         enableCloud.setChecked(cloudInstance.shouldUseCloud());
@@ -308,6 +309,7 @@ public class PipelineEditingActivity extends Activity {
         } else {
             CloudClientSingelton.getInstance().setUseCloud(false);
         }
+
         Intent result = new Intent();
         Bundle bundle = new Bundle();
         bundle.putSerializable("cs6250.benchmarkingsuite.imageprocessing.core.effects", effects);

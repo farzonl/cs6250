@@ -60,6 +60,50 @@ public class OpenCVInitActivity extends Activity {
                             1);
                 }
             }
+
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Give first an explanation, if needed.
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                    // Show an explanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                            1);
+                }
+            }
+
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // Give first an explanation, if needed.
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                    // Show an explanation to the user *asynchronously* -- don't block
+                    // this thread waiting for the user's response! After the user
+                    // sees the explanation, try again to request the permission.
+
+                } else {
+
+                    // No explanation needed, we can request the permission.
+
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            1);
+                }
+            }
         }
     }
 
@@ -90,15 +134,26 @@ public class OpenCVInitActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Resources.initServerResources(getApplicationContext());
 
         Log.i(TAG, "Trying to load OpenCV library");
-        if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_3_0, this, mOpenCVCallBack))
-        {
+        if (!OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_3_0, this, mOpenCVCallBack)) {
             Log.e(TAG, "Cannot connect to OpenCV Manager");
         }
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (!OpenCVLoader.initDebug()) {
+            Log.d("OpenCV", "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, this, mOpenCVCallBack);
+        } else {
+            Log.d("OpenCV", "OpenCV library found inside package. Using it!");
+            mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
+    }
+
 }

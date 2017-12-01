@@ -1,5 +1,7 @@
 package cs6250.benchmarkingsuite.imageprocessing.cloud;
 
+import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
+
 /**
  * Created by farzon on 10/14/17.
  */

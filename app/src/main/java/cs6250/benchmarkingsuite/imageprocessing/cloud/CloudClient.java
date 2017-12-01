@@ -13,6 +13,7 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 import cs6250.benchmarkingsuite.imageprocessing.server.IBenchProtocol;
+import cs6250.benchmarkingsuite.imageprocessing.metrics.BandwidthMeasurement;
 
 public class CloudClient implements Runnable {
 
