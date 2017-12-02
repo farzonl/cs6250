@@ -1,0 +1,1 @@
+Put traceview and iPerf logs in here for the best compression in all of these effects
