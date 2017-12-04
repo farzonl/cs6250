@@ -17,12 +17,12 @@ public class FaceDet {
     private long mNativeFaceDetContext;
     private String mLandMarkPath = "";
 
-    static {
-        try {
-            jniNativeClassInit();
-        } catch (UnsatisfiedLinkError e) {
-        }
-    }
+//    static {
+//        try {
+//            jniNativeClassInit();
+//        } catch (UnsatisfiedLinkError e) {
+//        }
+//    }
 
     @SuppressWarnings("unused")
     public FaceDet() {
