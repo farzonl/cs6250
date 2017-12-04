@@ -31,6 +31,8 @@ public class SepiaEffect extends Effect {
 		Core.transform(frame, effect, m_sepiaKernel);
 		
 		Imgproc.cvtColor(effect,effect,Imgproc.COLOR_BGRA2RGBA);
+		m_sepiaKernel.release();
+		frame.release();
 		return effect;
 		
 	}
