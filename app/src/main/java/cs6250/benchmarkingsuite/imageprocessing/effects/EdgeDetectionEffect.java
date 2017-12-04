@@ -20,7 +20,7 @@ public class EdgeDetectionEffect extends Effect {
 		Mat newFrame = new Mat();
 		Imgproc.Canny(frame, newFrame, 80, 100);
 		Imgproc.cvtColor(newFrame, newFrame, Imgproc.COLOR_GRAY2BGRA, 4);
-		
+		frame.release();
 		return newFrame;
 	}
 

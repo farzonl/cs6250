@@ -29,7 +29,7 @@ public class ColorSaturationEffect extends Effect{
 		newFrame.put(0, 0, buff);
 		Imgproc.cvtColor(newFrame, newFrame, Imgproc.COLOR_HSV2RGB);
 		Imgproc.cvtColor(frame, newFrame, Imgproc.COLOR_RGB2RGBA);
-		
+		frame.release();
 		return newFrame;
 	}
 

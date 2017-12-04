@@ -38,6 +38,11 @@ public class GradientMagnitudeEffect extends Effect {
 		
 		mag.convertTo(mag, CvType.CV_8U);
 		Imgproc.cvtColor(mag, mag, Imgproc.COLOR_GRAY2RGBA);
+
+		drv.release();
+		drv32f.release();
+		grayScale.release();
+		frame.release();
 		return mag;
 	}
 

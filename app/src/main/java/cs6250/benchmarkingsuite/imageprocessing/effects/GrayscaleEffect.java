@@ -18,7 +18,7 @@ public class GrayscaleEffect extends Effect {
 		Mat newFrame = new Mat();
 		Imgproc.cvtColor(frame, newFrame, Imgproc.COLOR_RGBA2GRAY);
 		Imgproc.cvtColor(newFrame, newFrame, Imgproc.COLOR_GRAY2RGBA);
-
+		frame.release();
 		return newFrame;
 	}
 
