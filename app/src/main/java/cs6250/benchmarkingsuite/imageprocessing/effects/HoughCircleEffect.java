@@ -49,7 +49,7 @@ public class HoughCircleEffect extends Effect {
 
 
 		frame.copyTo(newFrame);
-
+		frame.release();
 		return newFrame;
 	}
 	

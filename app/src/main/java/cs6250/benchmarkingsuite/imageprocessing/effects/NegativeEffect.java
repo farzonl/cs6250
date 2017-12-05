@@ -22,7 +22,7 @@ public class NegativeEffect extends Effect {
 		Mat newFrame = new Mat(frame.size(), frame.type());
 		Imgproc.cvtColor(frame, newFrame, Imgproc.COLOR_RGBA2RGB);
 		Core.bitwise_not(newFrame, newFrame);
-		
+		frame.release();
 		return newFrame;
 	}
 

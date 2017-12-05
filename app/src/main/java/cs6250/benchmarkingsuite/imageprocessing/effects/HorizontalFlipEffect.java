@@ -19,7 +19,7 @@ public class HorizontalFlipEffect extends Effect {
 	public Mat applyTo(Mat frame) {
 		Mat newFrame = new Mat();
 		Core.flip(frame, newFrame, 1);
-		
+		frame.release();
 		return newFrame;
 	}
 
