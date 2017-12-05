@@ -19,6 +19,10 @@ import cs6250.benchmarkingsuite.imageprocessing.static_files.classifiers.FaceSwa
 public class FaceSwapEffect extends Effect{
     private Mat face;
 
+    public boolean inBound(int r, int c, int rows, int cols) {
+        return r >= 0 && r < rows && c >= 0 && c <= cols;
+    }
+
     @Override
     public Mat applyTo(Mat frame) {
         Mat mask = FaceSwapResources.getMask();
@@ -66,9 +70,9 @@ public class FaceSwapEffect extends Effect{
 
             Mat face = maskResize.clone();
 
-            //Copy prof face to the matrix
-            frame.rowRange(top, bottom).colRange(left, right).copyTo(face.rowRange(0, height).colRange(0, width));
-
+            if (inBound(right, bottom, frame.cols(), frame.rows()) && inBound(left, top, frame.cols(), frame.rows())) {
+                frame.rowRange(top, bottom).colRange(left, right).copyTo(face.rowRange(0, height).colRange(0, width));
+            }
             //bitwise_and prof's face and mask
             Mat imgInv = maskResize.clone();
             Core.bitwise_and(face, maskResize, imgInv);
