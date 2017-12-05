@@ -9,6 +9,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
@@ -37,6 +38,7 @@ public final class MaskResources {
 
     public MaskResources() {
         mask = Imgcodecs.imread( System.getProperty("user.dir") + "/cs6250/app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/static_files/images/sunglasses.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        Imgproc.cvtColor(mask, mask, Imgproc.COLOR_RGB2RGBA);
     }
 
     public static Mat getMask() {

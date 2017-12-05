@@ -8,6 +8,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import cs6250.benchmarkingsuite.imageprocessing.R;
 
@@ -41,6 +42,8 @@ public class FaceSwapResources {
     public FaceSwapResources() {
         mask = Imgcodecs.imread( System.getProperty("user.dir") + "/cs6250/app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/static_files/images/faceswapmask.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
         elli = Imgcodecs.imread( System.getProperty("user.dir") + "/cs6250/app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/static_files/images/elli.png", Imgcodecs.CV_LOAD_IMAGE_COLOR);
+        Imgproc.cvtColor(mask, mask, Imgproc.COLOR_RGB2RGBA);
+        Imgproc.cvtColor(elli, elli, Imgproc.COLOR_RGB2RGBA);
     }
 
     public static Mat getMask() {
