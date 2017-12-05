@@ -22,10 +22,9 @@ public final class Constants {
             String targetPath = sdcard.getAbsolutePath() + File.separator + "shape_predictor_68_face_landmarks.dat";
             return targetPath;
         } else {
-            return  "shape_predictor_68_face_landmarks.dat";
+            return  System.getProperty("user.dir") + "/cs6250/app/src/main/java/cs6250/benchmarkingsuite/imageprocessing/static_files/xml/shape_predictor_68_face_landmarks.dat";
         }
     }
-
 
     public static void initConstants(Context ctx) {
         if (object == null) {
