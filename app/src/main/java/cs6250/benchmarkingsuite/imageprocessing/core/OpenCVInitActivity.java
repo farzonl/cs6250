@@ -155,5 +155,4 @@ public class OpenCVInitActivity extends Activity {
             mOpenCVCallBack.onManagerConnected(LoaderCallbackInterface.SUCCESS);
         }
     }
-
 }

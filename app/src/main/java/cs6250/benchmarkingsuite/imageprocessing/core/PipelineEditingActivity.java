@@ -255,9 +255,7 @@ public class PipelineEditingActivity extends Activity {
             portTextBox.setText(Integer.toString(portNumber));
         }
 
-
-//        ipTextBox.setText(IpFile.ipAddress);
-        ipTextBox.setText("128.61.15.91");
+        ipTextBox.setText(IpFile.ipAddress);
         portTextBox.setText("20001");
 
         enableCloud.setChecked(cloudInstance.shouldUseCloud());
