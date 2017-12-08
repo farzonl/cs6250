@@ -21,7 +21,7 @@ public class VerticalFlipEffect extends Effect {
 	public Mat applyTo(Mat frame) {
 		Mat newFrame = new Mat();
 		Core.flip(frame, newFrame, 0);
-		
+		frame.release();
 		return newFrame;
 	}
 

@@ -37,6 +37,8 @@ public class MotionHistoryEffect extends Effect {
 		
 		Mat newFrame = new Mat();
 		Imgproc.cvtColor(difference, newFrame, Imgproc.COLOR_GRAY2RGBA);
+
+		frame.release();
 		return newFrame;
 	}
 

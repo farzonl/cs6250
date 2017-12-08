@@ -60,7 +60,7 @@ public class HoughLineEffect extends Effect {
 		}
 
 		frame.copyTo(newFrame);
-
+		frame.release();
 		return newFrame;
 	}
 	

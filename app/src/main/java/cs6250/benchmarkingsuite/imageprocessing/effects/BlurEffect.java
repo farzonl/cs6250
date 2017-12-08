@@ -21,7 +21,8 @@ public class BlurEffect extends Effect {
 		Mat newFrame = new Mat();
 		Size size = new Size(50,50);;
 		Imgproc.blur(frame, newFrame, size);
-		
+
+		frame.release();
 		return newFrame;
 	}
 	
