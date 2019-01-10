@@ -7,6 +7,9 @@ cache:
     - ${TRAVIS_BUILD_DIR}/gradle/caches/
     - ${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/
 
+licenses:
+    - 'android-sdk-license-.+'
+
 env:
   global:
     - ANDROID_API_LEVEL=26
