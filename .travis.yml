@@ -45,6 +45,7 @@ android:
     - sys-img-armeabi-v7a-google_apis-$EMULATOR_API_LEVEL
 
 before_script:
+  - unzip openCVLibrary330.zip
   # Create and start emulator
   - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
   - emulator -avd test -no-window &
