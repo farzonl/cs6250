@@ -18,7 +18,7 @@ public class HoughCircleEffect extends Effect {
 	 * the function converts a cv::mat to gray scale then runs a gaussian blur on it to reduce noise. 
 	 * Then runs the canny edge detector to get projective circles in image space
 	 *  then runs the hough circle algorithm to find the most likely circles.
-	 * @param frame- A matrix of the current frame in the pipeline
+	 * @param frame A matrix of the current frame in the pipeline
 	 * @return A matrix of the frame after the effect has been applied
 	 */
 	@Override

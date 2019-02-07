@@ -75,8 +75,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addIdentityEffect();
         }
-        client.addIdentityEffect();
     }
 
     public void addCartoonEffect() throws org.apache.avro.AvroRemoteException {
@@ -88,8 +89,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addCartoonEffect();
         }
-        client.addCartoonEffect();
     }
 
     public void addFaceDetectionEffect() throws org.apache.avro.AvroRemoteException {
@@ -101,8 +103,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addFaceDetectionEffect();
         }
-        client.addFaceDetectionEffect();
     }
 
     public void addMaskEffect() throws org.apache.avro.AvroRemoteException {
@@ -114,8 +117,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addMaskEffect();
         }
-        client.addMaskEffect();
     }
 
     public void addBlurEffect() throws org.apache.avro.AvroRemoteException {
@@ -127,8 +131,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addBlurEffect();
         }
-        client.addBlurEffect();
     }
 
     public void addColorSaturationEffect() throws org.apache.avro.AvroRemoteException {
@@ -140,8 +145,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addColorSaturationEffect();
         }
-        client.addColorSaturationEffect();
     }
 
     public void addMotionHistoryEffect() throws org.apache.avro.AvroRemoteException {
@@ -153,8 +159,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addMotionHistoryEffect();
         }
-        client.addMotionHistoryEffect();
     }
 
     public void addNegativeEffect() throws org.apache.avro.AvroRemoteException {
@@ -166,8 +173,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addNegativeEffect();
         }
-        client.addNegativeEffect();
     }
 
     public void addSepiaEffect() throws org.apache.avro.AvroRemoteException {
@@ -179,8 +187,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addSepiaEffect();
         }
-        client.addSepiaEffect();
     }
 
     public void addVerticalEffect() throws org.apache.avro.AvroRemoteException {
@@ -192,8 +201,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addVerticalEffect();
         }
-        client.addVerticalEffect();
     }
 
     public void addXrayEffect() throws org.apache.avro.AvroRemoteException {
@@ -205,8 +215,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addXrayEffect();
         }
-        client.addXrayEffect();
     }
 
     public void addHorizontalFlipEffect() throws org.apache.avro.AvroRemoteException {
@@ -218,8 +229,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addHorizontalFlipEffect();
         }
-        client.addHorizontalFlipEffect();
     }
 
     public void addHoughCircleEffect() throws org.apache.avro.AvroRemoteException {
@@ -231,8 +243,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addHoughCircleEffect();
         }
-        client.addHoughCircleEffect();
     }
 
     public void addHoughLineEffect() throws org.apache.avro.AvroRemoteException {
@@ -244,8 +257,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addHoughLineEffect();
         }
-        client.addHoughLineEffect();
     }
 
     public void addEdgeDetectionEffect() throws org.apache.avro.AvroRemoteException {
@@ -257,8 +271,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addEdgeDetectionEffect();
         }
-        client.addEdgeDetectionEffect();
     }
 
     public void addGradientMagnitudeEffect() throws org.apache.avro.AvroRemoteException {
@@ -270,8 +285,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addGradientMagnitudeEffect();
         }
-        client.addGradientMagnitudeEffect();
     }
 
     public void addMotionDetectionEffect() throws org.apache.avro.AvroRemoteException {
@@ -283,8 +299,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addMotionDetectionEffect();
         }
-        client.addMotionDetectionEffect();
     }
 
     public void addCheckerBoardDetectionEffect() throws org.apache.avro.AvroRemoteException {
@@ -296,8 +313,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addCheckerBoardDetectionEffect();
         }
-        client.addCheckerBoardDetectionEffect();
     }
 
     public void addFrames(List<ByteBuffer> frames, org.apache.avro.ipc.Callback<List<ByteBuffer>> callback) throws java.io.IOException {
@@ -309,8 +327,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addFrames(frames, callback);
         }
-        client.addFrames(frames, callback);
     }
 
     public void addCompressedFrames(java.util.List<java.nio.ByteBuffer> frames, String algorithm, org.apache.avro.ipc.Callback<java.util.List<java.nio.ByteBuffer>> callback) throws java.io.IOException {
@@ -322,8 +341,9 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.addCompressedFrames(frames, algorithm, callback);
         }
-        client.addCompressedFrames(frames, algorithm, callback);
     }
 
     public void clearEffects() throws org.apache.avro.AvroRemoteException {
@@ -335,7 +355,8 @@ public class CloudClient implements Runnable {
             } catch (InterruptedException e) {
                 Log.e("CloudClient", e.getMessage(), e);
             }
+        } else {
+            client.clearEffects();
         }
-        client.clearEffects();
     }
 }
