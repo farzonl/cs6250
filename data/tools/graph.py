@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt; plt.rcdefaults()
-import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-import pathlib
 
 clientFileName = "traceview.txt"
 successArr = []

@@ -11,7 +11,7 @@ public class IdentityEffect extends Effect {
 
 	/**
 	 * this function does nothing to the input matrix.
-	 * @param A matrix of the current frame in the pipeline
+	 * @param frame A matrix of the current frame in the pipeline
 	 * @return A matrix of the frame after the effect has been applied
 	 */
 	@Override
