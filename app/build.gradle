@@ -147,5 +147,10 @@ task generate_iperf_version_string_h() {
     }
 }
 
+task untar (type: Copy) {
+    from tarTree(resources.gzip('jni/iperf-3.1.3-source.tar.gz'))
+    into 'jni/' 
+}
+generate_iperf_version_string_h.dependsOn untar
 preBuild.dependsOn generate_iperf_version_string_h
 preBuild.dependsOn generate_ipFile
