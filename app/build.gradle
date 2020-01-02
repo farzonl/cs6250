@@ -53,7 +53,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:appcompat-v7:26.+'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     implementation project(':openCVLibrary330')
 
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.+'
